@@ -5,7 +5,9 @@ import UserIcon from "./icons/UserIcon";
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: Constants.statusBarHeight,
+    width: "90%",
   },
   image: {
     width: 100,
