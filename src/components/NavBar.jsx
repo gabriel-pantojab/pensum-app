@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
+    maxHeight: 40,
     marginTop: Constants.statusBarHeight,
     flexDirection: "row",
     padding: 10,

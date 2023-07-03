@@ -5,12 +5,14 @@ import Home from "./Home";
 import Pensum from "./Pensum";
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
 });
 
 export default function Main() {
   return (
-    <View>
+    <View style={styles.container}>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

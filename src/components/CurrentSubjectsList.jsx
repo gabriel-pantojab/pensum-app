@@ -9,8 +9,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     paddingTop: 20,
     padding: 10,
-    gap: 15,
-    maxHeight: 300,
+    maxHeight: 350,
   },
   title: {
     position: "absolute",
@@ -25,17 +24,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function CurrentSubjectsList() {
+export default function CurrentSubjectsList({ subjects }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cursando</Text>
       <FlatList
         contentContainerStyle={styles.list}
-        data={[
-          { key: "1", name: "Matemática I", group: "1", teacher: "Perez" },
-          { key: "2", name: "Matemática II", group: "2", teacher: "Perez" },
-          { key: "3", name: "Matemática III", group: "3", teacher: "Perez" },
-        ]}
+        data={subjects}
         renderItem={({ item }) => (
           <SubjectInpProgress
             name={item.name}
