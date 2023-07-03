@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
-import { Text, View } from "react-native";
+import { View, Text } from "react-native";
 import UserCard from "./UserCard";
 import Course from "./Course";
+import CurrentSubjectsList from "./CurrentSubjectsList";
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     gap: 50,
   },
@@ -18,6 +19,7 @@ export default function Home() {
         description="Estudiante de Ing. Informática"
       />
       <Course />
+      <CurrentSubjectsList />
     </View>
   );
 }

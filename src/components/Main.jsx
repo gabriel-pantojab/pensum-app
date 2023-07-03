@@ -1,6 +1,4 @@
-import { Text } from "react-native";
-import { View } from "react-native";
-import { StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { Route, Routes } from "react-router-native";
 import NavBar from "./NavBar";
 import Home from "./Home";
