@@ -3,22 +3,25 @@ import { View } from "react-native";
 import UserCard from "./UserCard";
 import Course from "./Course";
 import CurrentSubjectsList from "./CurrentSubjectsList";
-
-import { user, currentSubjectsList } from "../model/mockups";
+import { useContext } from "react";
+import { StudentContext } from "../context/studentContext";
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#fefefe",
+    flex: 1,
     alignItems: "center",
     gap: 50,
   },
 });
 export default function Home() {
+  const { student, currentSubjectsList } = useContext(StudentContext);
   return (
     <View style={styles.container}>
       <UserCard
-        image={user.avatar}
-        name={user.name}
-        description={user.description}
+        image={student.avatar}
+        name={student.name}
+        description={student.description}
       />
       <Course />
       <CurrentSubjectsList subjects={currentSubjectsList} />

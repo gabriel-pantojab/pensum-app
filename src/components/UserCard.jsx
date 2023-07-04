@@ -15,7 +15,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
     borderRadius: 4,
   },
+
   userInfo: {
+    flex: 1,
     marginLeft: 10,
     justifyContent: "center",
   },
@@ -30,8 +32,22 @@ export default function UserCard({ image, name, description = "" }) {
         <UserIcon />
       )}
       <View style={styles.userInfo}>
-        <Text>{name}</Text>
-        <Text>{description}</Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 18,
+            flexWrap: "wrap",
+          }}
+        >
+          {name}
+        </Text>
+        <Text
+          style={{
+            flexWrap: "wrap",
+          }}
+        >
+          {description}
+        </Text>
       </View>
     </View>
   );

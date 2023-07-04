@@ -67,6 +67,40 @@ const levels = [
     id: 2,
     name: "B",
     progress: 40,
+    /**
+     * INGLES II
+ALGEBRA II
+CALCULO II
+ELEM. DE PROGRAMACION Y ESTRUC. DE DATOS
+ARQUITECTURA DE COMPUTADORAS I
+PROGRAMACION
+     */
+    subjects: [
+      {
+        name: "Ingles II",
+        state: "Aprobada",
+      },
+      {
+        name: "Algebra II",
+        state: "Cursando",
+      },
+      {
+        name: "Cálculo II",
+        state: "No Cursada",
+      },
+      {
+        name: "Elem. de Programación y Estruc. de Datos",
+        state: "No Cursada",
+      },
+      {
+        name: "Arquitectura de Computadoras I",
+        state: "No Cursada",
+      },
+      {
+        name: "Programación",
+        state: "No Cursada",
+      },
+    ],
   },
   {
     id: 3,

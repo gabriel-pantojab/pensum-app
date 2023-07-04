@@ -5,13 +5,14 @@ import { Link, useLocation } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
-    maxHeight: 40,
+    maxHeight: 50,
     marginTop: Constants.statusBarHeight,
     flexDirection: "row",
     padding: 10,
     backgroundColor: "#24263e",
   },
   text: {
+    fontSize: 16,
     color: "#999",
     marginRight: 10,
   },
@@ -26,7 +27,7 @@ function BarTab({ to, children }) {
     location === to || (to === "/pensum" && location.includes("/pensum"));
   const stylesLink = [styles.text, active && styles.active];
   return (
-    <Link to={to} underlayColor="#f0f4f7">
+    <Link to={to} underlayColor="transparent">
       <Text style={stylesLink}>{children}</Text>
     </Link>
   );
@@ -34,7 +35,11 @@ function BarTab({ to, children }) {
 
 export default function NavBar() {
   return (
-    <ScrollView horizontal style={styles.container}>
+    <ScrollView
+      horizontal
+      style={styles.container}
+      contentContainerStyle={{ alignItems: "center" }}
+    >
       <BarTab to="/">Home</BarTab>
       <BarTab to="/pensum">Pensum</BarTab>
       <BarTab to="/horario">Horario</BarTab>

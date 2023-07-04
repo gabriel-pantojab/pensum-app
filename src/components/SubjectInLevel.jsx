@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
   Text,
-  Button,
   TouchableOpacity,
   Modal,
   Pressable,
 } from "react-native";
 import MenuIcon from "./icons/MenuIcon";
 import CloseIcon from "./icons/CloseIcon";
+import { StudentContext } from "../context/studentContext";
+import { getCourse, saveCourse } from "../storage/storage";
 
 function RadioButton({ initValue, values, action }) {
   const [currentValue, setCurrentValue] = useState(initValue);
@@ -34,7 +35,58 @@ function RadioButton({ initValue, values, action }) {
   ));
 }
 
-export default function SubjectInLevel({ name, state }) {
+function ModalChangeState({ modal, setModal, name, stateSubject, action }) {
+  return (
+    <Modal
+      visible={modal}
+      animationType="slide"
+      transparent
+      onRequestClose={() => setModal(false)}
+    >
+      <View style={styles.containerModal}>
+        <View style={styles.modal}>
+          <Pressable
+            onPress={() => setModal(false)}
+            style={{
+              height: 20,
+              alignSelf: "flex-end",
+            }}
+          >
+            <CloseIcon />
+          </Pressable>
+          <View
+            style={{
+              justifyContent: "center",
+              padding: 20,
+              gap: 10,
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 18,
+                textAlign: "center",
+              }}
+            >
+              {name}
+            </Text>
+            <RadioButton
+              values={["No Cursada", "Cursando", "Aprobada"]}
+              action={(value) => {
+                action(value);
+              }}
+              initValue={stateSubject}
+            />
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+export default function SubjectInLevel({ name, state, level, id }) {
+  const { levels, setLevels, setCourse, setCurrentSubjectsList } =
+    useContext(StudentContext);
   const [modal, setModal] = useState(false);
   const [stateSubject, setStateSubject] = useState(state);
   const stylesSubject = [
@@ -43,6 +95,78 @@ export default function SubjectInLevel({ name, state }) {
     stateSubject === "Aprobada" && styles.aprobada,
     stateSubject === "Cursando" && styles.cursando,
   ];
+
+  const updateCourse = async (antValue, value) => {
+    if (antValue === value) return;
+    const course = await getCourse();
+    if (antValue === "No Cursada") {
+      if (value === "Aprobada") {
+        course.approvedSubjects += 1;
+      } else if (value === "Cursando") {
+        course.inProgressSubjects += 1;
+      }
+      course.pendingSubjects -= 1;
+    } else if (antValue === "Cursando") {
+      if (value === "Aprobada") {
+        course.approvedSubjects += 1;
+      } else if (value === "No Cursada") {
+        course.pendingSubjects += 1;
+      }
+      course.inProgressSubjects -= 1;
+    } else {
+      if (value === "No Cursada") {
+        course.pendingSubjects += 1;
+      } else if (value === "Cursando") {
+        course.inProgressSubjects += 1;
+      }
+      course.approvedSubjects -= 1;
+    }
+    setCourse(course);
+  };
+
+  const updateCurrentSubjectsList = async () => {
+    setCurrentSubjectsList((prev) => {
+      return [
+        ...prev,
+        {
+          name,
+          group: "",
+          teacher: "",
+        },
+      ];
+    });
+  };
+
+  const handleChangeState = async (value) => {
+    const temp = [...levels];
+    const index = temp.indexOf(temp.find((nivel) => nivel.name === level));
+    const currentLevel = temp[index];
+    const currentSubject = currentLevel.subjects.find(
+      (subject) => subject.id === id
+    );
+    const antValue = currentSubject.state;
+    currentSubject.state = value;
+    const totalSubjects = currentLevel.subjects.length;
+    const approvedSubjects = currentLevel.subjects.filter(
+      (subject) => subject.state === "Aprobada"
+    ).length;
+    const inProgressSubjects = currentLevel.subjects.filter(
+      (subject) => subject.state === "Cursando"
+    ).length;
+
+    currentLevel.progress = (approvedSubjects / totalSubjects) * 100;
+    currentLevel.inProgress = false;
+    if (currentLevel.progress === 0) {
+      currentLevel.progress = 0;
+      currentLevel.inProgress = inProgressSubjects > 0;
+    }
+    temp[index] = currentLevel;
+    setLevels(temp);
+    setStateSubject(value);
+    await updateCourse(antValue, value);
+    if (value === "Cursando") await updateCurrentSubjectsList();
+  };
+
   return (
     <View style={stylesSubject}>
       <TouchableOpacity style={styles.menu} onPress={() => setModal(true)}>
@@ -56,51 +180,14 @@ export default function SubjectInLevel({ name, state }) {
       >
         {name}
       </Text>
-      <Modal
-        visible={modal}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setModal(false)}
-      >
-        <View style={styles.containerModal}>
-          <View style={styles.modal}>
-            <Pressable
-              onPress={() => setModal(false)}
-              style={{
-                height: 20,
-                alignSelf: "flex-end",
-              }}
-            >
-              <CloseIcon />
-            </Pressable>
-            <View
-              style={{
-                justifyContent: "center",
-                padding: 20,
-                gap: 10,
-              }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 18,
-                  textAlign: "center",
-                }}
-              >
-                {name}
-              </Text>
-              <RadioButton
-                values={["No Cursada", "Cursando", "Aprobada"]}
-                action={(value) => {
-                  setStateSubject(value);
-                }}
-                onClose={() => setModal(false)}
-                initValue={stateSubject}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
+
+      <ModalChangeState
+        modal={modal}
+        setModal={setModal}
+        name={name}
+        stateSubject={stateSubject}
+        action={handleChangeState}
+      />
     </View>
   );
 }
@@ -127,7 +214,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     padding: 5,
-    backgroundColor: "#ccc",
+    backgroundColor: "#f9faf5",
     gap: 10,
   },
   title: {

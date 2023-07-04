@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { StudentContext } from "../context/studentContext";
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 2,
+    backgroundColor: "#6e77ee",
     width: "90%",
     borderRadius: 10,
     position: "relative",
@@ -11,36 +13,43 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   title: {
+    color: "white",
     position: "absolute",
     top: -18,
     left: 10,
     fontSize: 20,
-    backgroundColor: "white",
+    backgroundColor: "#6e77ee",
     paddingHorizontal: 10,
+    borderRadius: 5,
   },
   infoSubjects: {
     flexDirection: "row",
     justifyContent: "space-around",
   },
+  text: {
+    color: "white",
+  },
 });
 
 export default function Course() {
+  const { course } = useContext(StudentContext);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Carrera</Text>
       <Text
         style={{
+          ...styles.text,
           fontWeight: "bold",
           fontSize: 18,
         }}
       >
-        Ing. Informática
+        {course.name}
       </Text>
-      <Text>Total Materias: 48</Text>
+      <Text style={styles.text}>Total Materias: {course.totalSubjects}</Text>
       <View style={styles.infoSubjects}>
-        <Text>Aprobadas: 2</Text>
-        <Text>Cursando: 2</Text>
-        <Text>Restantes: 46</Text>
+        <Text style={styles.text}>Aprobadas: {course.approvedSubjects}</Text>
+        <Text style={styles.text}>Cursando: {course.inProgressSubjects}</Text>
+        <Text style={styles.text}>Restantes: {course.pendingSubjects}</Text>
       </View>
     </View>
   );

@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
     top: -18,
     left: 10,
     fontSize: 20,
-    backgroundColor: "white",
     paddingHorizontal: 10,
+    borderRadius: 5,
+    backgroundColor: "white",
   },
   list: {
     gap: 20,
@@ -28,17 +29,31 @@ export default function CurrentSubjectsList({ subjects }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cursando</Text>
-      <FlatList
-        contentContainerStyle={styles.list}
-        data={subjects}
-        renderItem={({ item }) => (
-          <SubjectInpProgress
-            name={item.name}
-            group={item.group}
-            teacher={item.teacher}
-          />
-        )}
-      />
+      {subjects.length > 0 ? (
+        <FlatList
+          contentContainerStyle={styles.list}
+          data={subjects}
+          renderItem={({ item }) => (
+            <SubjectInpProgress
+              name={item.name}
+              group={item.group}
+              teacher={item.teacher}
+            />
+          )}
+        />
+      ) : (
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "#ccc",
+            margin: 20,
+          }}
+        >
+          No esta cursando ni una materia
+        </Text>
+      )}
     </View>
   );
 }

@@ -1,12 +1,7 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
-import { levels } from "../model/mockups";
+import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
 import { Link } from "react-router-native";
+import { useContext } from "react";
+import { StudentContext } from "../context/studentContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -40,14 +35,14 @@ const styles = StyleSheet.create({
   },
 });
 
-function Level({ name, progress }) {
+function Level({ name, progress, inProgress }) {
   return (
-    <TouchableOpacity>
-      <Link to={`/pensum/${name}`}>
+    <Pressable>
+      <Link to={`/pensum/${name}`} underlayColor={"transparent"}>
         <View
           style={{
             ...styles.level,
-            borderColor: progress > 0 ? "#2f9e44" : "#ccc",
+            borderColor: progress > 0 || inProgress ? "#2f9e44" : "#ccc",
           }}
         >
           <View
@@ -61,18 +56,20 @@ function Level({ name, progress }) {
           <Text
             style={{
               ...styles.titleLevel,
-              color: progress > 0 ? "black" : "#ccc",
+              color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
             Nivel {name}
           </Text>
         </View>
       </Link>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
 export default function Pensum() {
+  const { levels } = useContext(StudentContext);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
@@ -80,7 +77,12 @@ export default function Pensum() {
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         data={levels}
         renderItem={({ item }) => (
-          <Level key={item.id} progress={item.progress} name={item.name} />
+          <Level
+            key={item.id}
+            progress={item.progress}
+            name={item.name}
+            inProgress={item.inProgress}
+          />
         )}
       />
     </View>

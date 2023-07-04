@@ -1,14 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-
-import { NativeRouter, Routes, Route } from "react-router-native";
+import { NativeRouter } from "react-router-native";
 
 import Main from "./src/components/Main";
-import NavBar from "./src/components/NavBar";
+import StudentProvider from "./src/context/studentContext";
 
 export default function App() {
   return (
     <NativeRouter>
-      <Main />
+      <StudentProvider>
+        <Main />
+      </StudentProvider>
     </NativeRouter>
   );
 }

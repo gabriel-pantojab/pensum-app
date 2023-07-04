@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { useParams } from "react-router-native";
-import { levels } from "../model/mockups";
+import { Link, useParams } from "react-router-native";
 
 import SubjectInLevel from "./SubjectInLevel";
+import BackIcon from "./icons/BackIcon";
+import { useContext } from "react";
+import { StudentContext } from "../context/studentContext";
 
 function StatesSubject() {
   return (
@@ -42,12 +44,22 @@ function StatesSubject() {
 }
 
 export default function SubjectsInLevel() {
+  const { levels } = useContext(StudentContext);
   const level = useParams().level;
   const index = level.charCodeAt(0) - "A".charCodeAt(0);
   const subjects = levels[index].subjects;
 
   return (
     <View style={styles.container}>
+      <Link
+        underlayColor={"transparent"}
+        style={{
+          alignSelf: "flex-end",
+        }}
+        to="/pensum"
+      >
+        <BackIcon />
+      </Link>
       <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
       <View style={styles.info}>
         <Text style={styles.level}>Nivel {level}</Text>
@@ -57,7 +69,15 @@ export default function SubjectsInLevel() {
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         data={subjects}
         renderItem={({ item }) => {
-          return <SubjectInLevel name={item.name} state={item.state} />;
+          return (
+            <SubjectInLevel
+              name={item.name}
+              state={item.state}
+              level={level}
+              id={item.id}
+              key={item.id}
+            />
+          );
         }}
       />
     </View>
