@@ -17,10 +17,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function SubjectInpProgress({ name, group = "", teacher = "" }) {
+export default function SubjectInpProgress({
+  name,
+  group = "",
+  teacher = "",
+  level = "",
+}) {
   return (
     <View style={styles.container}>
       <Text style={styles.subject}>{name}</Text>
+      <Text>Nivel: {level}</Text>
       <Text>Grupo: {group}</Text>
       <Text>Docente: {teacher}</Text>
     </View>

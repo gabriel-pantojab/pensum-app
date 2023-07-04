@@ -38,6 +38,7 @@ export default function CurrentSubjectsList({ subjects }) {
               name={item.name}
               group={item.group}
               teacher={item.teacher}
+              level={item.level}
             />
           )}
         />

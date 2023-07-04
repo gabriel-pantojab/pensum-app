@@ -10,7 +10,7 @@ import {
 import MenuIcon from "./icons/MenuIcon";
 import CloseIcon from "./icons/CloseIcon";
 import { StudentContext } from "../context/studentContext";
-import { getCourse, saveCourse } from "../storage/storage";
+import { getCourse } from "../storage/storage";
 
 function RadioButton({ initValue, values, action }) {
   const [currentValue, setCurrentValue] = useState(initValue);
@@ -124,17 +124,24 @@ export default function SubjectInLevel({ name, state, level, id }) {
     setCourse(course);
   };
 
-  const updateCurrentSubjectsList = async () => {
-    setCurrentSubjectsList((prev) => {
-      return [
-        ...prev,
-        {
-          name,
-          group: "",
-          teacher: "",
-        },
-      ];
-    });
+  const updateCurrentSubjectsList = async (value) => {
+    if (value === "Cursando") {
+      setCurrentSubjectsList((prev) => {
+        return [
+          ...prev,
+          {
+            name,
+            group: "",
+            teacher: "",
+            level,
+          },
+        ];
+      });
+    } else {
+      setCurrentSubjectsList((prev) => {
+        return prev.filter((subject) => subject.name != name);
+      });
+    }
   };
 
   const handleChangeState = async (value) => {
@@ -145,6 +152,7 @@ export default function SubjectInLevel({ name, state, level, id }) {
       (subject) => subject.id === id
     );
     const antValue = currentSubject.state;
+    if (antValue === value) return;
     currentSubject.state = value;
     const totalSubjects = currentLevel.subjects.length;
     const approvedSubjects = currentLevel.subjects.filter(
@@ -164,7 +172,7 @@ export default function SubjectInLevel({ name, state, level, id }) {
     setLevels(temp);
     setStateSubject(value);
     await updateCourse(antValue, value);
-    if (value === "Cursando") await updateCurrentSubjectsList();
+    await updateCurrentSubjectsList(value);
   };
 
   return (

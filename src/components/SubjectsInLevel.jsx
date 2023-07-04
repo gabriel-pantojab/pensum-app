@@ -3,8 +3,9 @@ import { Link, useParams } from "react-router-native";
 
 import SubjectInLevel from "./SubjectInLevel";
 import BackIcon from "./icons/BackIcon";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
+import useLoading from "../hooks/useLoading";
 
 function StatesSubject() {
   return (
@@ -49,8 +50,24 @@ export default function SubjectsInLevel() {
   const index = level.charCodeAt(0) - "A".charCodeAt(0);
   const subjects = levels[index].subjects;
 
+  const [approved, setApproved] = useState(0);
+  const [inProgress, setInProgress] = useState(0);
+  const [pending, setPending] = useState(0);
+
+  useEffect(() => {
+    const subjs = levels[index].subjects;
+    const appro = subjs.filter((s) => s.state === "Aprobada").length;
+    const inProg = subjs.filter((s) => s.state === "Cursando").length;
+    const pendg = subjs.filter((s) => s.state === "No Cursada").length;
+    setApproved(appro);
+    setInProgress(inProg);
+    setPending(pendg);
+  }, [levels]);
+
+  const { loading, finishedRender } = useLoading();
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={finishedRender}>
       <Link
         underlayColor={"transparent"}
         style={{
@@ -65,9 +82,16 @@ export default function SubjectsInLevel() {
         <Text style={styles.level}>Nivel {level}</Text>
         <StatesSubject />
       </View>
+      <View style={styles.info}>
+        <Text>Aprobadas: {approved}</Text>
+        <Text>Cursando: {inProgress}</Text>
+        <Text>No Cursadas: {pending}</Text>
+      </View>
       <FlatList
+        initialNumToRender={1}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         data={subjects}
+        ListFooterComponent={loading}
         renderItem={({ item }) => {
           return (
             <SubjectInLevel
@@ -88,7 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    gap: 20,
+    gap: 10,
   },
   title: {
     fontSize: 20,

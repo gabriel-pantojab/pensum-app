@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Link } from "react-router-native";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
+import Loading from "./Loading";
+import useLoading from "../hooks/useLoading";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,53 +37,101 @@ const styles = StyleSheet.create({
   },
 });
 
-function Level({ name, progress, inProgress }) {
+function Level({ name, progress = 0, inProgress = false, index }) {
+  const { levels } = useContext(StudentContext);
+  const [approved, setApproved] = useState(0);
+  const [subjectsInProgress, setSubjectsInProgress] = useState(0);
+  const [pending, setPending] = useState(0);
+
+  useEffect(() => {
+    const subjs = levels[index].subjects;
+    const appro = subjs.filter((s) => s.state === "Aprobada").length;
+    const inProg = subjs.filter((s) => s.state === "Cursando").length;
+    const pendg = subjs.filter((s) => s.state === "No Cursada").length;
+    setApproved(appro);
+    setSubjectsInProgress(inProg);
+    setPending(pendg);
+  }, []);
+
   return (
-    <Pressable>
-      <Link to={`/pensum/${name}`} underlayColor={"transparent"}>
+    <Link
+      to={`/pensum/${name}`}
+      underlayColor={"transparent"}
+      style={{
+        ...styles.level,
+        borderColor: progress > 0 || inProgress ? "#2f9e44" : "#ccc",
+      }}
+    >
+      <>
         <View
           style={{
-            ...styles.level,
-            borderColor: progress > 0 || inProgress ? "#2f9e44" : "#ccc",
+            ...styles.progress,
+            width: `${progress}%`,
+            borderBottomRightRadius: progress === 100 ? 8 : 0,
+            borderTopRightRadius: progress === 100 ? 8 : 0,
+          }}
+        ></View>
+        <Text
+          style={{
+            ...styles.titleLevel,
+            color: progress > 0 || inProgress ? "black" : "#ccc",
           }}
         >
-          <View
-            style={{
-              ...styles.progress,
-              width: `${progress}%`,
-              borderBottomRightRadius: progress === 100 ? 8 : 0,
-              borderTopRightRadius: progress === 100 ? 8 : 0,
-            }}
-          ></View>
+          Nivel {name}
+        </Text>
+        <View
+          style={{
+            alignSelf: "flex-start",
+            padding: 10,
+          }}
+        >
           <Text
             style={{
-              ...styles.titleLevel,
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
-            Nivel {name}
+            Aprobadas: {approved}
+          </Text>
+          <Text
+            style={{
+              color: progress > 0 || inProgress ? "black" : "#ccc",
+            }}
+          >
+            Cursando:{subjectsInProgress}
+          </Text>
+          <Text
+            style={{
+              color: progress > 0 || inProgress ? "black" : "#ccc",
+            }}
+          >
+            No Cursadas:{pending}
           </Text>
         </View>
-      </Link>
-    </Pressable>
+      </>
+    </Link>
   );
 }
 
 export default function Pensum() {
   const { levels } = useContext(StudentContext);
 
+  const { loading, finishedRender } = useLoading();
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={finishedRender}>
       <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
       <FlatList
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         data={levels}
-        renderItem={({ item }) => (
+        initialNumToRender={1}
+        ListFooterComponent={loading}
+        renderItem={({ item, index }) => (
           <Level
             key={item.id}
             progress={item.progress}
             name={item.name}
             inProgress={item.inProgress}
+            index={index}
           />
         )}
       />
