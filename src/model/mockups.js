@@ -38,48 +38,70 @@ const student = {
 const levels = [
   {
     id: 1,
-    name: "Nivel A",
+    name: "A",
     progress: 60,
+    subjects: [
+      {
+        name: "Ingles I",
+        state: "Aprobada",
+      },
+      {
+        name: "Física General",
+        state: "Cursando",
+      },
+      {
+        name: "Algebra I",
+        state: "No Cursada",
+      },
+      {
+        name: "Cálculo I",
+        state: "No Cursada",
+      },
+      {
+        name: "Introducción a la Programación",
+        state: "No Cursada",
+      },
+    ],
   },
   {
     id: 2,
-    name: "Nivel B",
+    name: "B",
     progress: 40,
   },
   {
     id: 3,
-    name: "Nivel C",
+    name: "C",
     progress: 0,
   },
   {
     id: 4,
-    name: "Nivel D",
+    name: "D",
     progress: 0,
   },
   {
     id: 5,
-    name: "Nivel E",
+    name: "E",
     progress: 0,
   },
 
   {
     id: 6,
-    name: "Nivel F",
+    name: "F",
     progress: 0,
   },
   {
     id: 7,
-    name: "Nivel G",
+    name: "G",
     progress: 0,
   },
   {
     id: 8,
-    name: "Nivel H",
+    name: "H",
     progress: 0,
   },
   {
     id: 9,
-    name: "Nivel I",
+    name: "I",
     progress: 100,
   },
 ];

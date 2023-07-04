@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-native";
 import NavBar from "./NavBar";
 import Home from "./Home";
 import Pensum from "./Pensum";
+import SubjectsInLevel from "./SubjectsInLevel";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,6 +18,7 @@ export default function Main() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pensum" element={<Pensum />} />
+        <Route path="/pensum/:level" element={<SubjectsInLevel />} />
         <Route path="/horario" element={<Text>Horario</Text>} />
         <Route path="*" element={<Text>Not Found</Text>} />
       </Routes>

@@ -1,5 +1,12 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { levels } from "../model/mockups";
+import { Link } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,7 +30,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     bottom: 0,
-    backgroundColor: "green",
+    backgroundColor: "#b2f2bb",
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
   },
@@ -35,17 +42,33 @@ const styles = StyleSheet.create({
 
 function Level({ name, progress }) {
   return (
-    <View style={styles.level}>
-      <View
-        style={{
-          ...styles.progress,
-          width: `${progress}%`,
-          borderBottomRightRadius: progress === 100 ? 8 : 0,
-          borderTopRightRadius: progress === 100 ? 8 : 0,
-        }}
-      ></View>
-      <Text style={styles.titleLevel}>{name}</Text>
-    </View>
+    <TouchableOpacity>
+      <Link to={`/pensum/${name}`}>
+        <View
+          style={{
+            ...styles.level,
+            borderColor: progress > 0 ? "#2f9e44" : "#ccc",
+          }}
+        >
+          <View
+            style={{
+              ...styles.progress,
+              width: `${progress}%`,
+              borderBottomRightRadius: progress === 100 ? 8 : 0,
+              borderTopRightRadius: progress === 100 ? 8 : 0,
+            }}
+          ></View>
+          <Text
+            style={{
+              ...styles.titleLevel,
+              color: progress > 0 ? "black" : "#ccc",
+            }}
+          >
+            Nivel {name}
+          </Text>
+        </View>
+      </Link>
+    </TouchableOpacity>
   );
 }
 

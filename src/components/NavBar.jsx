@@ -21,7 +21,9 @@ const styles = StyleSheet.create({
 });
 
 function BarTab({ to, children }) {
-  const active = useLocation().pathname === to;
+  const location = useLocation().pathname;
+  const active =
+    location === to || (to === "/pensum" && location.includes("/pensum"));
   const stylesLink = [styles.text, active && styles.active];
   return (
     <Link to={to} underlayColor="#f0f4f7">
