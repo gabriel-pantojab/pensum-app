@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import Home from "./Home";
 import Pensum from "./Pensum";
 import SubjectsInLevel from "./SubjectsInLevel";
+import Schedule from "./schedule/Schedule";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,7 @@ export default function Main() {
         <Route path="/" element={<Home />} />
         <Route path="/pensum" element={<Pensum />} />
         <Route path="/pensum/:level" element={<SubjectsInLevel />} />
-        <Route path="/horario" element={<Text>Horario</Text>} />
+        <Route path="/horario" element={<Schedule />} />
         <Route path="*" element={<Text>Not Found</Text>} />
       </Routes>
     </View>
