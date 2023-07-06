@@ -23,6 +23,7 @@ const hours = [
   "20:15",
 ];
 
+//TODO: traer los datos de la base de datos
 const borrar = [
   {
     name: "ALGORITMOS AVANZADOS",
@@ -42,15 +43,15 @@ const borrar = [
     backgroundColor: "green",
     teacher: "",
   },
-  // {
-  //   name: "ESTRUCTURA Y SEMANTICA DE LENGUAJES DE PROGRAMACION",
-  //   start: "09:45",
-  //   end: "11:15",
-  //   group: 1,
-  //   classroom: "625C",
-  //   teacher:""
-  //   backgroundColor: "red",
-  // },
+  {
+    name: "ESTRUCTURA Y SEMANTICA DE LENGUAJES DE PROGRAMACION",
+    start: "09:45",
+    end: "11:15",
+    group: 1,
+    classroom: "625C",
+    teacher: "",
+    backgroundColor: "red",
+  },
 ];
 
 function nextHour(hour) {
@@ -122,14 +123,12 @@ function Subject({ subjects }) {
   return (
     <View style={styC}>
       {subjects.map((s) => (
-        <>
-          <Text style={styT} key={s.name}>
-            {s.name}
-          </Text>
-          <Text style={styT} key={s.classroom}>
+        <View key={s.name}>
+          <Text style={styT}>{s.name}</Text>
+          <Text style={styT}>
             {s.classroom} G:{s.group}
           </Text>
-        </>
+        </View>
       ))}
     </View>
   );
