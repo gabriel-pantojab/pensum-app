@@ -1,26 +1,38 @@
-import { View, StyleSheet } from "react-native";
+import { View, Dimensions } from "react-native";
 import HeaderSchedule from "./HeaderSchedule";
-import { currentDate } from "../../utils/utils";
+import { getDateFormat } from "../../utils/utils";
 import TimeTable from "./TimeTable";
 
-export default function Schedule() {
-  const { day, month, dayName, year } = currentDate();
+function ScheduleContent({ date }) {
+  const { day, monthName, dayName, year } = getDateFormat(date);
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <HeaderSchedule month={month} dayName={dayName} day={day} year={year} />
-        <TimeTable />
-      </View>
+    <View
+      style={{
+        flex: 1,
+        width: Dimensions.get("window").width,
+      }}
+    >
+      <HeaderSchedule
+        month={monthName}
+        dayName={dayName}
+        day={day}
+        year={year}
+      />
+      <TimeTable />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+export default function Schedule() {
+  const date = new Date();
+
+  return (
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
+      <ScheduleContent date={date} />
+    </View>
+  );
+}

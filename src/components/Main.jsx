@@ -20,7 +20,9 @@ export default function Main() {
         <Route path="/" element={<Home />} />
         <Route path="/pensum" element={<Pensum />} />
         <Route path="/pensum/:level" element={<SubjectsInLevel />} />
-        <Route path="/horario" element={<Schedule />} />
+        <Route path="/clases-hoy" element={<Schedule />} />
+        <Route path="/horario" element={<Text>Horario</Text>} />
+        <Route path="/express" element={<Text>Express</Text>} />
         <Route path="*" element={<Text>Not Found</Text>} />
       </Routes>
     </View>

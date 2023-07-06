@@ -42,7 +42,9 @@ export default function NavBar() {
     >
       <BarTab to="/">Home</BarTab>
       <BarTab to="/pensum">Pensum</BarTab>
+      <BarTab to="/clases-hoy">Clases Hoy</BarTab>
       <BarTab to="/horario">Horario</BarTab>
+      <BarTab to="/express">Express</BarTab>
     </ScrollView>
   );
 }

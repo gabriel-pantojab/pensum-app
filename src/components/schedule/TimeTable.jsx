@@ -46,7 +46,7 @@ export default function TimeTable() {
   return (
     <View style={styles.container} onLayout={finishedRender}>
       <FlatList
-        initialNumToRender={5}
+        initialNumToRender={1}
         contentContainerStyle={{
           position: "relative",
           paddingVertical: 10,
