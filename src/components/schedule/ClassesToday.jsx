@@ -1,15 +1,15 @@
-import { View, Dimensions } from "react-native";
+import { View } from "react-native";
 import HeaderSchedule from "./HeaderSchedule";
 import { getDateFormat } from "../../utils/utils";
 import TimeTable from "./TimeTable";
 
-function ScheduleContent({ date }) {
+export default function ClassesToday() {
+  const date = new Date();
   const { day, monthName, dayName, year } = getDateFormat(date);
   return (
     <View
       style={{
         flex: 1,
-        width: Dimensions.get("window").width,
       }}
     >
       <HeaderSchedule
@@ -19,20 +19,6 @@ function ScheduleContent({ date }) {
         year={year}
       />
       <TimeTable />
-    </View>
-  );
-}
-
-export default function Schedule() {
-  const date = new Date();
-
-  return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <ScheduleContent date={date} />
     </View>
   );
 }
