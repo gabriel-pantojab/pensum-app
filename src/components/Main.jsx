@@ -7,6 +7,7 @@ import SubjectsInLevel from "./SubjectsInLevel";
 import ClassesToday from "./classestoday/ClassesToday";
 import * as ScreenOrientation from "expo-screen-orientation";
 import Schedule from "./schedule/Schedule";
+import Express from "./express/Express";
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +40,7 @@ export default function Main() {
         <Route path="/pensum/:level" element={<SubjectsInLevel />} />
         <Route path="/clases-hoy" element={<ClassesToday />} />
         <Route path="/horario" element={<Schedule />} />
-        <Route path="/express" element={<Text>Express</Text>} />
+        <Route path="/express" element={<Express />} />
         <Route path="*" element={<Text>Not Found</Text>} />
       </Routes>
     </View>

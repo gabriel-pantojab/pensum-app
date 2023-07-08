@@ -234,3 +234,17 @@ const levels = [
     ],
   },
 ];
+
+const student = {
+  name: "Gabriel Pantoja",
+  description: "Estudiante de Ing. Informática",
+  avatar: "",
+};
+
+const course = {
+  name: "Licenciatura en Ing Informática",
+  totalSubjects: 48,
+  approvedSubjects: 0,
+  pendingSubjects: 0,
+  inProgressSubjects: 0,
+};

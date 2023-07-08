@@ -14,8 +14,13 @@ export default function useLoading() {
     setRendering(false);
   };
 
+  const initLoading = () => {
+    setRendering(true);
+  };
+
   return {
     loading,
     finishedRender,
+    initLoading,
   };
 }

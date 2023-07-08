@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: "#999",
-    marginRight: 10,
+    marginRight: 20,
   },
   active: {
     color: "#fff",
