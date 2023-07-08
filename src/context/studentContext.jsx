@@ -12,6 +12,7 @@ const StudentContext = createContext();
 
 function StudentProvider({ children }) {
   const [student, setStudent] = useState({
+    notexist: true,
     name: "",
     description: "",
     avatar: "",
@@ -19,7 +20,7 @@ function StudentProvider({ children }) {
 
   useEffect(() => {
     getStudent().then((student) => {
-      setStudent(student);
+      if (student) setStudent(student);
     });
   }, []);
 
@@ -32,13 +33,17 @@ function StudentProvider({ children }) {
   });
 
   const setCourse = async (newCourse) => {
-    setCourseContext(newCourse);
-    await saveCourse(newCourse);
+    try {
+      setCourseContext(newCourse);
+      await saveCourse(newCourse);
+    } catch (error) {
+      console.log("Error Course", error);
+    }
   };
 
   useEffect(() => {
     getCourse().then((course) => {
-      setCourse(course);
+      if (course) setCourse(course);
     });
   }, []);
 
@@ -58,13 +63,17 @@ function StudentProvider({ children }) {
   const [levels, setLevelsContext] = useState([]);
 
   const setLevels = async (newLevels) => {
-    setLevelsContext(newLevels);
-    await saveLevels(newLevels);
+    try {
+      setLevelsContext(newLevels);
+      await saveLevels(newLevels);
+    } catch (error) {
+      console.log("Error Levels", error);
+    }
   };
 
   useEffect(() => {
     getLevels().then((levels) => {
-      setLevels(levels);
+      if (levels) setLevels(levels);
     });
   }, []);
 

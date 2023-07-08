@@ -149,6 +149,14 @@ async function saveLevels(levels) {
   }
 }
 
+async function removeLevels() {
+  try {
+    await AsyncStorage.removeItem("levels");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // saveCourse({
 //   name: "Licenciatura en Ing. Informática",
 //   totalSubjects: 48,
@@ -168,4 +176,5 @@ export {
   getCurrentSubjectsList,
   saveLevels,
   getLevels,
+  removeLevels,
 };
