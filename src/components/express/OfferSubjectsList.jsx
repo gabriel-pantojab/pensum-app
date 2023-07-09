@@ -3,6 +3,8 @@ import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import useLoading from "../../hooks/useLoading";
+import { IP } from "../../../constants";
+import CheckBox from "./CheckBox";
 
 export const levels = [
   {
@@ -126,7 +128,7 @@ function Level({ name, carrera }) {
       fontWeight: "bold",
     },
   });
-  const URL = `http://192.168.0.14:3000/carreras/${carrera
+  const URL = `http://${IP}:3000/carreras/${carrera
     .split(" ")
     .join("")
     .trim()}/niveles/${name}/materias`;

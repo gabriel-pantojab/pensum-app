@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
+import { IP } from "../../../constants";
 
 function CarrerasOption({ showCarreras }) {
   return (
@@ -17,9 +18,7 @@ function CarrerasOption({ showCarreras }) {
 }
 
 function Carrera({ name }) {
-  const URL = `http://192.168.0.14:3000/carreras/${name
-    .split(" ")
-    .join("")}/niveles`;
+  const URL = `http://${IP}:3000/carreras/${name.split(" ").join("")}/niveles`;
   const { offer, setShowOffer, showOffer } = useFetchOffer({ url: URL });
 
   return (
@@ -78,7 +77,7 @@ export default function Express() {
   const { loading, finishedRender, initLoading } = useLoading();
   const getCarreras = async () => {
     try {
-      const res = await fetch("http://192.168.0.14:3000/carreras");
+      const res = await fetch(`http://${IP}:3000/carreras`);
       const data = await res.json();
       setCarreras(data);
     } catch (e) {
