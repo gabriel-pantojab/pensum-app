@@ -5,9 +5,11 @@ import Course from "./Course";
 import CurrentSubjectsList from "./CurrentSubjectsList";
 import { useContext } from "react";
 import { StudentContext } from "../context/studentContext";
+import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Constants.statusBarHeight,
     backgroundColor: "#fefefe",
     flex: 1,
     alignItems: "center",

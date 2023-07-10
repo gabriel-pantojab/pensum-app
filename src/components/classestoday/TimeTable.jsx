@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import useLoading from "../../hooks/useLoading";
 
+// TODO : arreglar las horas, no todos mantienen los periodos definidos. ALGUNAS CLASES EMPIEZAN 10:30 U 12:00 :(
 const hours = [
   "06:45",
 

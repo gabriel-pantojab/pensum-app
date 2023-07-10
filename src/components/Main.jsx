@@ -51,7 +51,6 @@ export default function Main() {
     <>
       {state ? (
         <View style={sty}>
-          <NavBar vertical={vertical} />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pensum" element={<Pensum />} />
@@ -61,6 +60,7 @@ export default function Main() {
             <Route path="/express" element={<Express />} />
             <Route path="*" element={<Text>Not Found</Text>} />
           </Routes>
+          <NavBar vertical={vertical} />
         </View>
       ) : (
         <Register />

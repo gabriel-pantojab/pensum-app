@@ -2,6 +2,7 @@ import { View } from "react-native";
 import HeaderSchedule from "./HeaderSchedule";
 import { getDateFormat } from "../../utils/utils";
 import TimeTable from "./TimeTable";
+import Constants from "expo-constants";
 
 export default function ClassesToday() {
   const date = new Date();
@@ -10,6 +11,7 @@ export default function ClassesToday() {
     <View
       style={{
         flex: 1,
+        marginTop: Constants.statusBarHeight,
       }}
     >
       <HeaderSchedule

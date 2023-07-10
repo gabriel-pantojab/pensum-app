@@ -7,12 +7,17 @@ import useLoading from "../../hooks/useLoading";
 import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import { IP } from "../../../constants";
+import CaretUpIcon from "../icons/CaretUpIcon";
 
-function CarrerasOption({ showCarreras }) {
+function CarrerasOption({ showCarreras, showCarrerasValue }) {
   return (
     <Pressable style={styles.options} onPress={showCarreras}>
       <Text style={styles.title}>Carreras</Text>
-      <CaretDownIcon color="#fff" width={15} height={15} />
+      {showCarrerasValue ? (
+        <CaretUpIcon color="#fff" width={15} height={15} />
+      ) : (
+        <CaretDownIcon color="#fff" width={15} height={15} />
+      )}
     </Pressable>
   );
 }
@@ -37,7 +42,11 @@ function Carrera({ name }) {
         onPress={() => setShowOffer(!showOffer)}
       >
         <Text style={styles.carrera}>{name}</Text>
-        <CaretDownIcon color="#fff" width={15} height={15} />
+        {showOffer && offer ? (
+          <CaretUpIcon color="#fff" width={15} height={15} />
+        ) : (
+          <CaretDownIcon color="#fff" width={15} height={15} />
+        )}
       </Pressable>
       {showOffer && offer && (
         <LevelsList levels={offer.niveles} nameCarrera={name} />
@@ -60,10 +69,10 @@ function Carreras({ carreras, loading, finishedRender }) {
   );
 }
 
-function ExpressHeader({ action }) {
+function ExpressHeader({ action, showCarreras }) {
   return (
     <View style={styles.header}>
-      <CarrerasOption showCarreras={action} />
+      <CarrerasOption showCarreras={action} showCarrerasValue={showCarreras} />
       <Text style={styles.title}>
         Express - Gestión {new Date().getFullYear()}
       </Text>
@@ -94,6 +103,7 @@ export default function Express() {
           initLoading(true);
           setShowCarreras(!showCarreras);
         }}
+        showCarreras={showCarreras}
       />
       <View style={styles.content}>
         {showCarreras && (

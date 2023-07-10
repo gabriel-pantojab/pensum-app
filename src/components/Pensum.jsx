@@ -4,9 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
 import Loading from "./Loading";
 import useLoading from "../hooks/useLoading";
+import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Constants.statusBarHeight,
     flex: 1,
     padding: 10,
     gap: 20,

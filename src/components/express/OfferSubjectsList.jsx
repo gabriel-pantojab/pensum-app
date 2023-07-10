@@ -5,6 +5,7 @@ import useFetchOffer from "../../hooks/useFetchOffer";
 import useLoading from "../../hooks/useLoading";
 import { IP } from "../../../constants";
 import CheckBox from "./CheckBox";
+import CaretUpIcon from "../icons/CaretUpIcon";
 
 export const levels = [
   {
@@ -52,28 +53,44 @@ export const levels = [
 ];
 
 function Group({ group, teacher }) {
+  const stylesGroup = StyleSheet.create({
+    container: {
+      borderColor: "#fff",
+      marginRight: 20,
+      marginLeft: 20,
+      paddingVertical: 3,
+    },
+    group: {
+      fontSize: 11,
+      color: "#fff",
+    },
+  });
+  const [checked, setChecked] = useState(false);
   return (
-    <View>
-      <Text
-        style={{
-          flexDirection: "row",
-        }}
+    <View style={stylesGroup.container}>
+      <CheckBox
+        width={13}
+        value={checked}
+        onChange={() => setChecked(!checked)}
       >
-        G:{group} {teacher}
-      </Text>
+        <Text style={stylesGroup.group}>
+          G:{group} {teacher}
+        </Text>
+      </CheckBox>
     </View>
   );
 }
 
 //TODO: REVISAR COMO ESTAN LLEGANDO LOS DATOS PARA RENDERIZAR DOCENTE Y AUXILIAR
-function Subject({ name, groups }) {
+function Subject({ name, carrera, nivel }) {
   const stylesSubject = StyleSheet.create({
     container: {
       borderBottomWidth: 1,
       borderColor: "#fff",
-      marginRight: "auto",
+      marginRight: 20,
       marginLeft: 20,
       marginVertical: 5,
+      paddingHorizontal: 3,
     },
     subject: {
       flexDirection: "row",
@@ -87,20 +104,44 @@ function Subject({ name, groups }) {
       color: "#fff",
     },
   });
+  const URL = `http://${IP}:3000/carreras/${carrera
+    .split(" ")
+    .join("")
+    .trim()}/${nivel}/${name.trim()}/grupos`;
+  const { offer, setShowOffer, showOffer } = useFetchOffer({ url: URL });
   return (
     <View style={stylesSubject.container}>
-      <Pressable style={stylesSubject.subject}>
+      <Pressable
+        style={stylesSubject.subject}
+        onPress={() => setShowOffer(!showOffer)}
+      >
         <Text style={stylesSubject.nameSubject}>{name}</Text>
-        <CaretDownIcon color="#fff" width={12} height={12} />
+        {showOffer && offer ? (
+          <CaretUpIcon color="#fff" width={15} height={15} />
+        ) : (
+          <CaretDownIcon color="#fff" width={15} height={15} />
+        )}
       </Pressable>
       <View>
-        {/* {groups.map((group) => (
-          <Group
-            key={`${group.grupo}${group.titular.docente.substring(0, 3)}}`}
-            group={group.grupo}
-            teacher={group.titular.docente}
+        {showOffer && offer && (
+          <FlatList
+            initialNumToRender={1}
+            data={offer.grupos}
+            renderItem={({ item }) => {
+              const nameTeacher =
+                item.titular.docente != ""
+                  ? item.titular.docente
+                  : item.auxiliar.nombre;
+              return (
+                <Group
+                  key={item.grupo}
+                  group={item.grupo}
+                  teacher={nameTeacher}
+                />
+              );
+            }}
           />
-        ))} */}
+        )}
       </View>
     </View>
   );
@@ -110,7 +151,7 @@ function Level({ name, carrera }) {
   const stylesLevel = StyleSheet.create({
     container: {
       marginLeft: 20,
-      marginRight: "auto",
+      marginRight: 20,
       marginVertical: 5,
       borderWidth: 1,
       borderColor: "#fff",
@@ -120,12 +161,16 @@ function Level({ name, carrera }) {
     level: {
       flexDirection: "row",
       alignItems: "center",
+      justifyContent: "space-between",
       gap: 10,
+      padding: 3,
     },
     nameLevel: {
       color: "#fff",
       fontSize: 10,
       fontWeight: "bold",
+      borderBottomWidth: 1,
+      borderColor: "#fff",
     },
   });
   const URL = `http://${IP}:3000/carreras/${carrera
@@ -142,7 +187,11 @@ function Level({ name, carrera }) {
         }}
       >
         <Text style={stylesLevel.nameLevel}>NIVEL: {name}</Text>
-        <CaretDownIcon color="#fff" width={15} height={15} />
+        {showOffer && offer ? (
+          <CaretUpIcon color="#fff" width={15} height={15} />
+        ) : (
+          <CaretDownIcon color="#fff" width={15} height={15} />
+        )}
       </Pressable>
       {showOffer && offer && (
         <View>
@@ -152,7 +201,8 @@ function Level({ name, carrera }) {
               <Subject
                 key={item.nombreMateria}
                 name={item.nombreMateria}
-                //groups={item.grupos}
+                nivel={name.trim()}
+                carrera={carrera}
               />
             )}
             keyExtractor={(item) => item.nombreMateria}

@@ -11,7 +11,6 @@ import Calendar2Icon from "./icons/Calendar2";
 const styles = StyleSheet.create({
   container: {
     maxHeight: 50,
-    marginTop: Constants.statusBarHeight,
     flexDirection: "row",
     padding: 10,
     backgroundColor: "#24263e",
@@ -43,6 +42,7 @@ export default function NavBar({ vertical }) {
   const sty = [
     styles.container,
     vertical && {
+      marginTop: Constants.statusBarHeight,
       flexDirection: "column",
       maxWidth: 50,
       maxHeight: Dimensions.get("window").width,

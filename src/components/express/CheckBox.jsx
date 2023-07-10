@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import CheckIcon from "../icons/CheckIcon";
-export default function CheckBox({ name = "", width = 20, value, onChange }) {
+export default function CheckBox({
+  name = "",
+  width = 20,
+  value,
+  onChange,
+  children,
+}) {
   const styContainer = {
     ...styles.container,
-    width,
   };
   const styCheckbox = {
     ...styles.checkbox,
     width,
     height: width,
+    borderRadius: width / 4,
   };
   return (
     <View style={styContainer}>
@@ -24,16 +30,17 @@ export default function CheckBox({ name = "", width = 20, value, onChange }) {
             <CheckIcon width={width - 2} height={width - 2} color={"#1493ff"} />
           )}
         </View>
-        <Text>{name}</Text>
+        {children}
       </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   checkbox: {
-    borderRadius: 5,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -43,5 +50,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    gap: 5,
   },
 });
