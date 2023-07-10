@@ -7,10 +7,10 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import MenuIcon from "./icons/MenuIcon";
-import CloseIcon from "./icons/CloseIcon";
-import { StudentContext } from "../context/studentContext";
-import { getCourse } from "../storage/storage";
+import MenuIcon from "../icons/MenuIcon";
+import CloseIcon from "../icons/CloseIcon";
+import { StudentContext } from "../../context/studentContext";
+import { getCourse } from "../../storage/storage";
 
 function RadioButton({ initValue, values, action }) {
   const [currentValue, setCurrentValue] = useState(initValue);
@@ -85,7 +85,7 @@ function ModalChangeState({ modal, setModal, name, stateSubject, action }) {
 }
 
 export default function SubjectInLevel({ name, state, level, id }) {
-  const { levels, setLevels, setCourse, setCurrentSubjectsList } =
+  const { levels, setLevels, setCourse, setCurrentSubjectsList, course } =
     useContext(StudentContext);
   const [modal, setModal] = useState(false);
   const [stateSubject, setStateSubject] = useState(state);
@@ -98,7 +98,6 @@ export default function SubjectInLevel({ name, state, level, id }) {
 
   const updateCourse = async (antValue, value) => {
     if (antValue === value) return;
-    const course = await getCourse();
     if (antValue === "No Cursada") {
       if (value === "Aprobada") {
         course.approvedSubjects += 1;

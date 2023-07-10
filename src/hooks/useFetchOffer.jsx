@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function useFetchOffer({ url }) {
   const [showOffer, setShowOffer] = useState(false);
-  const [offer, setOffer] = useState(null);
+  const [offer, setOffer] = useState({});
   const getOffer = async () => {
     try {
       const res = await fetch(url);
@@ -16,7 +16,7 @@ export default function useFetchOffer({ url }) {
     if (showOffer) {
       getOffer();
     } else {
-      setOffer(null);
+      setOffer({});
     }
   }, [showOffer]);
   return {

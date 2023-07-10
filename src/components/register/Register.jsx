@@ -7,7 +7,8 @@ import { Course, Levels } from "../../storage/createInformatica";
 
 export default function Register() {
   const [username, setUsername] = useState("");
-  const { setStudent, setCourse, setLevels } = useContext(StudentContext);
+  const { setStudent, setCourse, setLevels, setCurrentSubjectsList } =
+    useContext(StudentContext);
   const registrar = async () => {
     if (username === "") return;
     const newStudent = {
@@ -19,6 +20,7 @@ export default function Register() {
     saveStudent(newStudent);
     setCourse(Course);
     setLevels(Levels);
+    setCurrentSubjectsList([]);
   };
   return (
     <View style={styles.container}>

@@ -2,10 +2,11 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Link, useParams } from "react-router-native";
 
 import SubjectInLevel from "./SubjectInLevel";
-import BackIcon from "./icons/BackIcon";
+import BackIcon from "../icons/BackIcon";
 import { useContext, useEffect, useState } from "react";
-import { StudentContext } from "../context/studentContext";
-import useLoading from "../hooks/useLoading";
+import { StudentContext } from "../../context/studentContext";
+import useLoading from "../../hooks/useLoading";
+import Constants from "expo-constants";
 
 function StatesSubject() {
   return (
@@ -44,7 +45,7 @@ function StatesSubject() {
   );
 }
 
-export default function SubjectsInLevel() {
+export default function SubjectsInLevelList() {
   const { levels } = useContext(StudentContext);
   const level = useParams().level;
   const index = level.charCodeAt(0) - "A".charCodeAt(0);
@@ -110,6 +111,7 @@ export default function SubjectsInLevel() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Constants.statusBarHeight,
     flex: 1,
     padding: 10,
     gap: 10,

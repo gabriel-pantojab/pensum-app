@@ -125,11 +125,12 @@ function Subject({ name, carrera, nivel }) {
       <View>
         {showOffer && offer && (
           <FlatList
-            initialNumToRender={1}
+            style={{ gap: 5 }}
+            initialNumToRender={3}
             data={offer.grupos}
             renderItem={({ item }) => {
               const nameTeacher =
-                item.titular.docente != ""
+                item.titular.docente != undefined
                   ? item.titular.docente
                   : item.auxiliar.nombre;
               return (

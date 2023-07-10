@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { StudentContext } from "../context/studentContext";
+import { StudentContext } from "../../context/studentContext";
 
 const styles = StyleSheet.create({
   container: {

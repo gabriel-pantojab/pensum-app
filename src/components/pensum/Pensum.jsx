@@ -1,9 +1,8 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Link } from "react-router-native";
 import { useContext, useEffect, useState } from "react";
-import { StudentContext } from "../context/studentContext";
-import Loading from "./Loading";
-import useLoading from "../hooks/useLoading";
+import { StudentContext } from "../../context/studentContext";
+import useLoading from "../../hooks/useLoading";
 import Constants from "expo-constants";
 
 const styles = StyleSheet.create({

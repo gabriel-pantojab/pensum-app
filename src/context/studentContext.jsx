@@ -6,6 +6,7 @@ import {
   getLevels,
   saveLevels,
   saveCourse,
+  saveCurrentSubjectsList,
 } from "../storage/storage";
 
 const StudentContext = createContext();
@@ -50,13 +51,17 @@ function StudentProvider({ children }) {
   const [currentSubjectsList, setCurrentSubjectsListContext] = useState([]);
 
   const setCurrentSubjectsList = async (newCurrentSubjectsList) => {
-    setCurrentSubjectsListContext(newCurrentSubjectsList);
-    await getCurrentSubjectsList(newCurrentSubjectsList);
+    try {
+      setCurrentSubjectsListContext(newCurrentSubjectsList);
+      await saveCurrentSubjectsList(newCurrentSubjectsList);
+    } catch (error) {
+      console.log("Error CurrentSubjectsList", error);
+    }
   };
 
   useEffect(() => {
     getCurrentSubjectsList().then((currentSubjectsList) => {
-      setCurrentSubjectsList(currentSubjectsList);
+      if (currentSubjectsList) setCurrentSubjectsList(currentSubjectsList);
     });
   }, []);
 

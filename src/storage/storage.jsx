@@ -14,7 +14,6 @@ async function getStudent() {
 
 async function saveStudent({ name, description, avatar }) {
   let student = await getStudent();
-  console.log(student);
 
   if (student === null) {
     student = {
@@ -129,6 +128,14 @@ async function saveCurrentSubjectsList(currentSubjectsList) {
   }
 }
 
+async function removeCurrentSubjectsList() {
+  try {
+    await AsyncStorage.removeItem("currentSubjectsList");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function getLevels() {
   try {
     const levels = await AsyncStorage.getItem("levels");
@@ -174,6 +181,7 @@ export {
   removeCourse,
   saveCurrentSubjectsList,
   getCurrentSubjectsList,
+  removeCurrentSubjectsList,
   saveLevels,
   getLevels,
   removeLevels,

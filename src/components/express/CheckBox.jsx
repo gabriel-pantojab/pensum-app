@@ -15,7 +15,7 @@ export default function CheckBox({
     ...styles.checkbox,
     width,
     height: width,
-    borderRadius: width / 4,
+    borderRadius: Math.random(width / 4),
   };
   return (
     <View style={styContainer}>
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
   pressCheckbox: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     gap: 5,
   },
 });

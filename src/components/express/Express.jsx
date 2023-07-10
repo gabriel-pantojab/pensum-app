@@ -58,13 +58,17 @@ function Carrera({ name }) {
 function Carreras({ carreras, loading, finishedRender }) {
   return (
     <View style={styles.menu} onLayout={finishedRender}>
-      <FlatList
-        initialNumToRender={5}
-        data={carreras}
-        renderItem={({ item }) => <Carrera name={item} />}
-        keyExtractor={(item) => item}
-        ListFooterComponent={loading}
-      />
+      {carreras.length ? (
+        <FlatList
+          initialNumToRender={5}
+          data={carreras}
+          renderItem={({ item }) => <Carrera name={item} />}
+          keyExtractor={(item) => item}
+          ListFooterComponent={loading}
+        />
+      ) : (
+        <Text style={styles.carrera}>No hay carreras disponibles</Text>
+      )}
     </View>
   );
 }
@@ -90,6 +94,7 @@ export default function Express() {
       const data = await res.json();
       setCarreras(data);
     } catch (e) {
+      setCarreras([]);
       console.log(e);
     }
   };

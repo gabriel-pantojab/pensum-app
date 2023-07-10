@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View, Text } from "react-native";
 import Constants from "expo-constants";
-import UserIcon from "./icons/UserIcon";
+import UserIcon from "../icons/UserIcon";
 
 const styles = StyleSheet.create({
   container: {
