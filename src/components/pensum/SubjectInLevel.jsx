@@ -85,8 +85,14 @@ function ModalChangeState({ modal, setModal, name, stateSubject, action }) {
 }
 
 export default function SubjectInLevel({ name, state, level, id }) {
-  const { levels, setLevels, setCourse, setCurrentSubjectsList, course } =
-    useContext(StudentContext);
+  const {
+    levels,
+    setLevels,
+    setCourse,
+    setCurrentSubjectsList,
+    course,
+    currentSubjectsList,
+  } = useContext(StudentContext);
   const [modal, setModal] = useState(false);
   const [stateSubject, setStateSubject] = useState(state);
   const stylesSubject = [
@@ -124,23 +130,23 @@ export default function SubjectInLevel({ name, state, level, id }) {
   };
 
   const updateCurrentSubjectsList = async (value) => {
+    let newCurrentSubjectsList = [];
     if (value === "Cursando") {
-      setCurrentSubjectsList((prev) => {
-        return [
-          ...prev,
-          {
-            name,
-            group: "",
-            teacher: "",
-            level,
-          },
-        ];
-      });
+      newCurrentSubjectsList = [
+        ...currentSubjectsList,
+        {
+          name,
+          group: "",
+          teacher: "",
+          level,
+        },
+      ];
     } else {
-      setCurrentSubjectsList((prev) => {
-        return prev.filter((subject) => subject.name != name);
-      });
+      newCurrentSubjectsList = currentSubjectsList.filter(
+        (subject) => subject.name != name
+      );
     }
+    setCurrentSubjectsList(newCurrentSubjectsList);
   };
 
   const handleChangeState = async (value) => {

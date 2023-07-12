@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import useFetchOffer from "../../hooks/useFetchOffer";
-import useLoading from "../../hooks/useLoading";
 import { IP } from "../../../constants";
 import CheckBox from "./CheckBox";
 import CaretUpIcon from "../icons/CaretUpIcon";
+import { ScheduleContext } from "./context/scheduleContext";
+import ScheduleProvider from "./context/scheduleContext";
 
 export const levels = [
   {
@@ -52,7 +53,8 @@ export const levels = [
   },
 ];
 
-function Group({ group, teacher }) {
+function Group({ group, teacher, infoGroup }) {
+  const { addSubject } = useContext(ScheduleContext);
   const stylesGroup = StyleSheet.create({
     container: {
       borderColor: "#fff",
@@ -71,7 +73,10 @@ function Group({ group, teacher }) {
       <CheckBox
         width={13}
         value={checked}
-        onChange={() => setChecked(!checked)}
+        onChange={() => {
+          setChecked(!checked);
+          addSubject(infoGroup, !checked);
+        }}
       >
         <Text style={stylesGroup.group}>
           G:{group} {teacher}
@@ -82,7 +87,7 @@ function Group({ group, teacher }) {
 }
 
 //TODO: REVISAR COMO ESTAN LLEGANDO LOS DATOS PARA RENDERIZAR DOCENTE Y AUXILIAR
-function Subject({ name, carrera, nivel }) {
+function Subject({ name, carrera, nivel, sis }) {
   const stylesSubject = StyleSheet.create({
     container: {
       borderBottomWidth: 1,
@@ -138,6 +143,11 @@ function Subject({ name, carrera, nivel }) {
                   key={item.grupo}
                   group={item.grupo}
                   teacher={nameTeacher}
+                  infoGroup={{
+                    ...item,
+                    subjectName: name,
+                    sis,
+                  }}
                 />
               );
             }}
@@ -204,6 +214,7 @@ function Level({ name, carrera }) {
                 name={item.nombreMateria}
                 nivel={name.trim()}
                 carrera={carrera}
+                sis={item.sis}
               />
             )}
             keyExtractor={(item) => item.nombreMateria}

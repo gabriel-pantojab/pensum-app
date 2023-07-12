@@ -8,6 +8,8 @@ import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import { IP } from "../../../constants";
 import CaretUpIcon from "../icons/CaretUpIcon";
+import TimeTableExpress from "./TimeTableExpress";
+import ScheduleProvider from "./context/scheduleContext";
 
 function CarrerasOption({ showCarreras, showCarrerasValue }) {
   return (
@@ -102,27 +104,27 @@ export default function Express() {
     getCarreras();
   }, []);
   return (
-    <View style={styles.container}>
-      <ExpressHeader
-        action={() => {
-          initLoading(true);
-          setShowCarreras(!showCarreras);
-        }}
-        showCarreras={showCarreras}
-      />
-      <View style={styles.content}>
-        {showCarreras && (
-          <Carreras
-            carreras={carreras}
-            loading={loading}
-            finishedRender={finishedRender}
-          />
-        )}
-        <View>
-          <Text>Express</Text>
+    <ScheduleProvider>
+      <View style={styles.container}>
+        <ExpressHeader
+          action={() => {
+            initLoading(true);
+            setShowCarreras(!showCarreras);
+          }}
+          showCarreras={showCarreras}
+        />
+        <View style={styles.content}>
+          {showCarreras && (
+            <Carreras
+              carreras={carreras}
+              loading={loading}
+              finishedRender={finishedRender}
+            />
+          )}
+          <TimeTableExpress />
         </View>
       </View>
-    </View>
+    </ScheduleProvider>
   );
 }
 
@@ -157,8 +159,8 @@ const styles = StyleSheet.create({
   },
   menu: {
     backgroundColor: "#999",
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
     borderBottomRightRadius: 5,
     borderColor: "#fff",
     maxHeight: Dimensions.get("window").height - Constants.statusBarHeight,

@@ -15,7 +15,7 @@ export default function CheckBox({
     ...styles.checkbox,
     width,
     height: width,
-    borderRadius: Math.random(width / 4),
+    borderRadius: width / 4,
   };
   return (
     <View style={styContainer}>

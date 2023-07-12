@@ -128,12 +128,6 @@ const example = {
         group: "2",
         classroom: "693A",
       },
-      {
-        subjectName: "ESTRUCTURA Y SEMANTICA DE LENGUAJES DE PROGRAMACION",
-        teacherName: "ROMERO RODRIQUEZ PATRICIA",
-        group: "1",
-        classroom: "625C",
-      },
     ],
   },
   jueves: {
@@ -194,6 +188,111 @@ const example = {
         teacherName: "BLANCO COCA LETICIA",
         group: "1",
         classroom: "693D",
+      },
+    ],
+  },
+};
+
+const e2 = {
+  lunes: {
+    1200: [
+      {
+        subjectName: "BIOLOGIA GENERAL",
+        teacherName: "FERNANDEZ TERRAZAS ERIKA",
+        group: "1",
+        classroom: "608A",
+      },
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608B",
+      },
+    ],
+    1245: [
+      {
+        subjectName: "BIOLOGIA GENERAL",
+        teacherName: "FERNANDEZ TERRAZAS ERIKA",
+        group: "1",
+        classroom: "608A",
+      },
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608B",
+      },
+    ],
+    1330: [
+      {
+        subjectName: "BIOLOGIA GENERAL",
+        teacherName: "FERNANDEZ TERRAZAS ERIKA",
+        group: "1",
+        classroom: "608A",
+      },
+    ],
+  },
+  martes: {
+    1200: [
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608A",
+      },
+    ],
+    1245: [
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608A",
+      },
+    ],
+    1330: [
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608A",
+      },
+    ],
+  },
+  miercoles: {
+    "0945": [
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608",
+      },
+    ],
+    1030: [
+      {
+        subjectName: "BIOLOGIA GENERAL",
+        teacherName: "FERNANDEZ TERRAZAS ERIKA",
+        group: "1",
+        classroom: "606",
+      },
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608",
+      },
+    ],
+    1115: [
+      {
+        subjectName: "BIOLOGIA GENERAL",
+        teacherName: "FERNANDEZ TERRAZAS ERIKA",
+        group: "1",
+        classroom: "606",
+      },
+      {
+        subjectName: "MORFOLOGIA Y ANATOMIA VEGETAL",
+        teacherName: "ANTEZANA VALERA CAROLA FATIMA",
+        group: "1",
+        classroom: "608",
       },
     ],
   },

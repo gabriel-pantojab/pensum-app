@@ -44,7 +44,7 @@ function StudentProvider({ children }) {
 
   useEffect(() => {
     getCourse().then((course) => {
-      if (course) setCourse(course);
+      if (course) setCourseContext(course);
     });
   }, []);
 
@@ -60,8 +60,9 @@ function StudentProvider({ children }) {
   };
 
   useEffect(() => {
-    getCurrentSubjectsList().then((currentSubjectsList) => {
-      if (currentSubjectsList) setCurrentSubjectsList(currentSubjectsList);
+    getCurrentSubjectsList().then((currentSubjectsListStorage) => {
+      if (currentSubjectsListStorage)
+        setCurrentSubjectsListContext(currentSubjectsListStorage);
     });
   }, []);
 
@@ -78,7 +79,7 @@ function StudentProvider({ children }) {
 
   useEffect(() => {
     getLevels().then((levels) => {
-      if (levels) setLevels(levels);
+      if (levels) setLevelsContext(levels);
     });
   }, []);
 

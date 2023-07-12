@@ -28,7 +28,6 @@ async function saveStudent({ name, description, avatar }) {
   }
 
   try {
-    console.log(student);
     const r = await AsyncStorage.setItem("student", JSON.stringify(student));
   } catch (error) {
     console.log(error);

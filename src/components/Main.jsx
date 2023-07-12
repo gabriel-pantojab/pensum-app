@@ -49,10 +49,10 @@ export default function Main() {
       if (course.name != "" && levels.length) setState(true);
     }
   }, [student, course, levels]);
-  removeStudent();
-  removeCourse();
-  removeLevels();
-  removeCurrentSubjectsList();
+  // removeStudent();
+  // removeCourse();
+  // removeLevels();
+  // removeCurrentSubjectsList();
   return (
     <>
       {state ? (
