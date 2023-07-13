@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { ScheduleContext } from "./context/scheduleContext";
 import { formatHour, nextHour } from "./utils";
+import Loading from "../Loading";
 
 function completePeriods(activities, minPeriod, maxPeriod) {
   if (minPeriod === 0 || maxPeriod === 0) return activities;
@@ -118,6 +119,7 @@ function Day({ dayName }) {
 
 export default function TimeTableExpress() {
   const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+  const { schedule } = useContext(ScheduleContext);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.containerScroll} horizontal>
@@ -127,20 +129,61 @@ export default function TimeTableExpress() {
               flexDirection: "row",
             }}
           >
-            <View>
-              <Text style={styles.dayName}></Text>
+            {!schedule ? (
               <View
                 style={{
-                  borderTopWidth: 1,
-                  borderColor: "#f9faf5",
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <Text style={styles.dayName}>Periodo</Text>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  Cargando...
+                </Text>
+                <Loading />
               </View>
-            </View>
-            {days.map((day) => (
-              <Day key={day} dayName={day} />
-            ))}
+            ) : schedule.empty ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  Horario vacio
+                </Text>
+              </View>
+            ) : (
+              <>
+                <View>
+                  <Text style={styles.dayName}></Text>
+                  <View
+                    style={{
+                      borderTopWidth: 1,
+                      borderColor: "#f9faf5",
+                    }}
+                  >
+                    <Text style={styles.dayName}>Periodo</Text>
+                  </View>
+                </View>
+                {days.map((day) => (
+                  <Day key={day} dayName={day} />
+                ))}
+              </>
+            )}
           </ScrollView>
         </View>
       </ScrollView>
@@ -183,7 +226,7 @@ const styles = StyleSheet.create({
     maxWidth: 100,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "green",
+    backgroundColor: "white",
     padding: 5,
   },
   infoSubject: {

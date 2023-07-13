@@ -17,35 +17,35 @@ import { IP } from "../../../constants";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import TimeTableExpress from "./TimeTableExpress";
 import ScheduleProvider, { ScheduleContext } from "./context/scheduleContext";
-import { saveSchedule } from "../../storage/storage";
+import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";
 
-function useGuardando() {
-  const [guardando, setGuardando] = useState(false);
-  const [guardado, setGuardado] = useState(false);
+function useEjecutando() {
+  const [ejecutando, setEjecutando] = useState(false);
+  const [ejecutado, setEjecutado] = useState(false);
 
   const init = () => {
-    setGuardando(true);
-    setGuardado(false);
+    setEjecutando(true);
+    setEjecutado(false);
   };
 
   const finish = () => {
     setTimeout(() => {
-      setGuardando(false);
-      setGuardado(true);
+      setEjecutando(false);
+      setEjecutado(true);
       setTimeout(() => {
-        setGuardado(false);
+        setEjecutado(false);
       }, 500);
     }, 500);
   };
-  return { init, finish, guardado, guardando };
+  return { init, finish, ejecutando, ejecutado };
 }
 
-function Guardando({ guardando, guardado }) {
-  if (!guardado && !guardando) return;
-  if (guardando) return <Loading />;
-  if (guardado)
+function Ejecutando({ ejecutando, ejecutado, mensaje }) {
+  if (!ejecutando && !ejecutado) return;
+  if (ejecutando) return <Loading />;
+  if (ejecutado)
     return (
       <View
         style={{
@@ -64,15 +64,23 @@ function Guardando({ guardando, guardado }) {
             fontSize: 10,
           }}
         >
-          Guardado
+          {mensaje}
         </Text>
       </View>
     );
 }
 
 function CarrerasOption({ showCarreras, showCarrerasValue }) {
-  const { schedule, minPeriod, maxPeriod } = useContext(ScheduleContext);
-  const { guardando, guardado, init, finish } = useGuardando();
+  const {
+    schedule,
+    minPeriod,
+    maxPeriod,
+    setSchedule,
+    selectedSubjects,
+    colors,
+  } = useContext(ScheduleContext);
+  const { ejecutando, ejecutado, init, finish } = useEjecutando();
+  const [sms, setSms] = useState("");
   return (
     <View
       style={{
@@ -90,14 +98,32 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
       </Pressable>
       <Button
         onPress={() => {
+          setSms("Guardado");
           init();
-          saveSchedule({ schedule, minPeriod, maxPeriod }).then(() => {
+          saveSchedule({
+            schedule,
+            minPeriod,
+            maxPeriod,
+            selectedSubjects,
+            colors,
+          }).then(() => {
             finish();
           });
         }}
         title="Guardar"
       />
-      <Guardando guardando={guardando} guardado={guardado} />
+      <Button
+        onPress={() => {
+          setSms("Limpiado");
+          init();
+          removeSchedule().then(() => {
+            setSchedule({ empty: true });
+            finish();
+          });
+        }}
+        title="Limpiar"
+      />
+      <Ejecutando ejecutando={ejecutando} ejecutado={ejecutado} mensaje={sms} />
     </View>
   );
 }
