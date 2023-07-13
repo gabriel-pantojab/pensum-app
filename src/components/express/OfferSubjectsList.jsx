@@ -6,68 +6,64 @@ import { IP } from "../../../constants";
 import CheckBox from "./CheckBox";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { ScheduleContext } from "./context/scheduleContext";
-import ScheduleProvider from "./context/scheduleContext";
-
-export const levels = [
-  {
-    nombreNivel: "",
-    materias: [
-      {
-        nombreMateria: "",
-        grupos: [
-          {
-            grupo: "1",
-            titular: {
-              docente: "Leticia",
-              horarios: [{ dia: "", hora: "", aula: "" }],
-            },
-            auxiliar: {
-              nombre: "",
-              horarios: [{ dia: "", hora: "", aula: "" }],
-            },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    nombreNivel: "",
-    materias: [
-      {
-        nombreMateria: "",
-        grupos: [
-          {
-            grupo: "1",
-            titular: {
-              docente: "",
-              horarios: [{ dia: "", hora: "", aula: "" }],
-            },
-            auxiliar: {
-              nombre: "",
-              horarios: [{ dia: "", hora: "", aula: "" }],
-            },
-          },
-        ],
-      },
-    ],
-  },
-];
-
+function checkedGroup(group, schedule) {
+  const dias = {
+    LU: "lunes",
+    MA: "martes",
+    MI: "miercoles",
+    JU: "jueves",
+    VI: "viernes",
+    SA: "sabado",
+    DO: "domingo",
+  };
+  let horarios = [];
+  if (group.titular.horarios) {
+    group.titular.horarios.forEach((h) => {
+      horarios.push({
+        dia: dias[h.dia],
+        hora: h.hora.split("-")[0].split(":").join(""),
+      });
+    });
+  }
+  if (group.auxiliar.horarios) {
+    group.auxiliar.horarios.forEach((h) => {
+      horarios.push({
+        dia: dias[h.dia],
+        hora: h.hora.split("-")[0].split(":").join(""),
+      });
+    });
+  }
+  let checked = false;
+  horarios.forEach((h) => {
+    if (schedule[h.dia]) {
+      if (schedule[h.dia][h.hora]) {
+        const s = schedule[h.dia][h.hora].subjects.find(
+          (o) => o.subjectName === group.subjectName
+        );
+        if (s) {
+          checked = true;
+        }
+      }
+    }
+  });
+  return checked;
+}
 function Group({ group, teacher, infoGroup }) {
-  const { addSubject } = useContext(ScheduleContext);
+  const { addSubject, schedule } = useContext(ScheduleContext);
+  const valueChecked = checkedGroup(infoGroup, schedule);
   const stylesGroup = StyleSheet.create({
     container: {
       borderColor: "#fff",
-      marginRight: 20,
-      marginLeft: 20,
+      marginRight: 10,
+      marginLeft: 10,
       paddingVertical: 3,
     },
     group: {
-      fontSize: 11,
+      fontSize: 10,
       color: "#fff",
     },
   });
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(valueChecked);
   return (
     <View style={stylesGroup.container}>
       <CheckBox
@@ -86,14 +82,13 @@ function Group({ group, teacher, infoGroup }) {
   );
 }
 
-//TODO: REVISAR COMO ESTAN LLEGANDO LOS DATOS PARA RENDERIZAR DOCENTE Y AUXILIAR
 function Subject({ name, carrera, nivel, sis }) {
   const stylesSubject = StyleSheet.create({
     container: {
       borderBottomWidth: 1,
       borderColor: "#fff",
-      marginRight: 20,
-      marginLeft: 20,
+      marginRight: 10,
+      marginLeft: 10,
       marginVertical: 5,
       paddingHorizontal: 3,
     },
@@ -104,7 +99,7 @@ function Subject({ name, carrera, nivel, sis }) {
       gap: 10,
     },
     nameSubject: {
-      fontSize: 11,
+      fontSize: 10,
       fontWeight: "bold",
       color: "#fff",
     },
@@ -161,8 +156,8 @@ function Subject({ name, carrera, nivel, sis }) {
 function Level({ name, carrera }) {
   const stylesLevel = StyleSheet.create({
     container: {
-      marginLeft: 20,
-      marginRight: 20,
+      marginLeft: 10,
+      marginRight: 10,
       marginVertical: 5,
       borderWidth: 1,
       borderColor: "#fff",

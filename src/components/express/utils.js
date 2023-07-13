@@ -1,3 +1,37 @@
+function generateColors() {
+  let colors = [];
+  for (let g = 100; g <= 255; g++) {
+    for (let b = 100; b <= 255; b++) {
+      const color = rgbToHex(255, g, b);
+      colors.push(color);
+    }
+  }
+  return colors;
+}
+
+function rgbToHex(r, g, b) {
+  const red = componentToHex(r);
+  const green = componentToHex(g);
+  const blue = componentToHex(b);
+
+  return `#${red}${green}${blue}`;
+}
+
+function componentToHex(c) {
+  const hex = c.toString(16);
+  return hex.length === 1 ? "0" + hex : hex;
+}
+
+function formatHour(text) {
+  let hour = text.substring(0, 2);
+  let min = text.substring(2, text.length);
+  if (hour > 24) {
+    hour = text.substring(0, 1);
+    min = text.substring(1, text.length);
+  }
+  return `${hour}:${min}`;
+}
+
 function nextHour(hour) {
   let [h, m] = hour.split(":");
   h = parseInt(h);
@@ -71,6 +105,7 @@ function unfoldInPeriodsSubjectGroup(mat, matName) {
           auxi: dia.auxi,
           group: mat.grupo,
           classroom: dia.classroom,
+          color: mat.color,
         },
       ];
     });
@@ -132,6 +167,7 @@ function subjects(subD) {
       //$
       subD[dayName][periodHour].forEach((subject) => {
         keyAct += subject.subjectName.split(" ").join("").toLowerCase();
+        keyAct += subject.group;
         subjectsAct.push(subject);
       }); //$
       if (keyAct != keyAnt && keyAnt != "") {
@@ -174,5 +210,12 @@ function subjects(subD) {
   });
   return horarioFinal;
 }
-
-export { unfoldInPeriodsSubjectGroup, subjectsDay, subjects };
+const colors = generateColors();
+export {
+  unfoldInPeriodsSubjectGroup,
+  subjectsDay,
+  subjects,
+  nextHour,
+  formatHour,
+  colors,
+};
