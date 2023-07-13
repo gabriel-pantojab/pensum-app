@@ -4,6 +4,7 @@ import { ScheduleContext } from "./context/scheduleContext";
 import { formatHour, nextHour } from "./utils";
 
 function completePeriods(activities, minPeriod, maxPeriod) {
+  if (minPeriod === 0 || maxPeriod === 0) return activities;
   activities.unshift({
     period: minPeriod,
     periods: 0,

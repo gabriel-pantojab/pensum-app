@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   formatHour,
   colors,
@@ -7,6 +7,7 @@ import {
   subjectsDay,
   unfoldInPeriodsSubjectGroup,
 } from "../utils";
+import { getSchedule, removeSchedule } from "../../../storage/storage";
 
 const ScheduleContext = createContext();
 
@@ -14,10 +15,21 @@ function ScheduleProvider({ children }) {
   const [schedule, setSchedule] = useState({});
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
-  const [minPeriod, setMinPeriod] = useState("2100");
-  const [maxPeriod, setMaxPeriod] = useState("0645");
+  const [minPeriod, setMinPeriod] = useState(0);
+  const [maxPeriod, setMaxPeriod] = useState(0);
 
   const [colorsSubjects, setColorsSubjects] = useState([]);
+
+  useEffect(() => {
+    getSchedule().then((schd) => {
+      console.log(schd);
+      if (schd) {
+        setSchedule(schd.schedule);
+        setMinPeriod(schd.minPeriod);
+        setMaxPeriod(schd.maxPeriod);
+      }
+    });
+  }, []);
 
   const updateMinMaxPeriod = (schd) => {
     const periods = Object.keys(schd)

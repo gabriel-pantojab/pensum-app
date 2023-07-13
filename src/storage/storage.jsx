@@ -163,6 +163,34 @@ async function removeLevels() {
   }
 }
 
+async function getSchedule() {
+  try {
+    const schedule = await AsyncStorage.getItem("schedule");
+    if (schedule !== null) {
+      return JSON.parse(schedule);
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function saveSchedule(schedule) {
+  try {
+    await AsyncStorage.setItem("schedule", JSON.stringify(schedule));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function removeSchedule() {
+  try {
+    await AsyncStorage.removeItem("schedule");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // saveCourse({
 //   name: "Licenciatura en Ing. Informática",
 //   totalSubjects: 48,
@@ -184,4 +212,7 @@ export {
   saveLevels,
   getLevels,
   removeLevels,
+  saveSchedule,
+  getSchedule,
+  removeSchedule,
 };

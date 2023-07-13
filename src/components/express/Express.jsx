@@ -1,26 +1,104 @@
-import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  Button,
+} from "react-native";
 import Constants from "expo-constants";
 import { Pressable } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import { IP } from "../../../constants";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import TimeTableExpress from "./TimeTableExpress";
-import ScheduleProvider from "./context/scheduleContext";
+import ScheduleProvider, { ScheduleContext } from "./context/scheduleContext";
+import { saveSchedule } from "../../storage/storage";
+import Loading from "../Loading";
+import CheckIcon from "../icons/CheckIcon";
+
+function useGuardando() {
+  const [guardando, setGuardando] = useState(false);
+  const [guardado, setGuardado] = useState(false);
+
+  const init = () => {
+    setGuardando(true);
+    setGuardado(false);
+  };
+
+  const finish = () => {
+    setTimeout(() => {
+      setGuardando(false);
+      setGuardado(true);
+      setTimeout(() => {
+        setGuardado(false);
+      }, 500);
+    }, 500);
+  };
+  return { init, finish, guardado, guardando };
+}
+
+function Guardando({ guardando, guardado }) {
+  if (!guardado && !guardando) return;
+  if (guardando) return <Loading />;
+  if (guardado)
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 3,
+          backgroundColor: "#f9faf5",
+          padding: 3,
+          borderRadius: 5,
+        }}
+      >
+        <CheckIcon width={10} height={10} color="green" />
+        <Text
+          style={{
+            color: "green",
+            fontSize: 10,
+          }}
+        >
+          Guardado
+        </Text>
+      </View>
+    );
+}
 
 function CarrerasOption({ showCarreras, showCarrerasValue }) {
+  const { schedule, minPeriod, maxPeriod } = useContext(ScheduleContext);
+  const { guardando, guardado, init, finish } = useGuardando();
   return (
-    <Pressable style={styles.options} onPress={showCarreras}>
-      <Text style={styles.title}>Carreras</Text>
-      {showCarrerasValue ? (
-        <CaretUpIcon color="#fff" width={15} height={15} />
-      ) : (
-        <CaretDownIcon color="#fff" width={15} height={15} />
-      )}
-    </Pressable>
+    <View
+      style={{
+        flexDirection: "row",
+        gap: 10,
+      }}
+    >
+      <Pressable style={styles.options} onPress={showCarreras}>
+        <Text style={styles.title}>Carreras</Text>
+        {showCarrerasValue ? (
+          <CaretUpIcon color="#fff" width={15} height={15} />
+        ) : (
+          <CaretDownIcon color="#fff" width={15} height={15} />
+        )}
+      </Pressable>
+      <Button
+        onPress={() => {
+          init();
+          saveSchedule({ schedule, minPeriod, maxPeriod }).then(() => {
+            finish();
+          });
+        }}
+        title="Guardar"
+      />
+      <Guardando guardando={guardando} guardado={guardado} />
+    </View>
   );
 }
 
