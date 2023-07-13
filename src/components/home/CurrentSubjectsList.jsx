@@ -1,15 +1,17 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import SubjectInpProgress from "./SubjectInpProgress";
+import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     width: "90%",
     position: "relative",
     borderRadius: 10,
     borderWidth: 2,
     paddingTop: 20,
     padding: 10,
-    maxHeight: 350,
+    marginBottom: 20,
   },
   title: {
     position: "absolute",
@@ -30,18 +32,17 @@ export default function CurrentSubjectsList({ subjects }) {
     <View style={styles.container}>
       <Text style={styles.title}>Cursando</Text>
       {subjects.length > 0 ? (
-        <FlatList
-          contentContainerStyle={styles.list}
-          data={subjects}
-          renderItem={({ item }) => (
+        <View style={styles.list}>
+          {subjects.map((item) => (
             <SubjectInpProgress
               name={item.name}
               group={item.group}
               teacher={item.teacher}
               level={item.level}
+              key={item.id}
             />
-          )}
-        />
+          ))}
+        </View>
       ) : (
         <Text
           style={{
