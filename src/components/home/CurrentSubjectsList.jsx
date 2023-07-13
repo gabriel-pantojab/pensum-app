@@ -39,7 +39,7 @@ export default function CurrentSubjectsList({ subjects }) {
               group={item.group}
               teacher={item.teacher}
               level={item.level}
-              key={item.id}
+              key={item.name}
             />
           ))}
         </View>

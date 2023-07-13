@@ -96,6 +96,17 @@ function ScheduleProvider({ children }) {
     });
   };
 
+  const clear = () => {
+    setSchedule({
+      empty: true,
+    });
+    setSelectedSubjects([]);
+    setColorsSubjects([]);
+
+    setMinPeriod(0);
+    setMaxPeriod(0);
+  };
+
   const data = {
     schedule,
     setSchedule,
@@ -104,6 +115,7 @@ function ScheduleProvider({ children }) {
     minPeriod,
     maxPeriod,
     colors,
+    clear,
   };
   return (
     <ScheduleContext.Provider value={data}>{children}</ScheduleContext.Provider>

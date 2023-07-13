@@ -1,59 +1,25 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import useLoading from "../../hooks/useLoading";
+import { useEffect, useState } from "react";
+import { getSchedule } from "../../storage/storage";
+import { getDateFormat } from "../../utils/utils";
+import { formatHour } from "../express/utils";
 
-// TODO : arreglar las horas, no todos mantienen los periodos definidos. ALGUNAS CLASES EMPIEZAN 10:30 U 12:00 :(
-const hours = [
-  "06:45",
+function buildFreeDay() {
+  let freeDay = [];
+  let start = "06:45";
+  while (start != "21:45") {
+    freeDay.push({
+      hour: start,
+      subjects: [],
+      periods: 0,
+    });
+    start = nextHour(start);
+  }
+  return freeDay;
+}
 
-  "08:15",
-
-  "09:45",
-
-  "11:15",
-
-  "12:45",
-
-  "14:15",
-
-  "15:45",
-
-  "17:15",
-
-  "18:45",
-
-  "20:15",
-];
-
-//TODO: traer los datos de la base de datos
-const borrar = [
-  {
-    name: "ALGORITMOS AVANZADOS",
-    start: "06:45",
-    end: "08:15",
-    group: 1,
-    classroom: "691D",
-    backgroundColor: "#999",
-    teacher: "",
-  },
-  {
-    name: "REDES DE COMPUTADORAS",
-    start: "09:45",
-    end: "11:15",
-    group: 2,
-    classroom: "693D",
-    backgroundColor: "green",
-    teacher: "",
-  },
-  {
-    name: "ESTRUCTURA Y SEMANTICA DE LENGUAJES DE PROGRAMACION",
-    start: "09:45",
-    end: "11:15",
-    group: 1,
-    classroom: "625C",
-    teacher: "",
-    backgroundColor: "red",
-  },
-];
+const freeDay = buildFreeDay();
 
 function nextHour(hour) {
   let [h, m] = hour.split(":");
@@ -67,24 +33,16 @@ function nextHour(hour) {
   return `${hourS}:${minS}`;
 }
 
-function Cell({ hour }) {
-  const end = nextHour(hour);
-  const subjects = borrar.filter((b) => b.start === hour);
-  const styContSubjects = [
-    {
-      flex: 1,
-      position: "relative",
-    },
-    subjects.length > 1 && {
-      height: 100 + 30 * subjects.length - 1,
-    },
-  ];
-  const styCellHour = [
-    styles.cellHour,
-    subjects.length > 1 && {
-      height: (100 + 30 * subjects.length - 1) / 2,
-    },
-  ];
+function Cell({ hour, subjects, periods }) {
+  let hours = [hour];
+  let next = hour;
+  let i = periods - 1;
+  while (i > 0) {
+    next = nextHour(next);
+    hours.push(next);
+    i--;
+  }
+  const height = periods ? 50 * periods : 50;
   return (
     <View
       style={{
@@ -93,39 +51,48 @@ function Cell({ hour }) {
         paddingLeft: 10,
       }}
     >
-      <View>
-        <View style={styCellHour}>
-          <Text style={styles.hour}>{hour}</Text>
-        </View>
-        <View style={styCellHour}>
-          <Text style={styles.hour}>{end}</Text>
-        </View>
+      <View
+        style={{
+          ...styles.cellHour,
+          height,
+        }}
+      >
+        {hours.map((h) => (
+          <Text key={h} style={styles.hour}>
+            {parseInt(h.split(":")[0]) < 10
+              ? `0${parseInt(h.split(":")[0])}:${h.split(":")[1]}`
+              : h}
+          </Text>
+        ))}
       </View>
-      <View style={styContSubjects}>
-        <View style={styles.cell}></View>
-        <View style={styles.cell}></View>
-        {subjects.length > 0 && <Subject subjects={subjects} />}
+      <View style={{ flex: 1, position: "relative" }}>
+        <View
+          style={{
+            ...styles.cell,
+            height,
+          }}
+        />
+        {subjects.length > 0 && (
+          <Subject subjects={subjects} periods={periods} />
+        )}
       </View>
     </View>
   );
 }
 
 function Subject({ subjects }) {
-  const bg = subjects.map((s) => s.backgroundColor);
+  const bg = subjects.map((s) => s.color);
   const styC = [
     styles.subject,
     { backgroundColor: bg[0] },
     subjects.length > 1 && styles.choque,
-    subjects.length > 1 && {
-      height: 100 + 30 * subjects.length - 1,
-    },
   ];
   const styT = [styles.subjectText, subjects.length > 1 && styles.choqueText];
   return (
     <View style={styC}>
       {subjects.map((s) => (
-        <View key={s.name}>
-          <Text style={styT}>{s.name}</Text>
+        <View key={s.subjectName}>
+          <Text style={styT}>{s.subjectName}</Text>
           <Text style={styT}>
             {s.classroom} G:{s.group}
           </Text>
@@ -135,21 +102,94 @@ function Subject({ subjects }) {
   );
 }
 
+function completeDay({ scheduleDay }) {
+  let hoursComplete = [];
+  let hours = Object.keys(scheduleDay);
+  if (!hours.includes("645")) {
+    hours = ["645", ...hours];
+  }
+  if (!hours.includes("2145")) {
+    hours = [...hours, "2145"];
+  }
+  for (let i = 0; i < hours.length - 1; i++) {
+    const current = hours[i];
+    const next = hours[i + 1];
+    let periods = scheduleDay[current] ? scheduleDay[current].periods : 0;
+    let start = formatHour(current);
+    if (periods)
+      hoursComplete.push({
+        hour: start,
+        subjects: scheduleDay[current].subjects,
+        periods,
+      });
+    else {
+      hoursComplete.push({
+        hour: start,
+        subjects: [],
+        periods: 0,
+      });
+    }
+    while (periods - 1 > 0) {
+      start = nextHour(start);
+      periods--;
+    }
+    start = nextHour(start);
+    while (start != formatHour(next) && start != "0" + formatHour(next)) {
+      hoursComplete.push({
+        hour: start,
+        subjects: [],
+        periods: 0,
+      });
+      start = nextHour(start);
+    }
+  }
+  return hoursComplete;
+}
+
 export default function TimeTable() {
   const { loading, finishedRender } = useLoading();
+  const [schedule, setSchedule] = useState(null);
+  useEffect(() => {
+    const { dayName } = getDateFormat(new Date());
+    getSchedule().then((res) => {
+      if (res) {
+        day = dayName
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+        if (res.schedule[day]) {
+          const scheduleDay = res.schedule[day];
+          const hoursComplete = completeDay({ scheduleDay });
+          setSchedule(hoursComplete);
+        } else {
+          setSchedule(freeDay);
+        }
+      } else {
+        setSchedule(freeDay);
+      }
+    });
+  }, []);
   return (
     <View style={styles.container} onLayout={finishedRender}>
-      <FlatList
-        initialNumToRender={1}
-        contentContainerStyle={{
-          position: "relative",
-          paddingVertical: 10,
-        }}
-        data={hours}
-        renderItem={({ item }) => <Cell hour={item} />}
-        keyExtractor={(item) => item}
-        ListFooterComponent={loading}
-      />
+      {schedule && (
+        <FlatList
+          initialNumToRender={1}
+          contentContainerStyle={{
+            position: "relative",
+            paddingVertical: 10,
+          }}
+          data={schedule}
+          renderItem={({ item }) => (
+            <Cell
+              hour={item.hour}
+              subjects={item.subjects}
+              periods={item.periods}
+            />
+          )}
+          keyExtractor={(item) => item.hour}
+          ListFooterComponent={loading}
+        />
+      )}
       <View style={styles.line}></View>
     </View>
   );
@@ -164,20 +204,22 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cellHour: {
-    height: 50,
     justifyContent: "center",
+    alignItems: "center",
   },
   hour: {
     fontSize: 15,
     fontWeight: "bold",
+    height: 50,
+    textAlign: "center",
   },
   activities: {
     flex: 1,
     paddingVertical: 10,
   },
   cell: {
+    position: "relative",
     flex: 1,
-    height: 50,
     borderColor: "#ccc",
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -193,11 +235,10 @@ const styles = StyleSheet.create({
   },
   subject: {
     position: "absolute",
-    height: 100,
     top: 1,
-    left: 9,
+    left: 7,
     right: 0,
-    bottom: 3,
+    bottom: 1,
     justifyContent: "center",
   },
   choque: {
@@ -207,7 +248,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     textAlign: "center",
-    padding: 5,
+    marginBottom: 5,
   },
   choqueText: {
     color: "red",
