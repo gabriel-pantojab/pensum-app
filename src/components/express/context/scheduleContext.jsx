@@ -51,7 +51,7 @@ const initSchedule = buildInitSchedule();
 const ScheduleContext = createContext();
 
 function ScheduleProvider({ children }) {
-  const [schedule, setSchedule] = useState(initSchedule);
+  const [schedule, setSchedule] = useState(null);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
   const [minPeriod, setMinPeriod] = useState(0);
@@ -66,7 +66,7 @@ function ScheduleProvider({ children }) {
         setMinPeriod(schd.minPeriod);
         setMaxPeriod(schd.maxPeriod);
         setSelectedSubjects(schd.selectedSubjects);
-        setColorsSubjects(schd.colorsSubjects);
+        if (schd.colorsSubjects) setColorsSubjects(schd.colorsSubjects);
       } else {
         setSchedule(initSchedule);
         setMinPeriod("645");

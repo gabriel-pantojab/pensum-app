@@ -4,6 +4,36 @@ import { ScheduleContext } from "./context/scheduleContext";
 import { formatHour, nextHour } from "./utils";
 import Loading from "../Loading";
 
+let HEIGHT = 52;
+let HEIGHT2 = 26;
+
+function getHours({ minPeriod, maxPeriod }) {
+  if (!minPeriod || !maxPeriod) return [];
+  let start = formatHour(minPeriod);
+  let end = formatHour(maxPeriod);
+  end = end.split(":")[0] < 10 ? "0" + end : end;
+  let hrs = [start];
+  while (start != end) {
+    start = nextHour(start);
+    hrs.push(start);
+  }
+  return hrs;
+}
+
+function getActivitiesDay({ dayName, schedule, minPeriod, maxPeriod }) {
+  if (!schedule[dayName]) return [];
+  let activities = [];
+  Object.keys(schedule[dayName]).forEach((key) => {
+    activities.push({
+      period: key,
+      periods: schedule[dayName][key].periods,
+      subjects: schedule[dayName][key].subjects,
+    });
+  });
+  activities = completePeriods(activities, minPeriod, maxPeriod);
+  return activities;
+}
+
 function completePeriods(activities, minPeriod, maxPeriod) {
   if (minPeriod === 0 || maxPeriod === 0) return activities;
   activities.unshift({
@@ -45,17 +75,16 @@ function completePeriods(activities, minPeriod, maxPeriod) {
 
 function Subject({ subject, choque, fact }) {
   const height = fact * subject.periods;
+  const styleSubject = [
+    !choque
+      ? { ...styles.subject, backgroundColor: subject.color }
+      : styles.choque,
+    {
+      height,
+    },
+  ];
   return (
-    <View
-      style={[
-        !choque
-          ? { ...styles.subject, backgroundColor: subject.color }
-          : styles.choque,
-        {
-          height,
-        },
-      ]}
-    >
+    <View style={styleSubject}>
       <Text style={[styles.infoSubject, choque && { color: "red" }]}>
         {subject.auxi && "* "}
         {subject.subjectName}
@@ -66,52 +95,34 @@ function Subject({ subject, choque, fact }) {
     </View>
   );
 }
-//TODO : revisar la key
-function ActivityList({ activity }) {
+
+function Activity({ activity }) {
+  const styleActivity = [
+    styles.activity,
+    activity.subjects.length === 0 && { height: HEIGHT },
+  ];
   return (
-    <View
-      style={[
-        styles.activity,
-        activity.subjects.length === 0 && { height: 53 },
-      ]}
-    >
+    <View style={styleActivity}>
       {activity.subjects.map((subject) => (
         <Subject
           key={`${subject.sis ? subject.sis : Date.now() + Math.random()}`}
           subject={{ ...subject, periods: activity.periods }}
           choque={activity.subjects.length > 1}
-          fact={activity.subjects.length > 1 ? 26 : 52}
+          fact={activity.subjects.length > 1 ? HEIGHT2 : HEIGHT}
         />
       ))}
     </View>
   );
 }
 
-function Day({ dayName }) {
-  dayName = dayName.toLowerCase();
-  const { schedule, minPeriod, maxPeriod } = useContext(ScheduleContext);
-  if (!schedule[dayName]) return;
-  let activities = [];
-  if (schedule[dayName]) {
-    Object.keys(schedule[dayName]).forEach((key) => {
-      activities.push({
-        period: key,
-        periods: schedule[dayName][key].periods,
-        subjects: schedule[dayName][key].subjects,
-      });
-    });
-  }
-  activities = completePeriods(activities, minPeriod, maxPeriod);
+function Day({ dayName, activities }) {
+  if (activities.length === 0) return;
   return (
     <View style={styles.day}>
       <Text style={styles.dayName}>{dayName}</Text>
-      <View>
+      <View style={styles.activitiesContainer}>
         {activities.map((activity) => (
-          <ActivityList
-            activity={activity}
-            dayName={dayName}
-            key={activity.period}
-          />
+          <Activity activity={activity} key={activity.period} />
         ))}
       </View>
     </View>
@@ -141,86 +152,31 @@ function LoadingSchedule() {
   );
 }
 
-function EmptySchedule() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: "bold",
-          textAlign: "center",
-        }}
-      >
-        Horario vacio
-      </Text>
-    </View>
-  );
-}
-
 function Hour({ hr }) {
   hr =
     parseInt(hr.split(":")[0]) < 10
       ? "0" + parseInt(hr.split(":")[0]) + ":" + hr.split(":")[1]
       : hr;
-  let h = parseInt(hr.split(":")[0]) + hr.split(":")[1];
-  let height = 53;
-  // const { schedule } = useContext(ScheduleContext);
-  // Object.keys(schedule).forEach((day) => {
-  //   if (schedule[day][h]) {
-  //     console.log(schedule[day][h].subjects.length);
-  //   }
-  // });
+  let height = HEIGHT;
+  const styleHour = {
+    ...styles.hour,
+    height,
+  };
   return (
-    <View
-      key={hr}
-      style={{
-        borderColor: "#f9faf5",
-        borderBottomWidth: 1,
-        height,
-        padding: 5,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 10,
-          textAlign: "center",
-          fontWeight: "bold",
-        }}
-      >
-        {hr}
-      </Text>
+    <View key={hr} style={styleHour}>
+      <Text style={styles.hourValue}>{hr}</Text>
     </View>
   );
 }
 
-function Hours() {
-  const { minPeriod, maxPeriod } = useContext(ScheduleContext);
-  if (!minPeriod || !maxPeriod) return;
-  let start = formatHour(minPeriod);
-  let end = formatHour(maxPeriod);
-  end = end.split(":")[0] < 10 ? "0" + end : end;
-  let hrs = [start];
-  while (start != end) {
-    start = nextHour(start);
-    hrs.push(start);
-  }
+function Hours({ hours }) {
+  if (hours.length === 0) return;
 
   return (
     <View>
       <Text style={styles.dayName}></Text>
-      <View
-        style={{
-          borderTopWidth: 1,
-          borderColor: "#f9faf5",
-        }}
-      >
-        {hrs.map((hr) => (
+      <View style={styles.activitiesContainer}>
+        {hours.map((hr) => (
           <Hour key={hr} hr={hr} />
         ))}
       </View>
@@ -230,7 +186,8 @@ function Hours() {
 
 export default function TimeTableExpress() {
   const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-  const { schedule } = useContext(ScheduleContext);
+  const { schedule, minPeriod, maxPeriod } = useContext(ScheduleContext);
+  const hours = getHours({ minPeriod, maxPeriod });
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.containerScroll} horizontal>
@@ -242,14 +199,20 @@ export default function TimeTableExpress() {
           >
             {!schedule ? (
               <LoadingSchedule />
-            ) : schedule.empty ? (
-              <EmptySchedule />
             ) : (
               <>
-                <Hours />
-                {days.map((day) => (
-                  <Day key={day} dayName={day} />
-                ))}
+                <Hours hours={hours} />
+                {days.map((day) => {
+                  let activities = getActivitiesDay({
+                    dayName: day.toLowerCase(),
+                    schedule,
+                    minPeriod,
+                    maxPeriod,
+                  });
+                  return (
+                    <Day key={day} dayName={day} activities={activities} />
+                  );
+                })}
               </>
             )}
           </ScrollView>
@@ -277,17 +240,14 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   activity: {
-    // padding: 3,
     borderColor: "#f9faf5",
-    borderWidth: 1,
+    borderBottomWidth: 1,
   },
   subject: {
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#f9faf5",
     padding: 5,
-    // margin: 3,
-    // borderRadius: 5,
     maxWidth: 100,
   },
   choque: {
@@ -300,5 +260,20 @@ const styles = StyleSheet.create({
   infoSubject: {
     fontSize: 9,
     textAlign: "center",
+  },
+  activitiesContainer: {
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderColor: "#f9faf5",
+  },
+  hour: {
+    borderColor: "#f9faf5",
+    borderBottomWidth: 1,
+    padding: 5,
+  },
+  hourValue: {
+    fontSize: 10,
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
