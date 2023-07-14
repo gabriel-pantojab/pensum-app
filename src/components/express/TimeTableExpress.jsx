@@ -79,9 +79,7 @@ function Subject({ subject, choque, fact }) {
     !choque
       ? { ...styles.subject, backgroundColor: subject.color }
       : styles.choque,
-    {
-      height,
-    },
+    { height },
   ];
   return (
     <View style={styleSubject}>
@@ -97,9 +95,10 @@ function Subject({ subject, choque, fact }) {
 }
 
 function Activity({ activity }) {
+  const fact = activity.subjects.length > 1 ? HEIGHT2 : HEIGHT;
   const styleActivity = [
     styles.activity,
-    activity.subjects.length === 0 && { height: HEIGHT },
+    { height: HEIGHT * activity.periods },
   ];
   return (
     <View style={styleActivity}>
@@ -108,7 +107,7 @@ function Activity({ activity }) {
           key={`${subject.sis ? subject.sis : Date.now() + Math.random()}`}
           subject={{ ...subject, periods: activity.periods }}
           choque={activity.subjects.length > 1}
-          fact={activity.subjects.length > 1 ? HEIGHT2 : HEIGHT}
+          fact={fact}
         />
       ))}
     </View>
@@ -244,14 +243,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   subject: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#f9faf5",
     padding: 5,
-    maxWidth: 100,
+    width: 100,
   },
   choque: {
-    maxWidth: 100,
+    width: 100,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",

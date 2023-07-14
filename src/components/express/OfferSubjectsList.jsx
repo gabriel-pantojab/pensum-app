@@ -41,7 +41,7 @@ function checkedGroup(group, schedule) {
     if (schedule[h.dia]) {
       if (schedule[h.dia][h.hora]) {
         const s = schedule[h.dia][h.hora].subjects.find(
-          (o) => o.subjectName === group.subjectName
+          (o) => o.subjectName === group.subjectName && o.group === group.grupo
         );
         if (s) {
           checked = true;

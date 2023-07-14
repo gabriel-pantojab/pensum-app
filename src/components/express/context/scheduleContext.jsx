@@ -99,7 +99,7 @@ function ScheduleProvider({ children }) {
   };
 
   const addSubject = (subject, checked) => {
-    let newSelectedSubjects;
+    let newSelectedSubjects = [];
     setSelectedSubjects((prev) => {
       if (checked) {
         let i;
@@ -141,12 +141,12 @@ function ScheduleProvider({ children }) {
   };
 
   const clear = () => {
-    setSchedule(initSchedule);
     setSelectedSubjects([]);
     setColorsSubjects([]);
 
     setMinPeriod("645");
     setMaxPeriod("2100");
+    setSchedule(initSchedule);
   };
 
   const data = {
