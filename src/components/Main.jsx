@@ -11,6 +11,7 @@ import Express from "./express/Express";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
 import Register from "./register/Register";
+import { removeSchedule } from "../storage/storage";
 
 const styles = StyleSheet.create({
   container: {
@@ -47,7 +48,7 @@ export default function Main() {
   // removeCourse();
   // removeLevels();
   // removeCurrentSubjectsList();
-  // removeSchedule();
+  //removeSchedule();
   return (
     <>
       {state ? (

@@ -71,8 +71,14 @@ function Ejecutando({ ejecutando, ejecutado, mensaje }) {
 }
 
 function CarrerasOption({ showCarreras, showCarrerasValue }) {
-  const { schedule, minPeriod, maxPeriod, selectedSubjects, colors, clear } =
-    useContext(ScheduleContext);
+  const {
+    schedule,
+    minPeriod,
+    maxPeriod,
+    selectedSubjects,
+    colorsSubjects,
+    clear,
+  } = useContext(ScheduleContext);
   const { ejecutando, ejecutado, init, finish } = useEjecutando();
   const [sms, setSms] = useState("");
   return (
@@ -99,7 +105,7 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
             minPeriod,
             maxPeriod,
             selectedSubjects,
-            colors,
+            colorsSubjects,
           }).then(() => {
             finish();
           });

@@ -9,10 +9,49 @@ import {
 } from "../utils";
 import { getSchedule } from "../../../storage/storage";
 
+function buildInitSchedule() {
+  const days = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
+  const hours = [
+    "645",
+    "730",
+    "815",
+    "900",
+    "945",
+    "1030",
+    "1115",
+    "1200",
+    "1245",
+    "1330",
+    "1415",
+    "1500",
+    "1545",
+    "1630",
+    "1715",
+    "1800",
+    "1845",
+    "1930",
+    "2015",
+    "2100",
+  ];
+  let schedule = {};
+  days.forEach((day) => {
+    schedule[day] = {};
+    hours.forEach((hour) => {
+      schedule[day][hour] = {
+        subjects: [],
+        periods: 1,
+      };
+    });
+  });
+  return schedule;
+}
+
+const initSchedule = buildInitSchedule();
+
 const ScheduleContext = createContext();
 
 function ScheduleProvider({ children }) {
-  const [schedule, setSchedule] = useState(null);
+  const [schedule, setSchedule] = useState(initSchedule);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
   const [minPeriod, setMinPeriod] = useState(0);
@@ -29,9 +68,9 @@ function ScheduleProvider({ children }) {
         setSelectedSubjects(schd.selectedSubjects);
         setColorsSubjects(schd.colorsSubjects);
       } else {
-        setSchedule({
-          empty: true,
-        });
+        setSchedule(initSchedule);
+        setMinPeriod("645");
+        setMaxPeriod("2100");
       }
     });
   }, []);
@@ -85,9 +124,14 @@ function ScheduleProvider({ children }) {
           return [...prev.slice(0, i), ...prev.slice(i + 1)];
         });
       }
+      if (!newSelectedSubjects.length) {
+        clear();
+        return [];
+      }
       const unfolds = newSelectedSubjects.map((item) => {
         return unfoldInPeriodsSubjectGroup(item, item.subjectName);
       });
+
       const subDay = subjectsDay(unfolds);
       const sch = subjects(subDay);
       updateMinMaxPeriod(sch);
@@ -97,14 +141,12 @@ function ScheduleProvider({ children }) {
   };
 
   const clear = () => {
-    setSchedule({
-      empty: true,
-    });
+    setSchedule(initSchedule);
     setSelectedSubjects([]);
     setColorsSubjects([]);
 
-    setMinPeriod(0);
-    setMaxPeriod(0);
+    setMinPeriod("645");
+    setMaxPeriod("2100");
   };
 
   const data = {
@@ -114,7 +156,7 @@ function ScheduleProvider({ children }) {
     addSubject,
     minPeriod,
     maxPeriod,
-    colors,
+    colorsSubjects,
     clear,
   };
   return (

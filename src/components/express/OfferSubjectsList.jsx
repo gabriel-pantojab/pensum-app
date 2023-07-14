@@ -73,8 +73,8 @@ function Group({ group, teacher, infoGroup }) {
         width={13}
         value={checked}
         onChange={() => {
-          setChecked(!checked);
           addSubject(infoGroup, !checked);
+          setChecked(!checked);
         }}
       >
         <Text style={stylesGroup.group}>

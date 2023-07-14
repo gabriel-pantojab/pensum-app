@@ -90,6 +90,7 @@ function ActivityList({ activity }) {
 function Day({ dayName }) {
   dayName = dayName.toLowerCase();
   const { schedule, minPeriod, maxPeriod } = useContext(ScheduleContext);
+  if (!schedule[dayName]) return;
   let activities = [];
   if (schedule[dayName]) {
     Object.keys(schedule[dayName]).forEach((key) => {
@@ -99,7 +100,7 @@ function Day({ dayName }) {
         subjects: schedule[dayName][key].subjects,
       });
     });
-  } else return;
+  }
   activities = completePeriods(activities, minPeriod, maxPeriod);
   return (
     <View style={styles.day}>
@@ -111,6 +112,116 @@ function Day({ dayName }) {
             dayName={dayName}
             key={activity.period}
           />
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function LoadingSchedule() {
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 20,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Cargando...
+      </Text>
+      <Loading />
+    </View>
+  );
+}
+
+function EmptySchedule() {
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 20,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Horario vacio
+      </Text>
+    </View>
+  );
+}
+
+function Hour({ hr }) {
+  hr =
+    parseInt(hr.split(":")[0]) < 10
+      ? "0" + parseInt(hr.split(":")[0]) + ":" + hr.split(":")[1]
+      : hr;
+  let h = parseInt(hr.split(":")[0]) + hr.split(":")[1];
+  let height = 53;
+  // const { schedule } = useContext(ScheduleContext);
+  // Object.keys(schedule).forEach((day) => {
+  //   if (schedule[day][h]) {
+  //     console.log(schedule[day][h].subjects.length);
+  //   }
+  // });
+  return (
+    <View
+      key={hr}
+      style={{
+        borderColor: "#f9faf5",
+        borderBottomWidth: 1,
+        height,
+        padding: 5,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 10,
+          textAlign: "center",
+          fontWeight: "bold",
+        }}
+      >
+        {hr}
+      </Text>
+    </View>
+  );
+}
+
+function Hours() {
+  const { minPeriod, maxPeriod } = useContext(ScheduleContext);
+  if (!minPeriod || !maxPeriod) return;
+  let start = formatHour(minPeriod);
+  let end = formatHour(maxPeriod);
+  end = end.split(":")[0] < 10 ? "0" + end : end;
+  let hrs = [start];
+  while (start != end) {
+    start = nextHour(start);
+    hrs.push(start);
+  }
+
+  return (
+    <View>
+      <Text style={styles.dayName}></Text>
+      <View
+        style={{
+          borderTopWidth: 1,
+          borderColor: "#f9faf5",
+        }}
+      >
+        {hrs.map((hr) => (
+          <Hour key={hr} hr={hr} />
         ))}
       </View>
     </View>
@@ -130,55 +241,12 @@ export default function TimeTableExpress() {
             }}
           >
             {!schedule ? (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    textAlign: "center",
-                  }}
-                >
-                  Cargando...
-                </Text>
-                <Loading />
-              </View>
+              <LoadingSchedule />
             ) : schedule.empty ? (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    textAlign: "center",
-                  }}
-                >
-                  Horario vacio
-                </Text>
-              </View>
+              <EmptySchedule />
             ) : (
               <>
-                <View>
-                  <Text style={styles.dayName}></Text>
-                  <View
-                    style={{
-                      borderTopWidth: 1,
-                      borderColor: "#f9faf5",
-                    }}
-                  >
-                    <Text style={styles.dayName}>Periodo</Text>
-                  </View>
-                </View>
+                <Hours />
                 {days.map((day) => (
                   <Day key={day} dayName={day} />
                 ))}

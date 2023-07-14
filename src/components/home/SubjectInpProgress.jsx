@@ -27,8 +27,8 @@ export default function SubjectInpProgress({
     <View style={styles.container}>
       <Text style={styles.subject}>{name}</Text>
       <Text>Nivel: {level}</Text>
-      <Text>Grupo: {group}</Text>
-      <Text>Docente: {teacher}</Text>
+      {teacher !== "" && <Text>Grupo: {group}</Text>}
+      {group !== "" && <Text>Docente: {teacher}</Text>}
     </View>
   );
 }
