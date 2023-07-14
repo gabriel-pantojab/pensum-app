@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 
-export default function useFetchOffer({ url }) {
+export default function useFetchOffer({ url, getData }) {
   const [showOffer, setShowOffer] = useState(false);
   const [offer, setOffer] = useState({});
   const getOffer = async () => {
     try {
-      const res = await fetch(url);
-      const data = await res.json();
-      setOffer(data);
+      if (getData) {
+        const data = await getData();
+        setOffer(data);
+      } else {
+        const res = await fetch(url);
+        const data = await res.json();
+        setOffer(data);
+      }
     } catch (e) {
       console.log(e);
     }

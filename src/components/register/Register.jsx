@@ -26,14 +26,16 @@ export default function Register() {
     <View style={styles.container}>
       <Text style={styles.title}>Pensum Informática</Text>
       <Text style={styles.title}>Universidad Mayor de San Simón</Text>
-      <Text style={styles.title}>Registro</Text>
-      <TextInput
-        style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-        placeholder="Username"
-      />
-      <Button title="Registrar" onPress={registrar} />
+      <View style={styles.register}>
+        <Text style={styles.title}>Registro</Text>
+        <TextInput
+          style={styles.input}
+          value={username}
+          onChangeText={setUsername}
+          placeholder="Nombre"
+        />
+        <Button title="Registrar" onPress={registrar} />
+      </View>
     </View>
   );
 }
@@ -41,10 +43,13 @@ export default function Register() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
-    justifyContent: "center",
+    marginTop: Constants.statusBarHeight,
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#F4EEE8",
+  },
+  register: {
+    flex: 1,
+    justifyContent: "center",
   },
   input: {
     height: 40,
@@ -59,5 +64,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     padding: 10,
+    color: "#0C134F",
   },
 });

@@ -2,10 +2,13 @@ import { useContext, useState } from "react";
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import useFetchOffer from "../../hooks/useFetchOffer";
-import { IP } from "../../../constants";
 import CheckBox from "./CheckBox";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { ScheduleContext } from "./context/scheduleContext";
+import {
+  getGruposCarreraNivelMateria,
+  getMateriasNivelCarrera,
+} from "../../../firebaseconfig";
 function checkedGroup(group, schedule) {
   const dias = {
     LU: "lunes",
@@ -104,11 +107,15 @@ function Subject({ name, carrera, nivel, sis }) {
       color: "#fff",
     },
   });
-  const URL = `http://${IP}:3000/carreras/${carrera
-    .split(" ")
-    .join("")
-    .trim()}/${nivel}/${name.trim()}/grupos`;
-  const { offer, setShowOffer, showOffer } = useFetchOffer({ url: URL });
+  const getData = async () => {
+    const data = await getGruposCarreraNivelMateria({
+      carrera: carrera.split(" ").join("").trim(),
+      nivel,
+      materia: name,
+    });
+    return data;
+  };
+  const { offer, setShowOffer, showOffer } = useFetchOffer({ getData });
   return (
     <View style={stylesSubject.container}>
       <Pressable
@@ -179,11 +186,16 @@ function Level({ name, carrera }) {
       borderColor: "#fff",
     },
   });
-  const URL = `http://${IP}:3000/carreras/${carrera
-    .split(" ")
-    .join("")
-    .trim()}/niveles/${name}/materias`;
-  const { offer, showOffer, setShowOffer } = useFetchOffer({ url: URL });
+  const getData = async () => {
+    const data = await getMateriasNivelCarrera({
+      carrera: carrera.split(" ").join("").trim(),
+      nivel: name,
+    });
+    return data;
+  };
+  const { offer, showOffer, setShowOffer } = useFetchOffer({
+    getData,
+  });
   return (
     <View style={stylesLevel.container}>
       <Pressable

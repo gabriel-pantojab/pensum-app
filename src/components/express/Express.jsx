@@ -13,13 +13,13 @@ import { useContext, useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
-import { IP } from "../../../constants";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import TimeTableExpress from "./TimeTableExpress";
 import ScheduleProvider, { ScheduleContext } from "./context/scheduleContext";
 import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";
+import { getCarreras, getNiveles } from "../../../firebaseconfig";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -123,8 +123,13 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
 }
 
 function Carrera({ name }) {
-  const URL = `http://${IP}:3000/carreras/${name.split(" ").join("")}/niveles`;
-  const { offer, setShowOffer, showOffer } = useFetchOffer({ url: URL });
+  const getData = async () => {
+    const data = await getNiveles(name.split(" ").join("").trim());
+    return data;
+  };
+  const { offer, setShowOffer, showOffer } = useFetchOffer({
+    getData,
+  });
 
   return (
     <View
@@ -188,10 +193,9 @@ export default function Express() {
   const [carreras, setCarreras] = useState([]);
   const [showCarreras, setShowCarreras] = useState(false);
   const { loading, finishedRender, initLoading } = useLoading();
-  const getCarreras = async () => {
+  const getCarrerasDB = async () => {
     try {
-      const res = await fetch(`http://${IP}:3000/carreras`);
-      const data = await res.json();
+      const data = await getCarreras();
       setCarreras(data);
     } catch (e) {
       setCarreras([]);
@@ -199,7 +203,7 @@ export default function Express() {
     }
   };
   useEffect(() => {
-    getCarreras();
+    getCarrerasDB();
   }, []);
   return (
     <ScheduleProvider>
