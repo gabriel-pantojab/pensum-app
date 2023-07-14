@@ -79,7 +79,7 @@ function ProgressCareer() {
     <View style={stylesProgress.container}>
       <Text style={stylesProgress.title}>Progreso</Text>
       <View style={stylesProgress.progress} />
-      <Text style={stylesProgress.progressText}>{percent} %</Text>
+      <Text style={stylesProgress.progressText}>{Math.round(percent)} %</Text>
     </View>
   );
 }
