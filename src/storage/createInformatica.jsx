@@ -353,7 +353,9 @@ export const express = [
           },
           {
             grupo: "B1",
-            titular: {},
+            titular: {
+              empty: true,
+            },
             auxiliar: {
               nombre: "MOREIRA CALIZAYA RENE",
               horarios: [{ dia: "MI", hora: "8:15-9:45", aula: "620" }],
@@ -361,7 +363,9 @@ export const express = [
           },
           {
             grupo: "B2",
-            titular: {},
+            titular: {
+              empty: true,
+            },
             auxiliar: {
               nombre: "RUIZ UCUMARI IVAN",
               horarios: [{ dia: "LU", hora: "9:45-11:15", aula: "620" }],
@@ -369,7 +373,9 @@ export const express = [
           },
           {
             grupo: "B3",
-            titular: {},
+            titular: {
+              empty: true,
+            },
             auxiliar: {
               nombre: "ORDONEZ SALVATIERRA MIGUEL ANGEL",
               horarios: [{ dia: "MA", hora: "15:45-17:15", aula: "620" }],
@@ -377,7 +383,9 @@ export const express = [
           },
           {
             grupo: "B4",
-            titular: {},
+            titular: {
+              empty: true,
+            },
             auxiliar: {
               nombre: "RUIZ UCUMARI IVAN",
               horarios: [{ dia: "MA", hora: "9:45-11:15", aula: "621" }],
@@ -385,7 +393,9 @@ export const express = [
           },
           {
             grupo: "B5",
-            titular: {},
+            titular: {
+              empty: true,
+            },
             auxiliar: {
               nombre: "TERRAZAS VARGAS JUAN CARLOS",
               horarios: [{ dia: "MI", hora: "11:15-12:45", aula: "620" }],
@@ -393,7 +403,9 @@ export const express = [
           },
           {
             grupo: "B6",
-            titular: {},
+            titular: {
+              empty: true,
+            },
             auxiliar: {
               nombre: "TERRAZAS VARGAS JUAN CARLOS",
               horarios: [{ dia: "JU", hora: "11:15-12:45", aula: "620" }],
