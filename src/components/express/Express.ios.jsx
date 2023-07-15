@@ -208,6 +208,8 @@ function ExpressHeader({ action, showCarreras }) {
         contentContainerStyle={{
           alignItems: "center",
           justifyContent: "space-between",
+          flex: 1,
+          gap: 30,
         }}
       >
         <CarrerasOption
