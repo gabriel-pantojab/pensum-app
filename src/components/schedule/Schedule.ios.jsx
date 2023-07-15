@@ -2,11 +2,20 @@ import { View, Text, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import TimeTableExpress from "../express/TimeTableExpress";
 import ScheduleProvider from "../express/context/scheduleContext";
+import { useDeviceOrientation } from "@react-native-community/hooks";
 
 export default function Schedule() {
+  const orientation = useDeviceOrientation();
+  const styCont = [
+    styles.container,
+    orientation === "landscape" && {
+      marginTop: 0,
+      paddingLeft: Constants.statusBarHeight,
+    },
+  ];
   return (
     <ScheduleProvider>
-      <View style={styles.container}>
+      <View style={styCont}>
         <Text style={styles.title}>Horario</Text>
         <View style={styles.containerTimeTable}>
           <TimeTableExpress />

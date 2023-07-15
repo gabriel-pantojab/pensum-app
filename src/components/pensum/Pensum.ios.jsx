@@ -120,7 +120,13 @@ export default function Pensum() {
   const { loading, finishedRender } = useLoading();
 
   const orientation = useDeviceOrientation();
-  const styCont = [styles.container];
+  const styCont = [
+    styles.container,
+    orientation === "landscape" && {
+      marginTop: 0,
+      paddingLeft: Constants.statusBarHeight,
+    },
+  ];
   return (
     <View style={styCont} onLayout={finishedRender}>
       <Text style={styles.title}>Licenciatura en Ing. Informática</Text>

@@ -13,6 +13,7 @@ import { StudentContext } from "../context/studentContext";
 import Register from "./register/Register";
 import { removeSchedule } from "../storage/storage";
 import { StatusBar } from "expo-status-bar";
+import { useDeviceOrientation } from "@react-native-community/hooks";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,13 +23,12 @@ const styles = StyleSheet.create({
 
 export default function Main() {
   const location = useLocation().pathname;
-  const vertical = location === "/horario" || location === "/express";
+  const orientation = useDeviceOrientation();
+  const vertical = orientation === "landscape";
 
   const sty = [
     styles.container,
-    (location === "/horario" || location === "/express") && {
-      flexDirection: "row",
-    },
+    orientation === "landscape" && { flexDirection: "row" },
   ];
   const { student, course, levels } = useContext(StudentContext);
   const [state, setState] = useState(false);

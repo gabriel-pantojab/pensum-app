@@ -14,6 +14,10 @@ export default function ClassesToday() {
       flex: 1,
       marginTop: Constants.statusBarHeight,
     },
+    orientation === "landscape" && {
+      marginTop: 0,
+      paddingLeft: Constants.statusBarHeight,
+    },
   ];
   return (
     <View style={styCont}>

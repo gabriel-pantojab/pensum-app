@@ -12,6 +12,8 @@ import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
 import Register from "./register/Register";
 import { removeSchedule } from "../storage/storage";
+import { StatusBar } from "expo-status-bar";
+import { useDeviceOrientation } from "@react-native-community/hooks";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,25 +23,11 @@ const styles = StyleSheet.create({
 
 export default function Main() {
   const location = useLocation().pathname;
-  const vertical = location === "/horario" || location === "/express";
-  if (location === "/horario" || location === "/express") {
-    ScreenOrientation.lockAsync(
-      ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
-    ).catch((error) => {
-      console.log("no soporta landscape");
-    });
-  } else {
-    ScreenOrientation.lockAsync(
-      ScreenOrientation.OrientationLock.PORTRAIT
-    ).catch((error) => {
-      console.log("no soporta portrait");
-    });
-  }
+  const orientation = useDeviceOrientation();
+  const vertical = orientation === "landscape";
   const sty = [
     styles.container,
-    (location === "/horario" || location === "/express") && {
-      flexDirection: "row",
-    },
+    orientation === "landscape" && { flexDirection: "row" },
   ];
   const { student, course, levels } = useContext(StudentContext);
   const [state, setState] = useState(false);
@@ -59,6 +47,7 @@ export default function Main() {
     <>
       {state ? (
         <View style={sty}>
+          <StatusBar style="auto" backgroundColor="#ccc" />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pensum" element={<Pensum />} />

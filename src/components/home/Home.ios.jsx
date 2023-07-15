@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import Constants from "expo-constants";
 import { ScrollView } from "react-native";
+import { useDeviceOrientation } from "@react-native-community/hooks";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,8 +19,15 @@ const styles = StyleSheet.create({
 
 export default function Home() {
   const { student, currentSubjectsList } = useContext(StudentContext);
+  const orientation = useDeviceOrientation();
+  const styCont = [
+    styles.container,
+    orientation === "landscape" && {
+      marginTop: 0,
+    },
+  ];
   return (
-    <View style={styles.container}>
+    <View style={styCont}>
       <ScrollView
         contentContainerStyle={{
           alignItems: "center",

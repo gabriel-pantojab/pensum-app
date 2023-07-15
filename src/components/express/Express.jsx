@@ -5,6 +5,7 @@ import {
   FlatList,
   Dimensions,
   Button,
+  ScrollView,
 } from "react-native";
 import Constants from "expo-constants";
 import { Pressable } from "react-native";
@@ -187,10 +188,22 @@ function Carreras({ carreras, loading, finishedRender }) {
 function ExpressHeader({ action, showCarreras }) {
   return (
     <View style={styles.header}>
-      <CarrerasOption showCarreras={action} showCarrerasValue={showCarreras} />
-      <Text style={styles.title}>
-        Express - Gestión {new Date().getFullYear()}
-      </Text>
+      <ScrollView
+        horizontal
+        contentContainerStyle={{
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 30,
+        }}
+      >
+        <CarrerasOption
+          showCarreras={action}
+          showCarrerasValue={showCarreras}
+        />
+        <Text style={styles.title}>
+          Express - Gestión {new Date().getFullYear()}
+        </Text>
+      </ScrollView>
     </View>
   );
 }

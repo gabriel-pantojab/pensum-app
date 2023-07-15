@@ -63,18 +63,38 @@ export default function NavBar({ vertical }) {
   return (
     <ScrollView horizontal={!vertical} style={sty} contentContainerStyle={styC}>
       <BarTab to="/" vertical={vertical}>
-        {vertical ? <HomeIcon color="#999" width={25} height={25} /> : "Home"}
+        {vertical ? (
+          <HomeIcon
+            color={location === "/" ? "#fff" : "#999"}
+            width={25}
+            height={25}
+          />
+        ) : (
+          "Home"
+        )}
       </BarTab>
       <BarTab to="/pensum" vertical={vertical}>
         {vertical ? (
-          <BookIcon color={"#999"} width={25} height={25} />
+          <BookIcon
+            color={
+              location === "/pensum" || location.includes("/pensum")
+                ? "#fff"
+                : "#999"
+            }
+            width={25}
+            height={25}
+          />
         ) : (
           "Pensum"
         )}
       </BarTab>
       <BarTab to="/clases-hoy" vertical={vertical}>
         {vertical ? (
-          <CalendarIcon color={"#999"} width={25} height={25} />
+          <CalendarIcon
+            color={location === "/clases-hoy" ? "#fff" : "#999"}
+            width={25}
+            height={25}
+          />
         ) : (
           "Clases Hoy"
         )}

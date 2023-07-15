@@ -208,7 +208,6 @@ function ExpressHeader({ action, showCarreras }) {
         contentContainerStyle={{
           alignItems: "center",
           justifyContent: "space-between",
-          flex: 1,
           gap: 30,
         }}
       >
@@ -228,8 +227,14 @@ export default function Express() {
   const [carreras, setCarreras] = useState([]);
   const [showCarreras, setShowCarreras] = useState(false);
   const { loading, finishedRender, initLoading } = useLoading();
+  const orientation = useDeviceOrientation();
 
-  const styCont = [styles.container];
+  const styCont = [
+    styles.container,
+    orientation === "landscape" && {
+      marginTop: 0,
+    },
+  ];
   const getCarrerasDB = async () => {
     try {
       const data = await getCarreras();
