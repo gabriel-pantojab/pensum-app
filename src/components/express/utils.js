@@ -23,6 +23,7 @@ function componentToHex(c) {
 }
 
 function formatHour(text) {
+  if (text.split(":").length === 2) return text;
   let hour = text.substring(0, 2);
   let min = text.substring(2, text.length);
   if (hour > 24) {

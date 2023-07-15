@@ -5,7 +5,9 @@ import { formatHour, nextHour } from "./utils";
 import Loading from "../Loading";
 
 let HEIGHT = 52;
-let HEIGHT2 = 26;
+let HEIGHT2 = 28;
+
+let PERIOD_HEIGHT = 28;
 
 function getHours({ minPeriod, maxPeriod }) {
   if (!minPeriod || !maxPeriod) return [];
@@ -73,13 +75,11 @@ function completePeriods(activities, minPeriod, maxPeriod) {
   return activitiesComplete;
 }
 
-function Subject({ subject, choque, fact }) {
-  const height = fact * subject.periods;
+function Subject({ subject, choque }) {
   const styleSubject = [
     !choque
       ? { ...styles.subject, backgroundColor: subject.color }
       : styles.choque,
-    { height },
   ];
   return (
     <View style={styleSubject}>
@@ -94,11 +94,56 @@ function Subject({ subject, choque, fact }) {
   );
 }
 
+function getMaxSubjectsAndMaxPeriods({ subjectsLength, periodActivity }) {
+  const { schedule } = useContext(ScheduleContext);
+  let maxSubjects = subjectsLength;
+  let maxPeriods = 1;
+  let activityPeriod = formatHour(periodActivity);
+  activityPeriod =
+    parseInt(activityPeriod.split(":")[0]) < 10
+      ? "0" +
+        parseInt(activityPeriod.split(":")[0]) +
+        ":" +
+        activityPeriod.split(":")[1]
+      : activityPeriod;
+  Object.keys(schedule).forEach((day) => {
+    Object.keys(schedule[day]).forEach((period) => {
+      let start = formatHour(period);
+      start = parseInt(start.split(":")[0]) < 10 ? "0" + start : start;
+      let hrs = [start];
+      let periods = schedule[day][period].periods;
+      while (periods - 1) {
+        start = nextHour(start);
+        hrs.push(start);
+        periods--;
+      }
+      if (
+        hrs.includes(activityPeriod) &&
+        schedule[day][period].subjects.length > maxSubjects
+      ) {
+        maxSubjects = schedule[day][period].subjects.length;
+        maxPeriods = schedule[day][period].periods;
+      }
+    });
+  });
+  return { maxSubjects, maxPeriods };
+}
+
 function Activity({ activity }) {
-  const fact = activity.subjects.length > 1 ? HEIGHT2 : HEIGHT;
+  const { maxSubjects, maxPeriods } = getMaxSubjectsAndMaxPeriods({
+    subjectsLength: activity.subjects.length,
+    periodActivity: activity.period,
+  });
   const styleActivity = [
     styles.activity,
-    { height: HEIGHT * activity.periods },
+    {
+      height: activity.subjects.length
+        ? 2 * PERIOD_HEIGHT * maxSubjects
+        : maxSubjects
+        ? (2 * PERIOD_HEIGHT * maxSubjects) / maxPeriods
+        : PERIOD_HEIGHT,
+    },
+    activity.subjects.length > 1 && { backgroundColor: "#f9faf5" },
   ];
   return (
     <View style={styleActivity}>
@@ -107,7 +152,6 @@ function Activity({ activity }) {
           key={`${subject.sis ? subject.sis : Date.now() + Math.random()}`}
           subject={{ ...subject, periods: activity.periods }}
           choque={activity.subjects.length > 1}
-          fact={fact}
         />
       ))}
     </View>
@@ -156,7 +200,13 @@ function Hour({ hr }) {
     parseInt(hr.split(":")[0]) < 10
       ? "0" + parseInt(hr.split(":")[0]) + ":" + hr.split(":")[1]
       : hr;
-  let height = HEIGHT;
+  const { maxSubjects, maxPeriods } = getMaxSubjectsAndMaxPeriods({
+    subjectsLength: 0,
+    periodActivity: hr,
+  });
+  let height = maxSubjects
+    ? (2 * PERIOD_HEIGHT * maxSubjects) / maxPeriods
+    : PERIOD_HEIGHT;
   const styleHour = {
     ...styles.hour,
     height,
@@ -241,12 +291,13 @@ const styles = StyleSheet.create({
   activity: {
     borderColor: "#f9faf5",
     borderBottomWidth: 1,
+    justifyContent: "center",
   },
   subject: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 5,
+    padding: 3,
     width: 100,
   },
   choque: {
@@ -254,7 +305,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    padding: 5,
+    padding: 3,
   },
   infoSubject: {
     fontSize: 9,
@@ -268,7 +319,7 @@ const styles = StyleSheet.create({
   hour: {
     borderColor: "#f9faf5",
     borderBottomWidth: 1,
-    padding: 5,
+    padding: 3,
   },
   hourValue: {
     fontSize: 10,
