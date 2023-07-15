@@ -12,6 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
 import Register from "./register/Register";
 import { removeSchedule } from "../storage/storage";
+import { StatusBar } from "expo-status-bar";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,19 +23,7 @@ const styles = StyleSheet.create({
 export default function Main() {
   const location = useLocation().pathname;
   const vertical = location === "/horario" || location === "/express";
-  if (location === "/horario" || location === "/express") {
-    ScreenOrientation.lockAsync(
-      ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT
-    ).catch((error) => {
-      console.log("no soporta landscape");
-    });
-  } else {
-    ScreenOrientation.lockAsync(
-      ScreenOrientation.OrientationLock.PORTRAIT
-    ).catch((error) => {
-      console.log("no soporta portrait");
-    });
-  }
+
   const sty = [
     styles.container,
     (location === "/horario" || location === "/express") && {
@@ -59,6 +48,7 @@ export default function Main() {
     <>
       {state ? (
         <View style={sty}>
+          <StatusBar style="auto" />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pensum" element={<Pensum />} />

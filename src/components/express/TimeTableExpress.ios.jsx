@@ -3,9 +3,8 @@ import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { ScheduleContext } from "./context/scheduleContext";
 import { formatHour, nextHour } from "./utils";
 import Loading from "../Loading";
-
-let HEIGHT = 52;
-let HEIGHT2 = 28;
+import { useDeviceOrientation } from "@react-native-community/hooks";
+import Constants from "expo-constants";
 
 let PERIOD_HEIGHT = 28;
 
@@ -236,9 +235,17 @@ function Hours({ hours }) {
 export default function TimeTableExpress() {
   const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
   const { schedule, minPeriod, maxPeriod } = useContext(ScheduleContext);
+  const orientation = useDeviceOrientation();
+
+  const styCont = [
+    styles.container,
+    orientation === "landscape" && {
+      paddingLeft: Constants.statusBarHeight,
+    },
+  ];
   const hours = getHours({ minPeriod, maxPeriod });
   return (
-    <View style={styles.container}>
+    <View style={styCont}>
       <ScrollView contentContainerStyle={styles.containerScroll} horizontal>
         <View>
           <ScrollView
