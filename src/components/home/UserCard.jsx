@@ -5,7 +5,7 @@ import UserIcon from "../icons/UserIcon";
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     marginTop: Constants.statusBarHeight,
     width: "90%",
   },
@@ -20,6 +20,14 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ccc",
+    padding: 10,
+    borderRadius: 10,
+  },
+  textInfo: {
+    flexWrap: "wrap",
+    width: "100%",
   },
 });
 
@@ -34,20 +42,14 @@ export default function UserCard({ image, name, description = "" }) {
       <View style={styles.userInfo}>
         <Text
           style={{
+            ...styles.textInfo,
             fontWeight: "bold",
             fontSize: 18,
-            flexWrap: "wrap",
           }}
         >
           {name}
         </Text>
-        <Text
-          style={{
-            flexWrap: "wrap",
-          }}
-        >
-          {description}
-        </Text>
+        <Text style={styles.textInfo}>{description}</Text>
       </View>
     </View>
   );

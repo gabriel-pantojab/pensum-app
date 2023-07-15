@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import SubjectInpProgress from "./SubjectInpProgress";
 import Constants from "expo-constants";
+import { getSchedule } from "../../storage/storage";
+import { useEffect, useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,21 +29,55 @@ const styles = StyleSheet.create({
   },
 });
 
+function getTeacherAndGroup(schedule, subjectName) {
+  let teacher = "",
+    group = "";
+  schedule.map((subject) => {
+    if (subject.subjectName === subjectName) {
+      group = subject.grupo;
+      if (subject.titular && subject.titular.docente) {
+        teacher = subject.titular.docente;
+      } else {
+        if (subject.auxiliar && subject.auxiliar.nombre) {
+          teacher = subject.auxiliar.nombre;
+        }
+      }
+    }
+  });
+  return { teacher, group };
+}
+
 export default function CurrentSubjectsList({ subjects }) {
+  const [schedule, setSchedule] = useState(null);
+  useEffect(() => {
+    getSchedule().then((res) => {
+      if (res) {
+        if (res.selectedSubjects) {
+          setSchedule(res.selectedSubjects);
+        }
+      } else {
+        setSchedule({});
+      }
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cursando</Text>
       {subjects.length > 0 ? (
         <View style={styles.list}>
-          {subjects.map((item) => (
-            <SubjectInpProgress
-              name={item.name}
-              group={item.group}
-              teacher={item.teacher}
-              level={item.level}
-              key={item.name}
-            />
-          ))}
+          {schedule &&
+            subjects.map((item) => {
+              let { teacher, group } = getTeacherAndGroup(schedule, item.name);
+              return (
+                <SubjectInpProgress
+                  name={item.name}
+                  group={group}
+                  teacher={teacher}
+                  level={item.level}
+                  key={item.name}
+                />
+              );
+            })}
         </View>
       ) : (
         <Text

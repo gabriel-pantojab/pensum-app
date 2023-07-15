@@ -98,14 +98,14 @@ function Level({ name, progress = 0, inProgress = false, index }) {
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
-            Cursando:{subjectsInProgress}
+            Cursando: {subjectsInProgress}
           </Text>
           <Text
             style={{
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
-            No Cursadas:{pending}
+            No Cursadas: {pending}
           </Text>
         </View>
       </>
