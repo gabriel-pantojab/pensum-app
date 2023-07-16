@@ -7,37 +7,9 @@ import { Course, Levels } from "../../storage/createInformatica";
 import { Pressable } from "react-native";
 import { theme } from "../../theme";
 import Loading from "../Loading";
+import { redirect } from "react-router";
 
-function Devs() {
-  const styGab = {
-    fontWeight: "bold",
-    color: "#1971c2",
-  };
-  const styTher = {
-    fontWeight: "bold",
-    color: "#c080ff",
-  };
-  return (
-    <View
-      style={{
-        position: "absolute",
-        bottom: 0,
-        right: 0,
-        width: 60,
-        height: 50,
-        flexDirection: "row",
-        transform: [{ rotate: "-40deg" }],
-      }}
-    >
-      <Text style={styGab}>gab</Text>
-      <Text style={styTher}>ther</Text>
-      <Text style={styGab}>+</Text>
-      <Text style={styTher}>+</Text>
-    </View>
-  );
-}
-
-export default function Register() {
+export default function Register({ login }) {
   const [username, setUsername] = useState("");
   const [registrando, setRegistrando] = useState(false);
   const [emptyField, setEmptyField] = useState(false);
@@ -63,6 +35,7 @@ export default function Register() {
       setCurrentSubjectsList([]),
     ]).then(() => {
       setRegistrando(false);
+      login();
     });
   };
   const styInput = [
@@ -72,7 +45,7 @@ export default function Register() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={{ ...styles.title, color: "#073476" }}>
+        <Text style={{ ...styles.title, color: theme.colors.primary }}>
           Universidad Mayor de San Simón
         </Text>
         <Text style={{ ...styles.title, color: theme.colors.redIinformatica }}>
@@ -102,7 +75,6 @@ export default function Register() {
           <Text style={styles.button}>Registrar</Text>
         </Pressable>
         {registrando && <Loading />}
-        <Devs />
       </View>
     </View>
   );
@@ -110,6 +82,7 @@ export default function Register() {
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
     marginTop: Constants.statusBarHeight,
     alignItems: "center",
