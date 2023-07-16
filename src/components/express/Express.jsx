@@ -21,6 +21,7 @@ import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";
 import { getCarreras, getNiveles } from "../../../firebaseconfig";
+import { useDeviceOrientation } from "@react-native-community/hooks";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -186,16 +187,20 @@ function Carreras({ carreras, loading, finishedRender }) {
 }
 
 function ExpressHeader({ action, showCarreras }) {
+  const orientation = useDeviceOrientation();
+  const styScroll = [
+    {
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 30,
+    },
+    orientation === "landscape" && {
+      flex: 1,
+    },
+  ];
   return (
     <View style={styles.header}>
-      <ScrollView
-        horizontal
-        contentContainerStyle={{
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 30,
-        }}
-      >
+      <ScrollView horizontal contentContainerStyle={styScroll}>
         <CarrerasOption
           showCarreras={action}
           showCarrerasValue={showCarreras}

@@ -67,7 +67,13 @@ export default function CurrentSubjectsList({ subjects }) {
         <View style={styles.list}>
           {schedule &&
             subjects.map((item) => {
-              let { teacher, group } = getTeacherAndGroup(schedule, item.name);
+              let teacher = "",
+                group = "";
+              if (Object.keys(schedule).length > 0) {
+                const res = getTeacherAndGroup(schedule, item.name);
+                teacher = res.teacher;
+                group = res.group;
+              }
               return (
                 <SubjectInpProgress
                   name={item.name}

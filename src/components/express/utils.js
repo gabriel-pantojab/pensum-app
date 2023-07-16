@@ -169,6 +169,7 @@ function subjects(subD) {
       subD[dayName][periodHour].forEach((subject) => {
         keyAct += subject.subjectName.split(" ").join("").toLowerCase();
         keyAct += subject.group;
+        keyAct += subject.classroom;
         subjectsAct.push(subject);
       }); //$
       if (keyAct != keyAnt && keyAnt != "") {

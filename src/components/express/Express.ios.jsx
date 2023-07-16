@@ -201,16 +201,19 @@ function ExpressHeader({ action, showCarreras }) {
       paddingLeft: Constants.statusBarHeight,
     },
   ];
+  const styScroll = [
+    {
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 30,
+    },
+    orientation === "landscape" && {
+      flex: 1,
+    },
+  ];
   return (
     <View style={styHeader}>
-      <ScrollView
-        horizontal
-        contentContainerStyle={{
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 30,
-        }}
-      >
+      <ScrollView horizontal contentContainerStyle={styScroll}>
         <CarrerasOption
           showCarreras={action}
           showCarrerasValue={showCarreras}

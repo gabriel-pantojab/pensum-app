@@ -106,7 +106,7 @@ function ScheduleProvider({ children }) {
         do {
           i = Math.floor(Math.random() * colors.length);
         } while (colorsSubjects.includes(i));
-        setColorsSubjects((prev) => [...prev, colors[i]]);
+        setColorsSubjects((prev) => [...prev, i]);
         newSelectedSubjects = [
           ...prev,
           {
