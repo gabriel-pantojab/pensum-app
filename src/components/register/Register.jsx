@@ -40,10 +40,14 @@ function Devs() {
 export default function Register() {
   const [username, setUsername] = useState("");
   const [registrando, setRegistrando] = useState(false);
+  const [emptyField, setEmptyField] = useState(false);
   const { setStudent, setCourse, setLevels, setCurrentSubjectsList } =
     useContext(StudentContext);
   const registrar = async () => {
-    if (username === "") return;
+    if (username === "") {
+      setEmptyField(true);
+      return;
+    }
     setRegistrando(true);
     const newStudent = {
       name: username,
@@ -61,6 +65,10 @@ export default function Register() {
       setRegistrando(false);
     });
   };
+  const styInput = [
+    styles.input,
+    emptyField && { borderColor: theme.colors.redIinformatica },
+  ];
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -74,11 +82,22 @@ export default function Register() {
       <View style={styles.register}>
         <Text style={{ ...styles.title, fontSize: 18 }}>Registro</Text>
         <TextInput
-          style={styles.input}
+          style={styInput}
           value={username}
-          onChangeText={setUsername}
+          onChangeText={(e) => {
+            const regex = /^[a-zA-Z ]*$/;
+            if (regex.test(e)) {
+              setUsername(e);
+              setEmptyField(false);
+            }
+          }}
           placeholder="Nombre"
         />
+        {emptyField && (
+          <Text style={{ fontSize: 12, color: theme.colors.redIinformatica }}>
+            El nombre no puede estar vacío
+          </Text>
+        )}
         <Pressable onPress={registrar}>
           <Text style={styles.button}>Registrar</Text>
         </Pressable>

@@ -5,7 +5,7 @@ import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#6e77ee",
+    backgroundColor: theme.colors.redIinformatica,
     width: "90%",
     borderRadius: 10,
     position: "relative",
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     top: -18,
     left: 10,
     fontSize: 20,
-    backgroundColor: "#6e77ee",
+    backgroundColor: theme.colors.redIinformatica,
     paddingHorizontal: 10,
     borderRadius: 5,
   },
@@ -47,7 +47,7 @@ function ProgressCareer() {
       height: 50,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "#6e77ee",
+      backgroundColor: theme.colors.redIinformatica,
       marginTop: 10,
     },
     progress: {
@@ -56,7 +56,7 @@ function ProgressCareer() {
       top: 10,
       bottom: 5,
       left: 5,
-      backgroundColor: "#b2f2bb",
+      backgroundColor: theme.colors.greenProgress,
       borderRadius: 10,
     },
     progressText: {
@@ -70,7 +70,7 @@ function ProgressCareer() {
       fontSize: 16,
       padding: 3,
       paddingHorizontal: 10,
-      backgroundColor: "#6e77ee",
+      backgroundColor: theme.colors.redIinformatica,
       borderTopRightRadius: 5,
       borderTopLeftRadius: 5,
       color: theme.colors.white,
