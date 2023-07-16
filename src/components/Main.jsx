@@ -11,7 +11,13 @@ import Express from "./express/Express";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
 import Register from "./register/Register";
-import { removeSchedule } from "../storage/storage";
+import {
+  removeSchedule,
+  removeStudent,
+  removeCourse,
+  removeLevels,
+  removeCurrentSubjectsList,
+} from "../storage/storage";
 import { StatusBar } from "expo-status-bar";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 
@@ -38,11 +44,11 @@ export default function Main() {
       if (course.name != "" && levels.length) setState(true);
     }
   }, [student, course, levels]);
-  // removeStudent();
-  // removeCourse();
-  // removeLevels();
-  // removeCurrentSubjectsList();
-  //removeSchedule();
+  removeStudent();
+  removeCourse();
+  removeLevels();
+  removeCurrentSubjectsList();
+  removeSchedule();
   return (
     <>
       {state ? (
