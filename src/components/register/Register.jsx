@@ -67,8 +67,8 @@ export default function Register() {
         <Text style={{ ...styles.title, color: "#073476" }}>
           Universidad Mayor de San Simón
         </Text>
-        <Text style={{ ...styles.title, color: "#dc3545" }}>
-          Pensum Informática
+        <Text style={{ ...styles.title, color: theme.colors.redIinformatica }}>
+          Pensum Ing. Informática
         </Text>
       </View>
       <View style={styles.register}>

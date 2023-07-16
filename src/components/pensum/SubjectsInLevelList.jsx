@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
 import Constants from "expo-constants";
+import { theme } from "../../theme";
 
 function StatesSubject() {
   return (
@@ -115,10 +116,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     gap: 10,
+    backgroundColor: theme.colors.white,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: theme.colors.primary,
   },
   level: {
     fontWeight: "bold",

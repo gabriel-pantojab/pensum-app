@@ -10,7 +10,7 @@ import {
 import MenuIcon from "../icons/MenuIcon";
 import CloseIcon from "../icons/CloseIcon";
 import { StudentContext } from "../../context/studentContext";
-import { getCourse } from "../../storage/storage";
+import { theme } from "../../theme";
 
 function RadioButton({ initValue, values, action }) {
   const [currentValue, setCurrentValue] = useState(initValue);
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 100,
     justifyContent: "center",
+    backgroundColor: theme.colors.white,
   },
   menu: {
     height: 20,
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     padding: 5,
-    backgroundColor: "#f9faf5",
+    backgroundColor: theme.colors.white,
     gap: 10,
   },
   title: {

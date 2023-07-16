@@ -4,6 +4,7 @@ import { getDateFormat } from "../../utils/utils";
 import TimeTable from "./TimeTable";
 import Constants from "expo-constants";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { theme } from "../../theme";
 
 export default function ClassesToday() {
   const orientation = useDeviceOrientation();
@@ -13,6 +14,7 @@ export default function ClassesToday() {
     {
       flex: 1,
       marginTop: Constants.statusBarHeight,
+      backgroundColor: theme.colors.white,
     },
     orientation === "landscape" && {
       marginTop: 0,

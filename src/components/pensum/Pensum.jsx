@@ -5,6 +5,7 @@ import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
 import Constants from "expo-constants";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -12,10 +13,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     gap: 20,
+    backgroundColor: theme.colors.white,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: theme.colors.primary,
   },
   level: {
     position: "relative",

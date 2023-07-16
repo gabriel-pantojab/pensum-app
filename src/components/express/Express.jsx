@@ -22,6 +22,7 @@ import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";
 import { getCarreras, getNiveles } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { theme } from "../../theme";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -93,9 +94,9 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
       <Pressable style={styles.options} onPress={showCarreras}>
         <Text style={styles.title}>Carreras</Text>
         {showCarrerasValue ? (
-          <CaretUpIcon color="#fff" width={15} height={15} />
+          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
-          <CaretDownIcon color="#fff" width={15} height={15} />
+          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
         )}
       </Pressable>
       <Button
@@ -143,7 +144,7 @@ function Carrera({ name }) {
     <View
       style={{
         borderBottomWidth: 1,
-        borderColor: "#fff",
+        borderColor: theme.colors.white,
       }}
     >
       <Pressable
@@ -156,9 +157,9 @@ function Carrera({ name }) {
       >
         <Text style={styles.carrera}>{name}</Text>
         {showOffer && offer ? (
-          <CaretUpIcon color="#fff" width={15} height={15} />
+          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
-          <CaretDownIcon color="#fff" width={15} height={15} />
+          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
         )}
       </Pressable>
       {showOffer && offer && (
@@ -273,14 +274,14 @@ const styles = StyleSheet.create({
     gap: 5,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: theme.colors.white,
     paddingHorizontal: 5,
     borderRadius: 5,
     backgroundColor: "#999",
     maxWidth: 85,
   },
   title: {
-    color: "#fff",
+    color: theme.colors.white,
     fontWeight: "bold",
   },
   menu: {
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderBottomWidth: 2,
     borderBottomRightRadius: 5,
-    borderColor: "#fff",
+    borderColor: theme.colors.white,
     maxHeight: Dimensions.get("window").height - Constants.statusBarHeight,
     padding: 5,
   },
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   carrera: {
-    color: "#fff",
+    color: theme.colors.white,
     padding: 5,
     fontWeight: "bold",
     fontSize: 10,

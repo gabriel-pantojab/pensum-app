@@ -7,11 +7,12 @@ import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import Constants from "expo-constants";
 import { ScrollView } from "react-native";
+import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
-    backgroundColor: "#fefefe",
+    backgroundColor: theme.colors.white,
     flex: 1,
   },
 });

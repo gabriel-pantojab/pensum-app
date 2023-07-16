@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { theme } from "../../theme";
 
 export default function HeaderSchedule({ month, dayName, day, year }) {
   return (
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
+    backgroundColor: theme.colors.primary,
   },
   dayContainer: {
     flexDirection: "row",
@@ -26,5 +28,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: "bold",
+    color: theme.colors.white,
   },
 });

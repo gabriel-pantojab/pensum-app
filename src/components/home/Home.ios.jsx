@@ -8,11 +8,12 @@ import { StudentContext } from "../../context/studentContext";
 import Constants from "expo-constants";
 import { ScrollView } from "react-native";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
-    backgroundColor: "#fefefe",
+    backgroundColor: theme.colors.white,
     flex: 1,
   },
 });

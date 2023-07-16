@@ -8,6 +8,7 @@ import CoffeIcon from "./icons/CoffeIcon";
 import CalendarIcon from "./icons/CalendarIcon";
 import Calendar2Icon from "./icons/Calendar2";
 import * as ScreenOrientation from "expo-screen-orientation";
+import { theme } from "../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   active: {
-    color: "#fff",
+    color: theme.colors.white,
   },
 });
 
@@ -65,7 +66,7 @@ export default function NavBar({ vertical }) {
       <BarTab to="/" vertical={vertical}>
         {vertical ? (
           <HomeIcon
-            color={location === "/" ? "#fff" : "#999"}
+            color={location === "/" ? theme.colors.white : "#999"}
             width={25}
             height={25}
           />
@@ -78,7 +79,7 @@ export default function NavBar({ vertical }) {
           <BookIcon
             color={
               location === "/pensum" || location.includes("/pensum")
-                ? "#fff"
+                ? theme.colors.white
                 : "#999"
             }
             width={25}
@@ -91,7 +92,7 @@ export default function NavBar({ vertical }) {
       <BarTab to="/clases-hoy" vertical={vertical}>
         {vertical ? (
           <CalendarIcon
-            color={location === "/clases-hoy" ? "#fff" : "#999"}
+            color={location === "/clases-hoy" ? theme.colors.white : "#999"}
             width={25}
             height={25}
           />
@@ -102,7 +103,7 @@ export default function NavBar({ vertical }) {
       <BarTab to="/horario" vertical={vertical}>
         {vertical ? (
           <Calendar2Icon
-            color={location === "/horario" ? "#fff" : "#999"}
+            color={location === "/horario" ? theme.colors.white : "#999"}
             width={25}
             height={25}
           />
@@ -113,7 +114,7 @@ export default function NavBar({ vertical }) {
       <BarTab to="/express" vertical={vertical}>
         {vertical ? (
           <CoffeIcon
-            color={location === "/express" ? "#fff" : "#999"}
+            color={location === "/express" ? theme.colors.white : "#999"}
             width={25}
             height={25}
           />

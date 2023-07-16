@@ -9,6 +9,7 @@ import {
   getGruposCarreraNivelMateria,
   getMateriasNivelCarrera,
 } from "../../../firebaseconfig";
+import { theme } from "../../theme";
 function checkedGroup(group, schedule) {
   const dias = {
     LU: "lunes",
@@ -56,14 +57,14 @@ function Group({ group, teacher, infoGroup }) {
   const valueChecked = checkedGroup(infoGroup, schedule);
   const stylesGroup = StyleSheet.create({
     container: {
-      borderColor: "#fff",
+      borderColor: theme.colors.white,
       marginRight: 10,
       marginLeft: 10,
       paddingVertical: 3,
     },
     group: {
       fontSize: 10,
-      color: "#fff",
+      color: theme.colors.white,
     },
   });
   const [checked, setChecked] = useState(valueChecked);
@@ -124,9 +125,9 @@ function Subject({ name, carrera, nivel, sis }) {
       >
         <Text style={stylesSubject.nameSubject}>{name}</Text>
         {showOffer && offer ? (
-          <CaretUpIcon color="#fff" width={15} height={15} />
+          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
-          <CaretDownIcon color="#fff" width={15} height={15} />
+          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
         )}
       </Pressable>
       <View>
@@ -206,9 +207,9 @@ function Level({ name, carrera }) {
       >
         <Text style={stylesLevel.nameLevel}>NIVEL: {name}</Text>
         {showOffer && offer ? (
-          <CaretUpIcon color="#fff" width={15} height={15} />
+          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
-          <CaretDownIcon color="#fff" width={15} height={15} />
+          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
         )}
       </Pressable>
       {showOffer && offer && (

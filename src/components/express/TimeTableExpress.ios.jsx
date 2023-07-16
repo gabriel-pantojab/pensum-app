@@ -5,6 +5,7 @@ import { formatHour, nextHour } from "./utils";
 import Loading from "../Loading";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import Constants from "expo-constants";
+import { theme } from "../../theme";
 
 let PERIOD_HEIGHT = 28;
 
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
     width: 100,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: theme.colors.white,
     padding: 3,
   },
   infoSubject: {

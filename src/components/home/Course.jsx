@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { StudentContext } from "../../context/studentContext";
+import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   title: {
-    color: "white",
+    color: theme.colors.white,
     position: "absolute",
     top: -18,
     left: 10,
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   text: {
-    color: "white",
+    color: theme.colors.white,
   },
 });
 
@@ -40,7 +41,7 @@ function ProgressCareer() {
     container: {
       width: "100%",
       borderWidth: 2,
-      borderColor: "#fff",
+      borderColor: theme.colors.white,
       borderRadius: 10,
       position: "relative",
       height: 50,
@@ -72,7 +73,7 @@ function ProgressCareer() {
       backgroundColor: "#6e77ee",
       borderTopRightRadius: 5,
       borderTopLeftRadius: 5,
-      color: "white",
+      color: theme.colors.white,
     },
   });
   return (

@@ -3,6 +3,7 @@ import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { ScheduleContext } from "./context/scheduleContext";
 import { formatHour, nextHour } from "./utils";
 import Loading from "../Loading";
+import { theme } from "../../theme";
 
 let HEIGHT = 52;
 let HEIGHT2 = 28;
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
     width: 100,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: theme.colors.white,
     padding: 3,
   },
   infoSubject: {

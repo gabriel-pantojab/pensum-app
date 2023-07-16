@@ -3,6 +3,7 @@ import Constants from "expo-constants";
 import TimeTableExpress from "../express/TimeTableExpress";
 import ScheduleProvider from "../express/context/scheduleContext";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { theme } from "../../theme";
 
 export default function Schedule() {
   const orientation = useDeviceOrientation();
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#24263e",
+    color: theme.colors.primary,
   },
   containerTimeTable: {
     flex: 1,

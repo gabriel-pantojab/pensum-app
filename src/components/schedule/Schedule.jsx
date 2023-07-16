@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import TimeTableExpress from "../express/TimeTableExpress";
 import ScheduleProvider from "../express/context/scheduleContext";
+import { theme } from "../../theme";
 
 export default function Schedule() {
   return (
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#24263e",
+    color: theme.colors.primary,
   },
   containerTimeTable: {
     flex: 1,

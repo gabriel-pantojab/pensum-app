@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import SubjectInpProgress from "./SubjectInpProgress";
-import Constants from "expo-constants";
 import { getSchedule } from "../../storage/storage";
 import { useEffect, useState } from "react";
+import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingHorizontal: 10,
     borderRadius: 5,
-    backgroundColor: "white",
+    backgroundColor: theme.colors.white,
   },
   list: {
     gap: 20,
