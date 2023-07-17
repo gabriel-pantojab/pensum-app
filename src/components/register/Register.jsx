@@ -8,6 +8,7 @@ import { Pressable } from "react-native";
 import { theme } from "../../theme";
 import Loading from "../Loading";
 import { redirect } from "react-router";
+import { StatusBar } from "expo-status-bar";
 
 export default function Register({ login }) {
   const [username, setUsername] = useState("");
@@ -44,6 +45,7 @@ export default function Register({ login }) {
   ];
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <View style={styles.header}>
         <Text style={{ ...styles.title, color: theme.colors.primary }}>
           Universidad Mayor de San Simón

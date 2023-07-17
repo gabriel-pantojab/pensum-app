@@ -46,6 +46,15 @@ function Devs() {
   );
 }
 
+function Logo() {
+  return (
+    <Image
+      style={{ width: 80, height: 80 }}
+      source={require("../../../assets/logo2.png")}
+    />
+  );
+}
+
 export default function Intro() {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -65,6 +74,7 @@ export default function Intro() {
               paddingBottom: 30,
             }}
           >
+            <Logo />
             <Text style={{ ...styles.title, color: theme.colors.primary }}>
               Universidad Mayor de San Simón
             </Text>

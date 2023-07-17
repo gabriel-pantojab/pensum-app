@@ -3,7 +3,11 @@ import Main from "./src/components/Main";
 import StudentProvider from "./src/context/studentContext";
 import { useEffect, useState } from "react";
 import Intro from "./src/components/intro/Intro";
-import { getStudent } from "./src/storage/storage";
+import {
+  getStudent,
+  removeSchedule,
+  removeStudent,
+} from "./src/storage/storage";
 import Register from "./src/components/register/Register";
 
 export default function App() {
@@ -11,8 +15,8 @@ export default function App() {
   const [existStudent, setExistStudent] = useState(false);
   useEffect(() => {
     setTimeout(() => {
-      setIntro(true);
-    }, 3500);
+      setIntro(false);
+    }, 3000);
   }, []);
   useEffect(() => {
     getStudent().then((std) => {
@@ -23,6 +27,8 @@ export default function App() {
       }
     });
   }, []);
+  removeSchedule();
+  removeStudent();
   return (
     <NativeRouter>
       <StudentProvider>
