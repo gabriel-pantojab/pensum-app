@@ -11,7 +11,7 @@ export default function App() {
   const [existStudent, setExistStudent] = useState(false);
   useEffect(() => {
     setTimeout(() => {
-      setIntro(false);
+      setIntro(true);
     }, 3500);
   }, []);
   useEffect(() => {

@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { theme } from "../../theme";
 import { useEffect, useState } from "react";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -58,7 +57,14 @@ export default function Intro() {
     <View style={styles.container}>
       {show && (
         <>
-          <View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "flex-end",
+              paddingBottom: 30,
+            }}
+          >
             <Text style={{ ...styles.title, color: theme.colors.primary }}>
               Universidad Mayor de San Simón
             </Text>
@@ -67,6 +73,18 @@ export default function Intro() {
             >
               Pensum Ing. Informática
             </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              style={{ width: 100, height: 100 }}
+              source={require("../../../assets/LogoUMSS.png")}
+            />
           </View>
           <Devs />
         </>
