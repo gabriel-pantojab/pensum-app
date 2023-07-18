@@ -3,13 +3,10 @@ import { Link } from "react-router-native";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
-import Constants from "expo-constants";
 import { theme } from "../../theme";
-import Header from "../Header";
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
     flex: 1,
   },
   content: {
@@ -127,7 +124,6 @@ export default function Pensum() {
   const styCont = [styles.container];
   return (
     <View style={styCont} onLayout={finishedRender}>
-      <Header />
       <View style={styles.content}>
         <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
         <FlatList

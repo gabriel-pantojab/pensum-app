@@ -5,14 +5,11 @@ import Course from "./Course";
 import CurrentSubjectsList from "./CurrentSubjectsList";
 import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
-import Constants from "expo-constants";
 import { ScrollView } from "react-native";
 import { theme } from "../../theme";
-import Header from "../Header";
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.white,
     flex: 1,
   },
@@ -23,7 +20,6 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Header />
       <ScrollView
         contentContainerStyle={{
           alignItems: "center",

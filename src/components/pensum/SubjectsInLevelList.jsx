@@ -6,9 +6,7 @@ import BackIcon from "../icons/BackIcon";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
-import Constants from "expo-constants";
 import { theme } from "../../theme";
-import Header from "../Header";
 
 function StatesSubject() {
   return (
@@ -71,7 +69,6 @@ export default function SubjectsInLevelList() {
 
   return (
     <View style={styles.container} onLayout={finishedRender}>
-      <Header />
       <View style={styles.content}>
         <View
           style={{
@@ -124,7 +121,6 @@ export default function SubjectsInLevelList() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
     flex: 1,
     backgroundColor: theme.colors.white,
   },
