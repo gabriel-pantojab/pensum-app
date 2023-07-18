@@ -3,10 +3,10 @@
     "name": "pensum-app",
     "slug": "pensum-app",
     "version": "1.0.0",
-    "icon": "./assets/logo2.png",
+    "icon": "./assets/appicon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/logo2.png",
+      "image": "./assets/logo4.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo2.png",
+        "foregroundImage": "./assets/logo4.png",
         "backgroundColor": "#ffffff"
       }
     },

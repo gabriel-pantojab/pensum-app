@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import { theme } from "../../theme";
 import { useEffect, useState } from "react";
+import Logo from "../Logo";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -46,15 +47,6 @@ function Devs() {
   );
 }
 
-function Logo() {
-  return (
-    <Image
-      style={{ width: 80, height: 80 }}
-      source={require("../../../assets/logo2.png")}
-    />
-  );
-}
-
 export default function Intro() {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -74,7 +66,7 @@ export default function Intro() {
               paddingBottom: 30,
             }}
           >
-            <Logo />
+            <Logo widthBG={100} heightBG={100} />
             <Text style={{ ...styles.title, color: theme.colors.primary }}>
               Universidad Mayor de San Simón
             </Text>

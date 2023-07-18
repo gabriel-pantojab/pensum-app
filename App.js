@@ -3,11 +3,7 @@ import Main from "./src/components/Main";
 import StudentProvider from "./src/context/studentContext";
 import { useEffect, useState } from "react";
 import Intro from "./src/components/intro/Intro";
-import {
-  getStudent,
-  removeSchedule,
-  removeStudent,
-} from "./src/storage/storage";
+import { getStudent } from "./src/storage/storage";
 import Register from "./src/components/register/Register";
 
 export default function App() {
@@ -27,8 +23,6 @@ export default function App() {
       }
     });
   }, []);
-  removeSchedule();
-  removeStudent();
   return (
     <NativeRouter>
       <StudentProvider>

@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, Image } from "react-native";
+import { Text, View, TextInput, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import { saveStudent } from "../../storage/storage";
 import { useContext, useState } from "react";
@@ -7,8 +7,9 @@ import { Course, Levels } from "../../storage/createInformatica";
 import { Pressable } from "react-native";
 import { theme } from "../../theme";
 import Loading from "../Loading";
-import { redirect } from "react-router";
 import { StatusBar } from "expo-status-bar";
+import Eagle from "../icons/Eagle";
+import Birrete from "../icons/Birrete";
 
 export default function Register({ login }) {
   const [username, setUsername] = useState("");
@@ -77,6 +78,17 @@ export default function Register({ login }) {
           <Text style={styles.button}>Registrar</Text>
         </Pressable>
         {registrando && <Loading />}
+        <View
+          style={{
+            marginTop: 30,
+          }}
+        >
+          <Birrete
+            color={theme.colors.redIinformatica}
+            width={150}
+            height={150}
+          />
+        </View>
       </View>
     </View>
   );
