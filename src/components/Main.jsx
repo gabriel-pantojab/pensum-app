@@ -31,7 +31,9 @@ export default function Main() {
   return (
     <View style={sty}>
       <StatusBar style="auto" backgroundColor="#ccc" />
-      {location.pathname !== "/express" && <Header />}
+      {location.pathname !== "/main/express" && orientation !== "landscape" && (
+        <Header />
+      )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pensum" element={<Pensum />} />

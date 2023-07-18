@@ -83,7 +83,7 @@ export default function SubjectsInLevelList() {
             style={{
               alignSelf: "flex-end",
             }}
-            to="/pensum"
+            to="/main/pensum"
           >
             <BackIcon />
           </Link>

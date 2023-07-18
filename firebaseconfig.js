@@ -1,8 +1,15 @@
 import { initializeApp } from "firebase/app";
 
 // Optionally import the services that you want to use
-// import {...} from "firebase/auth";
 import { child, get, getDatabase, ref, set } from "firebase/database";
+// import {...} from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signOut,
+} from "firebase/auth";
 import { express } from "./src/storage/createInformatica";
 // import {...} from "firebase/firestore";
 // import {...} from "firebase/functions";
@@ -24,6 +31,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const database = getDatabase(app);
+
+export const auth = getAuth(app);
 
 export function crearHorariosInformatica() {
   try {
@@ -115,4 +124,24 @@ export async function getGruposCarreraNivelMateria({
   return {
     grupos: grupos,
   };
+}
+
+/**AUTH */
+
+export async function crearUsuario({ username, nickname, password }) {
+  const email = nickname + "@gmail.com";
+  await createUserWithEmailAndPassword(auth, email, password);
+  let user = auth.currentUser;
+  await updateProfile(user, {
+    displayName: username,
+  });
+}
+
+export async function login({ nickname, password }) {
+  const email = nickname + "@gmail.com";
+  return signInWithEmailAndPassword(auth, email, password);
+}
+
+export async function logout() {
+  return signOut(auth);
 }
