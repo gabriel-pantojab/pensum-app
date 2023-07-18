@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 10,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.white,
   },
   dayContainer: {
     flexDirection: "row",
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: "bold",
-    color: theme.colors.white,
+    color: theme.colors.primary,
   },
 });

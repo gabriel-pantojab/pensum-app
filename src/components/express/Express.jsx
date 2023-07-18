@@ -5,7 +5,6 @@ import {
   FlatList,
   Dimensions,
   Button,
-  ScrollView,
 } from "react-native";
 import Constants from "expo-constants";
 import { Pressable } from "react-native";
@@ -189,27 +188,19 @@ function Carreras({ carreras, loading, finishedRender }) {
 
 function ExpressHeader({ action, showCarreras }) {
   const orientation = useDeviceOrientation();
-  const styScroll = [
-    {
-      alignItems: "center",
-      justifyContent: "space-between",
-      gap: 30,
-    },
+  const styHeader = [
+    styles.header,
     orientation === "landscape" && {
-      flex: 1,
+      flexDirection: "row-reverse",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
   ];
+  const styTitle = [styles.title];
   return (
-    <View style={styles.header}>
-      <ScrollView horizontal contentContainerStyle={styScroll}>
-        <CarrerasOption
-          showCarreras={action}
-          showCarrerasValue={showCarreras}
-        />
-        <Text style={styles.title}>
-          Express - Gestión {new Date().getFullYear()}
-        </Text>
-      </ScrollView>
+    <View style={styHeader}>
+      <Text style={styTitle}>Express - Gestión {new Date().getFullYear()}</Text>
+      <CarrerasOption showCarreras={action} showCarrerasValue={showCarreras} />
     </View>
   );
 }
@@ -263,11 +254,9 @@ const styles = StyleSheet.create({
   },
   header: {
     position: "relative",
-    flexDirection: "row",
-    backgroundColor: "#24263e",
+    backgroundColor: theme.colors.primary,
     padding: 5,
-    alignItems: "center",
-    justifyContent: "space-between",
+    gap: 10,
   },
   options: {
     flexDirection: "row",

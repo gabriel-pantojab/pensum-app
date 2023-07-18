@@ -8,6 +8,7 @@ import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
 import Constants from "expo-constants";
 import { theme } from "../../theme";
+import Header from "../Header";
 
 function StatesSubject() {
   return (
@@ -70,42 +71,53 @@ export default function SubjectsInLevelList() {
 
   return (
     <View style={styles.container} onLayout={finishedRender}>
-      <Link
-        underlayColor={"transparent"}
-        style={{
-          alignSelf: "flex-end",
-        }}
-        to="/pensum"
-      >
-        <BackIcon />
-      </Link>
-      <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
-      <View style={styles.info}>
-        <Text style={styles.level}>Nivel {level}</Text>
-        <StatesSubject />
+      <Header />
+      <View style={styles.content}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
+          <Link
+            underlayColor={"transparent"}
+            style={{
+              alignSelf: "flex-end",
+            }}
+            to="/pensum"
+          >
+            <BackIcon />
+          </Link>
+        </View>
+        <View style={styles.info}>
+          <Text style={styles.level}>Nivel {level}</Text>
+          <StatesSubject />
+        </View>
+        <View style={styles.info}>
+          <Text>Aprobadas: {approved}</Text>
+          <Text>Cursando: {inProgress}</Text>
+          <Text>No Cursadas: {pending}</Text>
+        </View>
+        <FlatList
+          initialNumToRender={1}
+          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+          data={subjects}
+          ListFooterComponent={loading}
+          renderItem={({ item }) => {
+            return (
+              <SubjectInLevel
+                name={item.name}
+                state={item.state}
+                level={level}
+                id={item.id}
+                key={item.id}
+              />
+            );
+          }}
+        />
       </View>
-      <View style={styles.info}>
-        <Text>Aprobadas: {approved}</Text>
-        <Text>Cursando: {inProgress}</Text>
-        <Text>No Cursadas: {pending}</Text>
-      </View>
-      <FlatList
-        initialNumToRender={1}
-        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-        data={subjects}
-        ListFooterComponent={loading}
-        renderItem={({ item }) => {
-          return (
-            <SubjectInLevel
-              name={item.name}
-              state={item.state}
-              level={level}
-              id={item.id}
-              key={item.id}
-            />
-          );
-        }}
-      />
     </View>
   );
 }
@@ -113,6 +125,10 @@ export default function SubjectsInLevelList() {
 const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
+    flex: 1,
+    backgroundColor: theme.colors.white,
+  },
+  content: {
     flex: 1,
     padding: 10,
     gap: 10,

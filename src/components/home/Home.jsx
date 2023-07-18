@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import UserCard from "./UserCard";
 import Course from "./Course";
 import CurrentSubjectsList from "./CurrentSubjectsList";
@@ -8,6 +8,7 @@ import { StudentContext } from "../../context/studentContext";
 import Constants from "expo-constants";
 import { ScrollView } from "react-native";
 import { theme } from "../../theme";
+import Header from "../Header";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,8 +20,10 @@ const styles = StyleSheet.create({
 
 export default function Home() {
   const { student, currentSubjectsList } = useContext(StudentContext);
+
   return (
     <View style={styles.container}>
+      <Header />
       <ScrollView
         contentContainerStyle={{
           alignItems: "center",

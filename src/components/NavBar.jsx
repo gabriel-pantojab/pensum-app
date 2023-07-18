@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Dimensions, View } from "react-native";
+import { Text, StyleSheet, Dimensions } from "react-native";
 import { ScrollView } from "react-native";
 import Constants from "expo-constants";
 import { Link, useLocation } from "react-router-native";
@@ -7,15 +7,14 @@ import BookIcon from "./icons/BookIcon";
 import CoffeIcon from "./icons/CoffeIcon";
 import CalendarIcon from "./icons/CalendarIcon";
 import Calendar2Icon from "./icons/Calendar2";
-import * as ScreenOrientation from "expo-screen-orientation";
 import { theme } from "../theme";
-
+//"#24263e"
 const styles = StyleSheet.create({
   container: {
     maxHeight: 50,
     flexDirection: "row",
     padding: 10,
-    backgroundColor: "#24263e",
+    backgroundColor: theme.colors.primary,
   },
   text: {
     fontSize: 18,
@@ -24,6 +23,8 @@ const styles = StyleSheet.create({
   },
   active: {
     color: theme.colors.white,
+    borderBottomWidth: 1,
+    borderColor: theme.colors.white,
   },
 });
 
