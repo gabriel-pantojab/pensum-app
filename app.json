@@ -10,7 +10,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": ["./assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
       "requireFullScreen": true

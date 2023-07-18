@@ -6,4 +6,8 @@ export const theme = {
     lila: "#6e77ee",
     greenProgress: "#b2f2bb",
   },
+  fonst: {
+    goodDog: "Good Dog",
+    holidayBudapest: "Holiday Budapest",
+  },
 };

@@ -5,10 +5,15 @@ import { useEffect, useState } from "react";
 import Intro from "./src/components/intro/Intro";
 import { getStudent } from "./src/storage/storage";
 import Register from "./src/components/register/Register";
+import { useFonts } from "expo-font";
 
 export default function App() {
   const [intro, setIntro] = useState(true);
   const [existStudent, setExistStudent] = useState(false);
+  const [fontsLoaded] = useFonts({
+    "Good Dog": require("./assets/fonts/GoodDog.otf"),
+    "Holiday Budapest": require("./assets/fonts/Holiday_Budapest.ttf"),
+  });
   useEffect(() => {
     setTimeout(() => {
       setIntro(false);
@@ -26,7 +31,7 @@ export default function App() {
   return (
     <NativeRouter>
       <StudentProvider>
-        {intro ? (
+        {intro || !fontsLoaded ? (
           <Intro />
         ) : existStudent ? (
           <Main />
