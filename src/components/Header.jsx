@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { theme } from "../theme";
 import Logo from "./Logo";
+import TextStyle from "./TextStyle";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
   appName: {
     color: theme.colors.white,
     fontSize: 30,
-    fontFamily: theme.fonst.goodDog,
+    fontFamily: theme.fonts.goodDog,
     marginRight: 10,
   },
 });
