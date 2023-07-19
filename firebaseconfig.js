@@ -13,18 +13,17 @@ import {
 // import {...} from "firebase/firestore";
 // import {...} from "firebase/functions";
 // import {...} from "firebase/storage";
-
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "api-key",
-  apiKey: "AIzaSyA5x_HXYlRw3KpRvIxYct3B9LaVjsxk0GQ",
-  authDomain: "pensum-app-41ffb.firebaseapp.com",
-  projectId: "pensum-app-41ffb",
-  storageBucket: "pensum-app-41ffb.appspot.com",
-  messagingSenderId: "1066639320462",
-  appId: "1:1066639320462:web:26d56615c7bc60b52db0df",
-  measurementId: "G-12X7ZV67KF",
-  databaseURL: "https://pensum-app-41ffb-default-rtdb.firebaseio.com/",
+  apiKey: process.env.EXPO_PUBLIC_APIKEY,
+  apiKey: process.env.EXPO_PUBLIC_APIKEY2,
+  authDomain: process.env.EXPO_PUBLIC_AUTHDOMAIN,
+  projectId: process.env.EXPO_PUBLIC_PROJECTID,
+  storageBucket: process.env.EXPO_PUBLIC_STORAGEBUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_MESAAGINGSENDERID,
+  appId: process.env.EXPO_PUBLIC_APPID,
+  measurementId: process.env.EXPO_PUBLIC_MEASUREMENTID,
+  databaseURL: process.env.EXPO_PUBLIC_DATABASEURL,
 };
 
 const app = initializeApp(firebaseConfig);
