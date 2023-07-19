@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import { ScrollView } from "react-native";
 import { theme } from "../../theme";
+import { logoutApp } from "../../storage/storage";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,8 +36,7 @@ export default function Home() {
   const [saliendo, setSaliendo] = useState(false);
   const logout = async () => {
     setSaliendo(true);
-    const user = await getCurrentUser();
-    const uid = user.uid;
+    const uid = student.uid;
     await logoutApp({ uid });
     clearData();
     setSaliendo(false);

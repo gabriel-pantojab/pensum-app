@@ -39,8 +39,7 @@ export default function Home() {
   const [saliendo, setSaliendo] = useState(false);
   const logout = async () => {
     setSaliendo(true);
-    const user = await getCurrentUser();
-    const uid = user.uid;
+    const uid = student.uid;
     await logoutApp({ uid });
     clearData();
     setSaliendo(false);

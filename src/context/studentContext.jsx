@@ -17,6 +17,7 @@ function StudentProvider({ children }) {
     name: "",
     description: "",
     avatar: "",
+    uid: "",
   });
 
   useEffect(() => {

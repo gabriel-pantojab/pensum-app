@@ -212,7 +212,7 @@ export default function Express() {
   const getCarrerasDB = async () => {
     try {
       const data = await getCarreras();
-      setCarreras(data);
+      if (data) setCarreras(data);
     } catch (e) {
       setCarreras([]);
       console.log(e);

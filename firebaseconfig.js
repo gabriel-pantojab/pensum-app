@@ -65,7 +65,7 @@ export async function getCarreras() {
       }
     })
     .catch((error) => {
-      console.error("Error getting data carreras");
+      console.log("Error getting data carreras");
     });
 }
 
@@ -423,6 +423,7 @@ export async function addUser({ uid, name, description, avatar }) {
   const currentSubjectsList = [];
   const schedule = {};
   return set(ref(database, "usuarios/" + uid), {
+    uid,
     user: {
       name,
       description,

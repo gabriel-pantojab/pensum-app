@@ -85,7 +85,6 @@ export default function SignUp() {
         password,
         username,
       }),
-      setStudent(newStudent),
       saveStudent(newStudent),
       setCourse(Course),
       setLevels(Levels),
@@ -93,14 +92,18 @@ export default function SignUp() {
     ])
       .then(() => {
         getCurrentUser()
-          .then((user) => {
+          .then(async (user) => {
             const uid = user.uid;
-            addUser({
+            await setStudent({
+              ...newStudent,
               uid,
-              name: username,
-              description: "Estudiante de Ing. Informática",
-              avatar: "",
-            });
+            }),
+              await addUser({
+                uid,
+                name: username,
+                description: "Estudiante de Ing. Informática",
+                avatar: "",
+              });
           })
           .then(() => {
             setRegistrando(false);

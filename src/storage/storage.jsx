@@ -215,8 +215,6 @@ export async function logoutApp({ uid }) {
   if (!schedule) schedule = {};
   if (!currentSubjectsList) currentSubjectsList = [];
 
-  await logout();
-
   const userdata = {
     user: {
       ...student,
@@ -231,6 +229,8 @@ export async function logoutApp({ uid }) {
     uid,
     userdata,
   });
+
+  await logout();
 }
 
 export {

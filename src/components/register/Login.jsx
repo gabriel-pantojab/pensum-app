@@ -78,7 +78,7 @@ export default function Login() {
       .then((res) => {
         const uid = res.user.uid;
         getUser({ uid }).then(async (resp) => {
-          const user = resp.user;
+          const user = { ...resp.user, uid };
           const course = resp.course;
           const currentSubjectsList = resp.currentSubjectsList;
           const levels = resp.levels;
