@@ -17,3 +17,7 @@ web-build/
 .metro-health-check*
 
 /src/model/
+
+.env
+
+/src/components/register/LoginRHF.jsx
