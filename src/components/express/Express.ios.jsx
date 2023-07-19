@@ -5,7 +5,6 @@ import {
   FlatList,
   Dimensions,
   Button,
-  ScrollView,
 } from "react-native";
 import Constants from "expo-constants";
 import { Pressable } from "react-native";
@@ -131,9 +130,9 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
   );
 }
 
-function Carrera({ name }) {
+function Carrera({ name, sis }) {
   const getData = async () => {
-    const data = await getNiveles(name.split(" ").join("").trim());
+    const data = await getNiveles({ sisCarrera: sis });
     return data;
   };
   const { offer, setShowOffer, showOffer } = useFetchOffer({
@@ -144,7 +143,7 @@ function Carrera({ name }) {
     <View
       style={{
         borderBottomWidth: 1,
-        borderColor: "#fff",
+        borderColor: theme.colors.white,
       }}
     >
       <Pressable
@@ -157,13 +156,17 @@ function Carrera({ name }) {
       >
         <Text style={styles.carrera}>{name}</Text>
         {showOffer && offer ? (
-          <CaretUpIcon color="#fff" width={15} height={15} />
+          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
-          <CaretDownIcon color="#fff" width={15} height={15} />
+          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
         )}
       </Pressable>
       {showOffer && offer && (
-        <LevelsList levels={offer.niveles} nameCarrera={name} />
+        <LevelsList
+          levels={offer.niveles}
+          nameCarrera={name}
+          sisCarrera={sis}
+        />
       )}
     </View>
   );
@@ -183,8 +186,8 @@ function Carreras({ carreras, loading, finishedRender }) {
         <FlatList
           initialNumToRender={5}
           data={carreras}
-          renderItem={({ item }) => <Carrera name={item} />}
-          keyExtractor={(item) => item}
+          renderItem={({ item }) => <Carrera name={item} sis={item.sis} />}
+          keyExtractor={(item) => item.sis}
           ListFooterComponent={loading}
         />
       ) : (
@@ -199,6 +202,8 @@ function ExpressHeader({ action, showCarreras }) {
   const styHeader = [
     styles.header,
     orientation === "landscape" && {
+      flexDirection: "row-reverse",
+      justifyContent: "space-between",
       paddingLeft: Constants.statusBarHeight,
     },
   ];
@@ -222,9 +227,7 @@ export default function Express() {
   const styCont = [
     styles.container,
     orientation === "landscape" && {
-      flexDirection: "row-reverse",
-      justifyContent: "space-between",
-      alignItems: "center",
+      paddingLeft: Constants.statusBarHeight,
     },
   ];
   const getCarrerasDB = async () => {
