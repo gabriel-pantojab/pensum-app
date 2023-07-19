@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { logout, updateUser } from "../../firebaseconfig";
 
 async function getStudent() {
   try {
@@ -198,6 +199,39 @@ async function removeSchedule() {
 //   pendingSubjects: 48,
 //   inProgressSubjects: 0,
 // });
+
+export async function logoutApp({ uid }) {
+  const student = await getStudent();
+  const course = await getCourse();
+  let currentSubjectsList = await getCurrentSubjectsList();
+  const levels = await getLevels();
+  let schedule = await getSchedule();
+  await removeStudent();
+  await removeCourse();
+  await removeCurrentSubjectsList();
+  await removeLevels();
+  await removeSchedule();
+
+  if (!schedule) schedule = {};
+  if (!currentSubjectsList) currentSubjectsList = [];
+
+  await logout();
+
+  const userdata = {
+    user: {
+      ...student,
+    },
+    course,
+    currentSubjectsList,
+    levels,
+    schedule,
+  };
+
+  await updateUser({
+    uid,
+    userdata,
+  });
+}
 
 export {
   saveStudent,

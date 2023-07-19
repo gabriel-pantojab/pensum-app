@@ -4,6 +4,7 @@ import { theme } from "../../theme";
 import { StatusBar } from "expo-status-bar";
 import Birrete from "../icons/Birrete";
 import { Link } from "react-router-native";
+import Logo from "../Logo";
 
 export default function Register() {
   return (

@@ -6,7 +6,7 @@ import { Course, Levels } from "../../storage/createInformatica";
 import { Pressable } from "react-native";
 import { theme } from "../../theme";
 import Loading from "../Loading";
-import { crearUsuario } from "../../../firebaseconfig";
+import { addUser, crearUsuario, getCurrentUser } from "../../../firebaseconfig";
 import Constants from "expo-constants";
 import { Link } from "react-router-native";
 import BackIcon from "../icons/BackIcon";
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function SignUp({ login }) {
+export default function SignUp() {
   const [username, setUsername] = useState("");
   const [registrando, setRegistrando] = useState(false);
   const [emptyFieldUserName, setEmptyFieldUserName] = useState(false);
@@ -92,8 +92,19 @@ export default function SignUp({ login }) {
       setCurrentSubjectsList([]),
     ])
       .then(() => {
-        setRegistrando(false);
-        login();
+        getCurrentUser()
+          .then((user) => {
+            const uid = user.uid;
+            addUser({
+              uid,
+              name: username,
+              description: "Estudiante de Ing. Informática",
+              avatar: "",
+            });
+          })
+          .then(() => {
+            setRegistrando(false);
+          });
       })
       .catch((e) => {
         if (e.code === "auth/email-already-in-use") {
@@ -186,6 +197,7 @@ export default function SignUp({ login }) {
             setEmptyFieldPassword(false);
           }
         }}
+        secureTextEntry
         placeholder="password"
       />
       {emptyFieldPassword && (

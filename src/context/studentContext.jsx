@@ -83,6 +83,24 @@ function StudentProvider({ children }) {
     });
   }, []);
 
+  const clearData = () => {
+    setStudent({
+      notexist: true,
+      name: "",
+      description: "",
+      avatar: "",
+    });
+    setCourse({
+      name: "",
+      totalSubjects: 0,
+      approvedSubjects: 0,
+      pendingSubjects: 0,
+      inProgressSubjects: 0,
+    });
+    setCurrentSubjectsList([]);
+    setLevels([]);
+  };
+
   const data = {
     student,
     course,
@@ -92,6 +110,7 @@ function StudentProvider({ children }) {
     setCourse,
     setCurrentSubjectsList,
     setLevels,
+    clearData,
   };
   return (
     <StudentContext.Provider value={data}>{children}</StudentContext.Provider>

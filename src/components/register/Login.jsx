@@ -3,7 +3,18 @@ import { Link } from "react-router-native";
 import BackIcon from "../icons/BackIcon";
 import { theme } from "../../theme";
 import Constants from "expo-constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { getUser, login as loginFirebase } from "../../../firebaseconfig";
+import { Alert } from "react-native";
+import { StudentContext } from "../../context/studentContext";
+import {
+  saveCourse,
+  saveCurrentSubjectsList,
+  saveLevels,
+  saveSchedule,
+  saveStudent,
+} from "../../storage/storage";
+import Loading from "../Loading";
 
 const styles = StyleSheet.create({
   login: {
@@ -40,7 +51,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Login({ login }) {
+export default function Login() {
+  const [iniciando, setIniciando] = useState(false);
+  const { setStudent, setCourse, setCurrentSubjectsList, setLevels } =
+    useContext(StudentContext);
   const [nickname, setNickname] = useState("");
   const [emptyFieldNickName, setEmptyFieldNickName] = useState(false);
 
@@ -56,6 +70,69 @@ export default function Login({ login }) {
       setEmptyFieldPassword(true);
       return;
     }
+    setIniciando(true);
+    loginFirebase({
+      nickname,
+      password,
+    })
+      .then((res) => {
+        const uid = res.user.uid;
+        getUser({ uid }).then(async (resp) => {
+          const user = resp.user;
+          const course = resp.course;
+          const currentSubjectsList = resp.currentSubjectsList;
+          const levels = resp.levels;
+          const schedule = resp.schedule;
+          if (user) {
+            setStudent(user);
+            await saveStudent(user);
+          }
+          if (course) {
+            setCourse(course);
+            await saveCourse(course);
+          }
+          if (currentSubjectsList) {
+            setCurrentSubjectsList(currentSubjectsList);
+            await saveCurrentSubjectsList(currentSubjectsList);
+          }
+          if (levels) {
+            setLevels(levels);
+            await saveLevels(levels);
+          }
+          if (schedule) {
+            await saveSchedule(schedule);
+          }
+          setIniciando(false);
+        });
+      })
+      .catch((err) => {
+        if (err.code === "auth/user-not-found") {
+          Alert.alert(
+            "Usuario no encontrado",
+            "El usuario ingresado no existe",
+            [
+              {
+                text: "Aceptar",
+                onPress: () => {
+                  setNickname("");
+                  setPassword("");
+                },
+              },
+            ]
+          );
+        } else if (err.code === "auth/wrong-password") {
+          Alert.alert("Datos incorrectos", "Usuario o contraseña incorrectos", [
+            {
+              text: "Aceptar",
+              onPress: () => {
+                setPassword("");
+                setNickname("");
+              },
+            },
+          ]);
+        }
+        setIniciando(false);
+      });
   };
 
   const styInputNickName = [
@@ -104,6 +181,7 @@ export default function Login({ login }) {
           setPassword(text);
           setEmptyFieldPassword(false);
         }}
+        secureTextEntry
         value={password}
       />
       {emptyFieldPassword && (
@@ -114,6 +192,7 @@ export default function Login({ login }) {
       <Pressable onPress={iniciarSesion}>
         <Text style={styles.button}>Ingresar</Text>
       </Pressable>
+      {iniciando && <Loading />}
     </View>
   );
 }
