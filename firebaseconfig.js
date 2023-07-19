@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 
 // Optionally import the services that you want to use
-import { child, get, getDatabase, ref, set } from "firebase/database";
+import { child, get, getDatabase, ref, set, update } from "firebase/database";
 // import {...} from "firebase/auth";
 import {
   getAuth,
@@ -10,7 +10,6 @@ import {
   updateProfile,
   signOut,
 } from "firebase/auth";
-import { express } from "./src/storage/createInformatica";
 // import {...} from "firebase/firestore";
 // import {...} from "firebase/functions";
 // import {...} from "firebase/storage";
@@ -34,20 +33,23 @@ const database = getDatabase(app);
 
 export const auth = getAuth(app);
 
-export function crearHorariosInformatica() {
+export function crearHorariosCarrera({ sis, horarios }) {
   try {
-    set(ref(database, "LICENCIATURAENINGENIERIAINFORMATICA/"), {
-      nombre: "LICENCIATURA EN INGENIERÍA INFORMÁTICA",
-      horarios: express,
+    update(ref(database, "carreras/" + sis), {
+      horarios,
     });
   } catch (error) {
-    cconsole.log(error);
+    console.log(error);
   }
 }
 
-export function crearCarreras() {
+export function updateCarreras({ sis, nombre }) {
   try {
-    set(ref(database, "carreras/"), ["LICENCIATURA EN INGENIERÍA INFORMÁTICA"]);
+    update(ref(database, "carreras/"), {
+      [sis]: {
+        nombre,
+      },
+    });
   } catch (error) {
     console.log(error);
   }
@@ -59,23 +61,26 @@ export async function getCarreras() {
     .then((snapshot) => {
       if (snapshot.exists()) {
         const carreras = snapshot.val();
-        return carreras;
+        let carrerasArray = Object.keys(carreras).map((key) => {
+          const carrera = carreras[key];
+          return {
+            sis: key,
+            nombre: carrera.nombre,
+          };
+        });
+        return carrerasArray;
       } else {
         return null;
       }
     })
     .catch((error) => {
-      console.log("Error getting data carreras");
+      console.log("Error getting data carreras", error);
     });
 }
 
-export async function getNiveles(carrera) {
-  carrera = carrera
-    .toUpperCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+export async function getNiveles({ sisCarrera }) {
   const dbref = ref(database);
-  return get(child(dbref, carrera + "/"))
+  return get(child(dbref, "carreras/" + sisCarrera))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const niveles = snapshot.val().horarios.map((nivel) => {
@@ -93,31 +98,29 @@ export async function getNiveles(carrera) {
     });
 }
 
-export async function getMateriasNivelCarrera({ carrera, nivel }) {
-  carrera = carrera
-    .toUpperCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+export async function getMateriasNivelCarrera({ sisCarrera, nivel }) {
   const dbref = ref(database);
-  return get(child(dbref, carrera + "/horarios/")).then((snapshot) => {
-    if (snapshot.exists()) {
-      const niveles = snapshot.val();
-      const nivelDb = niveles.find((n) => n.nombreNivel === nivel);
-      return {
-        materias: nivelDb.materias,
-      };
-    } else {
-      return null;
+  return get(child(dbref, "carreras/" + sisCarrera + "/horarios")).then(
+    (snapshot) => {
+      if (snapshot.exists()) {
+        const niveles = snapshot.val();
+        const nivelDb = niveles.find((n) => n.nombreNivel === nivel);
+        return {
+          materias: nivelDb.materias,
+        };
+      } else {
+        return null;
+      }
     }
-  });
+  );
 }
 
 export async function getGruposCarreraNivelMateria({
-  carrera,
+  sisCarrera,
   nivel,
   materia,
 }) {
-  const materias = await getMateriasNivelCarrera({ carrera, nivel });
+  const materias = await getMateriasNivelCarrera({ sisCarrera, nivel });
   const grupos = materias.materias.find(
     (m) => m.nombreMateria === materia
   ).grupos;

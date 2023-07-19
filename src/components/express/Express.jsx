@@ -130,9 +130,9 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
   );
 }
 
-function Carrera({ name }) {
+function Carrera({ name, sis }) {
   const getData = async () => {
-    const data = await getNiveles(name.split(" ").join("").trim());
+    const data = await getNiveles({ sisCarrera: sis });
     return data;
   };
   const { offer, setShowOffer, showOffer } = useFetchOffer({
@@ -162,7 +162,11 @@ function Carrera({ name }) {
         )}
       </Pressable>
       {showOffer && offer && (
-        <LevelsList levels={offer.niveles} nameCarrera={name} />
+        <LevelsList
+          levels={offer.niveles}
+          nameCarrera={name}
+          sisCarrera={sis}
+        />
       )}
     </View>
   );
@@ -175,8 +179,10 @@ function Carreras({ carreras, loading, finishedRender }) {
         <FlatList
           initialNumToRender={5}
           data={carreras}
-          renderItem={({ item }) => <Carrera name={item} />}
-          keyExtractor={(item) => item}
+          renderItem={({ item }) => (
+            <Carrera name={item.nombre} sis={item.sis} />
+          )}
+          keyExtractor={(item) => item.sis}
           ListFooterComponent={loading}
         />
       ) : (

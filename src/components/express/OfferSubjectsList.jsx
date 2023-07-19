@@ -86,7 +86,7 @@ function Group({ group, teacher, infoGroup }) {
   );
 }
 
-function Subject({ name, carrera, nivel, sis }) {
+function Subject({ name, nivel, sisSubejct, sisCarrera }) {
   const stylesSubject = StyleSheet.create({
     container: {
       borderBottomWidth: 1,
@@ -110,7 +110,7 @@ function Subject({ name, carrera, nivel, sis }) {
   });
   const getData = async () => {
     const data = await getGruposCarreraNivelMateria({
-      carrera: carrera.split(" ").join("").trim(),
+      sisCarrera,
       nivel,
       materia: name,
     });
@@ -149,7 +149,7 @@ function Subject({ name, carrera, nivel, sis }) {
                   infoGroup={{
                     ...item,
                     subjectName: name,
-                    sis,
+                    sis: sisSubejct,
                   }}
                 />
               );
@@ -161,7 +161,7 @@ function Subject({ name, carrera, nivel, sis }) {
   );
 }
 
-function Level({ name, carrera }) {
+function Level({ name, carrera, sisCarrera }) {
   const stylesLevel = StyleSheet.create({
     container: {
       marginLeft: 10,
@@ -189,7 +189,7 @@ function Level({ name, carrera }) {
   });
   const getData = async () => {
     const data = await getMateriasNivelCarrera({
-      carrera: carrera.split(" ").join("").trim(),
+      sisCarrera,
       nivel: name,
     });
     return data;
@@ -221,8 +221,8 @@ function Level({ name, carrera }) {
                 key={item.nombreMateria}
                 name={item.nombreMateria}
                 nivel={name.trim()}
-                carrera={carrera}
-                sis={item.sis}
+                sisSubject={item.sis}
+                sisCarrera={sisCarrera}
               />
             )}
             keyExtractor={(item) => item.nombreMateria}
@@ -233,7 +233,7 @@ function Level({ name, carrera }) {
   );
 }
 
-export default function LevelsList({ levels, nameCarrera }) {
+export default function LevelsList({ levels, nameCarrera, sisCarrera }) {
   return (
     <View>
       <FlatList
@@ -244,6 +244,7 @@ export default function LevelsList({ levels, nameCarrera }) {
             key={item.nobreNivel}
             name={item.nombreNivel}
             carrera={nameCarrera}
+            sisCarrera={sisCarrera}
           />
         )}
         keyExtractor={(item) => item.nombreNivel}
