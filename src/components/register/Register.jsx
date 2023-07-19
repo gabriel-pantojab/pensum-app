@@ -1,49 +1,12 @@
-import { Text, View, TextInput, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import { saveStudent } from "../../storage/storage";
-import { useContext, useState } from "react";
-import { StudentContext } from "../../context/studentContext";
-import { Course, Levels } from "../../storage/createInformatica";
-import { Pressable } from "react-native";
 import { theme } from "../../theme";
-import Loading from "../Loading";
 import { StatusBar } from "expo-status-bar";
-import Eagle from "../icons/Eagle";
 import Birrete from "../icons/Birrete";
+import { Link } from "react-router-native";
+import Logo from "../Logo";
 
-export default function Register({ login }) {
-  const [username, setUsername] = useState("");
-  const [registrando, setRegistrando] = useState(false);
-  const [emptyField, setEmptyField] = useState(false);
-  const { setStudent, setCourse, setLevels, setCurrentSubjectsList } =
-    useContext(StudentContext);
-  const registrar = async () => {
-    if (username === "") {
-      setEmptyField(true);
-      return;
-    }
-    setRegistrando(true);
-    const newStudent = {
-      name: username,
-      description: "Estudiante de Ing. Informática",
-      avatar: "",
-    };
-
-    Promise.all([
-      setStudent(newStudent),
-      saveStudent(newStudent),
-      setCourse(Course),
-      setLevels(Levels),
-      setCurrentSubjectsList([]),
-    ]).then(() => {
-      setRegistrando(false);
-      login();
-    });
-  };
-  const styInput = [
-    styles.input,
-    emptyField && { borderColor: theme.colors.redIinformatica },
-  ];
+export default function Register() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -55,40 +18,24 @@ export default function Register({ login }) {
           Pensum Ing. Informática
         </Text>
       </View>
-      <View style={styles.register}>
-        <Text style={{ ...styles.title, fontSize: 18 }}>Registro</Text>
-        <TextInput
-          style={styInput}
-          value={username}
-          onChangeText={(e) => {
-            const regex = /^[a-zA-Z ]*$/;
-            if (regex.test(e)) {
-              setUsername(e);
-              setEmptyField(false);
-            }
-          }}
-          placeholder="Nombre"
+      <View style={styles.buttonsRegister}>
+        <Link to="/login" style={styles.button}>
+          <Text style={styles.text}>Ingresar</Text>
+        </Link>
+        <Link to="/signUp" style={styles.button}>
+          <Text style={styles.text}>Registrarse</Text>
+        </Link>
+      </View>
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <Birrete
+          color={theme.colors.redIinformatica}
+          width={150}
+          height={150}
         />
-        {emptyField && (
-          <Text style={{ fontSize: 12, color: theme.colors.redIinformatica }}>
-            El nombre no puede estar vacío
-          </Text>
-        )}
-        <Pressable onPress={registrar}>
-          <Text style={styles.button}>Registrar</Text>
-        </Pressable>
-        {registrando && <Loading />}
-        <View
-          style={{
-            marginTop: 30,
-          }}
-        >
-          <Birrete
-            color={theme.colors.redIinformatica}
-            width={150}
-            height={150}
-          />
-        </View>
       </View>
     </View>
   );
@@ -126,13 +73,22 @@ const styles = StyleSheet.create({
   },
   header: {},
   button: {
-    width: 300,
     backgroundColor: "#0C134F",
-    color: theme.colors.white,
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
     padding: 10,
     borderRadius: 10,
+  },
+  buttonsRegister: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 30,
+  },
+  text: {
+    color: theme.colors.white,
   },
 });
