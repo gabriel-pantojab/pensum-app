@@ -16,6 +16,7 @@ const errors = {
 };
 
 export default function HandleError({ errorCode }) {
+  console.log(errorCode);
   const error = errors[errorCode] ? errors[errorCode] : errors["default"];
   Alert.alert(error.header, error.message, [
     {

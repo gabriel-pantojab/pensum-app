@@ -186,6 +186,7 @@ export default function LoginPage() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              secureTextEntry
             />
           )}
           name="password"
