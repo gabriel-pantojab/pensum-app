@@ -22,6 +22,7 @@ import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";
 import { getCarreras, getNiveles } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { theme } from "../../theme";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -201,27 +202,13 @@ function ExpressHeader({ action, showCarreras }) {
       paddingLeft: Constants.statusBarHeight,
     },
   ];
-  const styScroll = [
-    {
-      alignItems: "center",
-      justifyContent: "space-between",
-      gap: 30,
-    },
-    orientation === "landscape" && {
-      flex: 1,
-    },
-  ];
+
   return (
     <View style={styHeader}>
-      <ScrollView horizontal contentContainerStyle={styScroll}>
-        <CarrerasOption
-          showCarreras={action}
-          showCarrerasValue={showCarreras}
-        />
-        <Text style={styles.title}>
-          Express - Gestión {new Date().getFullYear()}
-        </Text>
-      </ScrollView>
+      <Text style={styles.title}>
+        Express - Gestión {new Date().getFullYear()}
+      </Text>
+      <CarrerasOption showCarreras={action} showCarrerasValue={showCarreras} />
     </View>
   );
 }
@@ -235,7 +222,9 @@ export default function Express() {
   const styCont = [
     styles.container,
     orientation === "landscape" && {
-      marginTop: 0,
+      flexDirection: "row-reverse",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
   ];
   const getCarrerasDB = async () => {
@@ -277,18 +266,14 @@ export default function Express() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
-
     flex: 1,
     backgroundColor: "#ccc",
   },
   header: {
     position: "relative",
-    flexDirection: "row",
-    backgroundColor: "#24263e",
+    backgroundColor: theme.colors.primary,
     padding: 5,
-    alignItems: "center",
-    justifyContent: "space-between",
+    gap: 10,
   },
   options: {
     flexDirection: "row",

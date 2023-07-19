@@ -7,12 +7,13 @@ import BookIcon from "./icons/BookIcon";
 import CoffeIcon from "./icons/CoffeIcon";
 import CalendarIcon from "./icons/CalendarIcon";
 import Calendar2Icon from "./icons/Calendar2";
+import { theme } from "../theme";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: 10,
-    backgroundColor: "#24263e",
+    backgroundColor: theme.colors.primary,
     paddingBottom: 30,
   },
   text: {
@@ -21,14 +22,16 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   active: {
-    color: "#fff",
+    color: theme.colors.white,
+    borderBottomWidth: 1,
+    borderColor: theme.colors.white,
   },
 });
 
 function BarTab({ to, children, vertical }) {
   const location = useLocation().pathname;
   const active =
-    location === to || (to === "/pensum" && location.includes("/pensum"));
+    location === to || (to === "/main/pensum" && location.includes("/pensum"));
   const stylesLink = [styles.text, active && styles.active];
   return (
     <Link to={to} underlayColor="transparent">
@@ -64,10 +67,10 @@ export default function NavBar({ vertical }) {
         style={sty}
         contentContainerStyle={styC}
       >
-        <BarTab to="/" vertical={vertical}>
+        <BarTab to="/main" vertical={vertical}>
           {vertical ? (
             <HomeIcon
-              color={location === "/" ? "#fff" : "#999"}
+              color={location === "/main" ? theme.colors.white : "#999"}
               width={25}
               height={25}
             />
@@ -75,12 +78,12 @@ export default function NavBar({ vertical }) {
             "Home"
           )}
         </BarTab>
-        <BarTab to="/pensum" vertical={vertical}>
+        <BarTab to="/main/pensum" vertical={vertical}>
           {vertical ? (
             <BookIcon
               color={
-                location === "/pensum" || location.includes("/pensum")
-                  ? "#fff"
+                location === "/main/pensum" || location.includes("/pensum")
+                  ? theme.colors.white
                   : "#999"
               }
               width={25}
@@ -90,10 +93,12 @@ export default function NavBar({ vertical }) {
             "Pensum"
           )}
         </BarTab>
-        <BarTab to="/clases-hoy" vertical={vertical}>
+        <BarTab to="/main/clases-hoy" vertical={vertical}>
           {vertical ? (
             <CalendarIcon
-              color={location === "/clases-hoy" ? "#fff" : "#999"}
+              color={
+                location === "/main/clases-hoy" ? theme.colors.white : "#999"
+              }
               width={25}
               height={25}
             />
@@ -101,10 +106,10 @@ export default function NavBar({ vertical }) {
             "Clases Hoy"
           )}
         </BarTab>
-        <BarTab to="/horario" vertical={vertical}>
+        <BarTab to="/main/horario" vertical={vertical}>
           {vertical ? (
             <Calendar2Icon
-              color={location === "/horario" ? "#fff" : "#999"}
+              color={location === "/main/horario" ? theme.colors.white : "#999"}
               width={25}
               height={25}
             />
@@ -112,10 +117,10 @@ export default function NavBar({ vertical }) {
             "Horario"
           )}
         </BarTab>
-        <BarTab to="/express" vertical={vertical}>
+        <BarTab to="/main/express" vertical={vertical}>
           {vertical ? (
             <CoffeIcon
-              color={location === "/express" ? "#fff" : "#999"}
+              color={location === "/main/express" ? theme.colors.white : "#999"}
               width={25}
               height={25}
             />

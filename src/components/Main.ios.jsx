@@ -7,15 +7,14 @@ import SubjectsInLevelList from "./pensum/SubjectsInLevelList";
 import ClassesToday from "./classestoday/ClassesToday";
 import Schedule from "./schedule/Schedule";
 import Express from "./express/Express";
-import { useContext, useEffect, useState } from "react";
-import { StudentContext } from "../context/studentContext";
-import Register from "./register/Register";
 import { StatusBar } from "expo-status-bar";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: Constants.statusBarHeight,
   },
 });
 
@@ -26,36 +25,24 @@ export default function Main() {
 
   const sty = [
     styles.container,
-    orientation === "landscape" && { flexDirection: "row" },
+    orientation === "landscape" && { flexDirection: "row", marginTop: 0 },
   ];
-  const { student, course, levels } = useContext(StudentContext);
-  const [state, setState] = useState(false);
-  useEffect(() => {
-    if (student.notexist) {
-      setState(false);
-    } else {
-      if (course.name != "" && levels.length) setState(true);
-    }
-  }, [student, course, levels]);
   return (
-    <>
-      {state ? (
-        <View style={sty}>
-          <StatusBar style="auto" />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/pensum" element={<Pensum />} />
-            <Route path="/pensum/:level" element={<SubjectsInLevelList />} />
-            <Route path="/clases-hoy" element={<ClassesToday />} />
-            <Route path="/horario" element={<Schedule />} />
-            <Route path="/express" element={<Express />} />
-            <Route path="*" element={<Text>Not Found</Text>} />
-          </Routes>
-          <NavBar vertical={vertical} />
-        </View>
-      ) : (
-        <Register />
+    <View style={sty}>
+      <StatusBar style="auto" />
+      {location !== "/main/express" && orientation !== "landscape" && (
+        <Header />
       )}
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/pensum" element={<Pensum />} />
+        <Route path="/pensum/:level" element={<SubjectsInLevelList />} />
+        <Route path="/clases-hoy" element={<ClassesToday />} />
+        <Route path="/horario" element={<Schedule />} />
+        <Route path="/express" element={<Express />} />
+        <Route path="*" element={<Text>Not Found</Text>} />
+      </Routes>
+      <NavBar vertical={vertical} />
+    </View>
   );
 }

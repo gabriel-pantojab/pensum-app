@@ -1,34 +1,56 @@
 import { StyleSheet } from "react-native";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import UserCard from "./UserCard";
 import Course from "./Course";
 import CurrentSubjectsList from "./CurrentSubjectsList";
 import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
-import Constants from "expo-constants";
 import { ScrollView } from "react-native";
-import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.white,
     flex: 1,
+  },
+  logout: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    padding: 5,
+  },
+  logoutText: {
+    color: theme.colors.primary,
+    fontFamily: theme.fonts.holidayBudapest,
+  },
+  logoutTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
   },
 });
 
 export default function Home() {
-  const { student, currentSubjectsList } = useContext(StudentContext);
-  const orientation = useDeviceOrientation();
-  const styCont = [
-    styles.container,
-    orientation === "landscape" && {
-      marginTop: 0,
-    },
-  ];
+  const { student, currentSubjectsList, clearData } =
+    useContext(StudentContext);
+  const [saliendo, setSaliendo] = useState(false);
+  const logout = async () => {
+    setSaliendo(true);
+    const user = await getCurrentUser();
+    const uid = user.uid;
+    await logoutApp({ uid });
+    clearData();
+    setSaliendo(false);
+  };
+  const styCont = [styles.container];
   return (
     <View style={styCont}>
+      <View style={styles.logout}>
+        {saliendo && <Loading large="small" />}
+        <Pressable onPress={logout} style={styles.logoutTextContainer}>
+          <Text style={styles.logoutText}>Log out</Text>
+          <LogoutIcon width={15} height={15} color={theme.colors.primary} />
+        </Pressable>
+      </View>
       <ScrollView
         contentContainerStyle={{
           alignItems: "center",

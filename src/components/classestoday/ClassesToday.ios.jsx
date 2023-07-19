@@ -13,11 +13,9 @@ export default function ClassesToday() {
   const styCont = [
     {
       flex: 1,
-      marginTop: Constants.statusBarHeight,
       backgroundColor: theme.colors.white,
     },
     orientation === "landscape" && {
-      marginTop: 0,
       paddingLeft: Constants.statusBarHeight,
     },
   ];
