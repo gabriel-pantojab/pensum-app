@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
+    flex: 1,
     padding: 10,
     gap: 20,
     backgroundColor: theme.colors.white,
