@@ -26,30 +26,6 @@ const styles = StyleSheet.create({
     padding: 10,
     gap: 10,
   },
-  containerForm: {
-    flex: 1,
-    width: "100%",
-    maxWidth: 500,
-    alignItems: "center",
-    gap: 20,
-  },
-  textError: {
-    color: theme.colors.redIinformatica,
-    fontSize: 12,
-  },
-  textInput: {
-    borderBottomWidth: 1,
-    borderColor: theme.colors.primary,
-    padding: 5,
-    width: "80%",
-  },
-  title: {
-    fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: 10,
-    color: "#0C134F",
-  },
 });
 
 async function login({ nickname, password }) {
@@ -80,8 +56,8 @@ const defaultValues = {
 };
 
 const schema = yup.object({
-  nickname: yup.string().required("Porfavor ingrese su nickname"),
-  password: yup.string().required("Porfavor ingrese su contraseña"),
+  nickname: yup.string().required("Porfavor ingrese su nickname").trim(),
+  password: yup.string().required("Porfavor ingrese su contraseña").trim(),
 });
 
 export default function LoginPage() {
@@ -142,8 +118,8 @@ export default function LoginPage() {
           <BackIcon />
         </Link>
       </View>
-      <Text style={{ ...styles.title, fontSize: 18 }}>Inicio de Sesión</Text>
-      <View style={styles.containerForm}>
+      <Text style={theme.form.title}>Inicio de Sesión</Text>
+      <View style={theme.form.container}>
         <Controller
           control={control}
           rules={{
@@ -152,7 +128,7 @@ export default function LoginPage() {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={[
-                styles.textInput,
+                theme.form.textInput,
                 errors.nickname && {
                   borderColor: theme.colors.redIinformatica,
                 },
@@ -166,7 +142,7 @@ export default function LoginPage() {
           name="nickname"
         />
         {errors.nickname && (
-          <Text style={styles.textError}>{errors.nickname.message}</Text>
+          <Text style={theme.form.textError}>{errors.nickname.message}</Text>
         )}
 
         <Controller
@@ -177,7 +153,7 @@ export default function LoginPage() {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={[
-                styles.textInput,
+                theme.form.textInput,
                 errors.password && {
                   borderColor: theme.colors.redIinformatica,
                 },
@@ -192,7 +168,7 @@ export default function LoginPage() {
           name="password"
         />
         {errors.password && (
-          <Text style={styles.textError}>{errors.password.message}</Text>
+          <Text style={theme.form.textError}>{errors.password.message}</Text>
         )}
         <Button title="Ingresar" onPress={handleSubmit(onSubmit)} />
         {isSubmitting && <Loading />}

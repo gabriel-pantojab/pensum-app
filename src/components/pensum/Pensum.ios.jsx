@@ -62,7 +62,7 @@ function Level({ name, progress = 0, inProgress = false, index }) {
 
   return (
     <Link
-      to={`/pensum/${name}`}
+      to={`/main/pensum/${name}`}
       underlayColor={"transparent"}
       style={{
         ...styles.level,

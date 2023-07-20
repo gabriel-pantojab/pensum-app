@@ -9,6 +9,10 @@ const errors = {
     header: "Datos incorrectos",
     message: "Usuario o contraseña incorrectos",
   },
+  "auth/email-already-in-use": {
+    header: "Error",
+    message: "El usuario ya existe",
+  },
   default: {
     header: "Error",
     message: "Ha ocurrido un error inesperado",
@@ -16,7 +20,6 @@ const errors = {
 };
 
 export default function HandleError({ errorCode }) {
-  console.log(errorCode);
   const error = errors[errorCode] ? errors[errorCode] : errors["default"];
   Alert.alert(error.header, error.message, [
     {
