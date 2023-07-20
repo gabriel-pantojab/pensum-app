@@ -39,10 +39,10 @@ export function onAuthStateChanged() {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
       const uid = user.uid;
-      console.log("User is signed in.", uid);
+      // console.log("User is signed in.", uid);
       // ...
     } else {
-      console.log("No user is signed in.");
+      // console.log("No user is signed in.");
     }
   });
 }
@@ -55,6 +55,48 @@ export function crearHorariosCarrera({ sis, horarios }) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export function crearNivelesCarrera({ sis, niveles }) {
+  try {
+    update(ref(database, "carreras/" + sis), {
+      niveles,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getInfoNiveles({ sisCarrera }) {
+  const dbref = ref(database);
+  return get(child(dbref, "carreras/" + sisCarrera))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const niveles = snapshot.val().niveles;
+        return niveles;
+      } else {
+        return null;
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting data niveles", error);
+    });
+}
+
+export async function getTotalMateriasCarrera({ sisCarrera }) {
+  const dbref = ref(database);
+  return get(child(dbref, "carreras/" + sisCarrera))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const totalMaterias = snapshot.val().totalMaterias;
+        return totalMaterias;
+      } else {
+        return null;
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting data niveles", error);
+    });
 }
 
 export function updateCarreras({ sis, nombre }) {
@@ -434,15 +476,32 @@ function crearLevelsInformatica() {
   ];
 }
 
-export async function addUser({ uid, name, description, avatar }) {
-  const course = crearCourseInformatica();
-  const levels = crearLevelsInformatica();
+export async function addUser({
+  uid,
+  name,
+  description,
+  avatar,
+  nickname,
+  sisCarrera,
+  nameCarrera,
+}) {
+  const totalMateriasCarrera = await getTotalMateriasCarrera({ sisCarrera });
+  const course = {
+    name: nameCarrera,
+    sis: sisCarrera,
+    totalSubjects: totalMateriasCarrera,
+    approvedSubjects: 0,
+    pendingSubjects: totalMateriasCarrera,
+    inProgressSubjects: 0,
+  };
+  const levels = await getInfoNiveles({ sisCarrera });
   const currentSubjectsList = [];
   const schedule = {};
   return set(ref(database, "usuarios/" + uid), {
     uid,
     user: {
       name,
+      nickname,
       description,
       avatar,
     },

@@ -11,13 +11,15 @@ import {
   addUser,
   crearUsuario,
   getCurrentUser,
+  getInfoNiveles,
+  getTotalMateriasCarrera,
   onAuthStateChanged,
 } from "../../../firebaseconfig";
 import { saveStudent } from "../../storage/storage";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
-import { Course, Levels } from "../../storage/createInformatica";
 import HandleError from "./HandleError";
+import Select, { Option } from "../Select";
 
 const styles = StyleSheet.create({
   container: {
@@ -61,16 +63,24 @@ const schema = yup.object({
     .trim(),
 });
 
-async function signUp({ nickname, password, username }) {
+async function signUp({
+  nickname,
+  password,
+  username,
+  nameCarrera,
+  sisCarrera,
+}) {
   await crearUsuario({ nickname, password, username });
   const user = await getCurrentUser();
   const uid = user.uid;
   await addUser({
     uid,
     name: username,
-    description: "Estudiante de Ing. Informática",
+    description: "Estudiante de " + nameCarrera,
     avatar: "",
     nickname,
+    nameCarrera,
+    sisCarrera,
   });
   const studentDB = {
     name: username,
@@ -84,6 +94,10 @@ async function signUp({ nickname, password, username }) {
 }
 
 export default function SignUpPage() {
+  const [carrera, setCarrera] = useState({
+    name: "",
+    sis: "",
+  });
   const { setStudent, setCourse, setLevels, setCurrentSubjectsList } =
     useContext(StudentContext);
   const {
@@ -99,7 +113,32 @@ export default function SignUpPage() {
   const onSubmit = async (data) => {
     const { username, nickname, password } = data;
     try {
-      const newStudent = await signUp({ nickname, password, username });
+      const newStudent = await signUp({
+        nickname,
+        password,
+        username,
+        nameCarrera: carrera.name,
+        sisCarrera: carrera.sis,
+      });
+      let Levels = await getInfoNiveles({ sisCarrera: carrera.sis });
+      Levels = Levels.map((level) => {
+        return {
+          ...level,
+          progress: 0,
+          inProgress: 0,
+        };
+      });
+      const totalMateriasCarrera = await getTotalMateriasCarrera({
+        sisCarrera: carrera.sis,
+      });
+      const Course = {
+        name: carrera.name,
+        sis: carrera.sis,
+        totalSubjects: totalMateriasCarrera,
+        approvedSubjects: 0,
+        pendingSubjects: totalMateriasCarrera,
+        inProgressSubjects: 0,
+      };
       setStudent(newStudent);
       setCourse(Course);
       setLevels(Levels);
@@ -196,6 +235,47 @@ export default function SignUpPage() {
         {errors.password && (
           <Text style={theme.form.textError}>{errors.password.message}</Text>
         )}
+        <View
+          style={{
+            width: "80%",
+          }}
+        >
+          <Text
+            style={{
+              ...theme.form.text,
+              color: theme.colors.primary,
+              marginBottom: 5,
+            }}
+          >
+            Carrera
+          </Text>
+          <Select defaultValue={carrera.sis}>
+            <Option
+              value={"134111"}
+              name="Licenciatura en Ingeniería Informática"
+              onChange={(value) => {
+                setCarrera(value);
+              }}
+            >
+              <Text>Licenciatura en Ingeniería Informática</Text>
+            </Option>
+
+            <Option
+              value={"411702"}
+              name="Licenciatura en Ingeniería de Sistemas"
+              onChange={(value) => {
+                setCarrera(value);
+              }}
+            >
+              <Text>Licenciatura en Ingeniería de Sistemas</Text>
+            </Option>
+          </Select>
+          {carrera.name === "" && (
+            <Text style={theme.form.textError}>
+              Porfavor seleccione una carrera
+            </Text>
+          )}
+        </View>
         <Button title="Registrar" onPress={handleSubmit(onSubmit)} />
         {isSubmitting && <Loading />}
       </View>

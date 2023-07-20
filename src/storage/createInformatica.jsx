@@ -40,7 +40,6 @@ export const Levels = [
       },
     ],
   },
-
   {
     id: 2,
     name: "B",
