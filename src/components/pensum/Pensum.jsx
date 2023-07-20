@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +18,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
     color: theme.colors.primary,
   },
   level: {
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
   },
   titleLevel: {
-    fontWeight: "bold",
     fontSize: 18,
   },
 });
@@ -76,14 +75,14 @@ function Level({ name, progress = 0, inProgress = false, index }) {
             borderTopRightRadius: progress === 100 ? 8 : 0,
           }}
         ></View>
-        <Text
+        <TextStyle
           style={{
             ...styles.titleLevel,
             color: progress > 0 || inProgress ? "black" : "#ccc",
           }}
         >
           Nivel {name}
-        </Text>
+        </TextStyle>
         <View
           style={{
             alignSelf: "flex-start",
@@ -126,7 +125,9 @@ export default function Pensum() {
   return (
     <View style={styCont} onLayout={finishedRender}>
       <View style={styles.content}>
-        <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
+        <TextStyle style={styles.title}>
+          Licenciatura en Ing. Informática
+        </TextStyle>
         <FlatList
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
           data={levels}

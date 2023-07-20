@@ -4,7 +4,7 @@ import { theme } from "../theme";
 const styles = StyleSheet.create({
   text: {
     fontFamily: theme.fonts.holidayBudapest,
-    letterSpacing: 1,
+    fontSize: 16,
   },
 });
 

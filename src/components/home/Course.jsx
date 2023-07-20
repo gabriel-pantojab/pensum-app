@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { StudentContext } from "../../context/studentContext";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.redIinformatica,
+    backgroundColor: "#ccc",
     width: "90%",
     borderRadius: 10,
     position: "relative",
@@ -19,9 +20,10 @@ const styles = StyleSheet.create({
     top: -18,
     left: 10,
     fontSize: 20,
-    backgroundColor: theme.colors.redIinformatica,
+    backgroundColor: "#ccc",
     paddingHorizontal: 10,
     borderRadius: 5,
+    fontFamily: theme.fonts.holidayBudapest,
   },
   infoSubjects: {
     flexDirection: "row",
@@ -47,7 +49,7 @@ function ProgressCareer() {
       height: 50,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: theme.colors.redIinformatica,
+      backgroundColor: "#ccc",
       marginTop: 10,
     },
     progress: {
@@ -70,7 +72,7 @@ function ProgressCareer() {
       fontSize: 16,
       padding: 3,
       paddingHorizontal: 10,
-      backgroundColor: theme.colors.redIinformatica,
+      backgroundColor: "#ccc",
       borderTopRightRadius: 5,
       borderTopLeftRadius: 5,
       color: theme.colors.white,
@@ -78,9 +80,11 @@ function ProgressCareer() {
   });
   return (
     <View style={stylesProgress.container}>
-      <Text style={stylesProgress.title}>Progreso</Text>
+      <TextStyle style={stylesProgress.title}>Progreso</TextStyle>
       <View style={stylesProgress.progress} />
-      <Text style={stylesProgress.progressText}>{Math.round(percent)} %</Text>
+      <TextStyle style={stylesProgress.progressText}>
+        {Math.round(percent)} %
+      </TextStyle>
     </View>
   );
 }
@@ -89,21 +93,28 @@ export default function Course() {
   const { course } = useContext(StudentContext);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Carrera</Text>
-      <Text
+      <TextStyle style={styles.title}>Carrera</TextStyle>
+      <TextStyle
         style={{
           ...styles.text,
-          fontWeight: "bold",
-          fontSize: 18,
+          fontSize: 20,
         }}
       >
         {course.name}
-      </Text>
-      <Text style={styles.text}>Total Materias: {course.totalSubjects}</Text>
+      </TextStyle>
+      <TextStyle style={styles.text}>
+        Total Materias: {course.totalSubjects}
+      </TextStyle>
       <View style={styles.infoSubjects}>
-        <Text style={styles.text}>Aprobadas: {course.approvedSubjects}</Text>
-        <Text style={styles.text}>Cursando: {course.inProgressSubjects}</Text>
-        <Text style={styles.text}>Restantes: {course.pendingSubjects}</Text>
+        <TextStyle style={styles.text}>
+          Aprobadas: {course.approvedSubjects}
+        </TextStyle>
+        <TextStyle style={styles.text}>
+          Cursando: {course.inProgressSubjects}
+        </TextStyle>
+        <TextStyle style={styles.text}>
+          Restantes: {course.pendingSubjects}
+        </TextStyle>
       </View>
       <ProgressCareer />
     </View>

@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     position: "relative",
     borderRadius: 10,
     borderWidth: 2,
+    borderColor: "#ccc",
     paddingTop: 20,
     padding: 10,
     marginBottom: 20,
@@ -23,6 +24,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
     backgroundColor: theme.colors.white,
+    color: "#2c2c2c",
+    fontFamily: theme.fonts.holidayBudapest,
   },
   list: {
     gap: 20,
@@ -90,7 +93,7 @@ export default function CurrentSubjectsList({ subjects }) {
           style={{
             textAlign: "center",
             fontSize: 18,
-            fontWeight: "bold",
+            fontFamily: theme.fonts.holidayBudapest,
             color: "#ccc",
             margin: 20,
           }}

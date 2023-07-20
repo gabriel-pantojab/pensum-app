@@ -5,6 +5,7 @@ export const theme = {
     redIinformatica: "#dc3545",
     lila: "#6e77ee",
     greenProgress: "#b2f2bb",
+    softRed: "#fa5252",
   },
   fonts: {
     goodDog: "Good Dog",

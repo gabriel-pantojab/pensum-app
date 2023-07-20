@@ -1,13 +1,14 @@
 import { Image, StyleSheet, View, Text } from "react-native";
 import Constants from "expo-constants";
 import UserIcon from "../icons/UserIcon";
+import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    marginTop: Constants.statusBarHeight,
-    width: "90%",
+    width: "100%",
   },
   image: {
     width: 100,
@@ -17,39 +18,41 @@ const styles = StyleSheet.create({
   },
 
   userInfo: {
-    flex: 1,
-    marginLeft: 10,
+    width: "90%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ccc",
-    padding: 10,
-    borderRadius: 10,
+    borderColor: "#ccc",
+    borderBottomWidth: 2,
+    paddingBottom: 5,
   },
   textInfo: {
     flexWrap: "wrap",
     width: "100%",
+    color: "#1f1f1f",
   },
 });
 
 export default function UserCard({ image, name, description = "" }) {
   return (
     <View style={styles.container}>
-      {image != "" ? (
-        <Image style={styles.image} source={{ uri: image }} />
-      ) : (
-        <UserIcon />
-      )}
       <View style={styles.userInfo}>
+        <TextStyle
+          style={{
+            ...styles.textInfo,
+            fontSize: 20,
+          }}
+        >
+          Estudiante:
+        </TextStyle>
         <Text
           style={{
             ...styles.textInfo,
-            fontWeight: "bold",
-            fontSize: 18,
+            paddingLeft: 10,
+            fontSize: 16,
           }}
         >
           {name}
         </Text>
-        <Text style={styles.textInfo}>{description}</Text>
       </View>
     </View>
   );
