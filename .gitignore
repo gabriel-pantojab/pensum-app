@@ -20,4 +20,6 @@ web-build/
 
 .env
 
+.env
+
 /src/components/register/LoginRHF.jsx

@@ -13,7 +13,6 @@ import {
 // import {...} from "firebase/firestore";
 // import {...} from "firebase/functions";
 // import {...} from "firebase/storage";
-
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_APIKEY,

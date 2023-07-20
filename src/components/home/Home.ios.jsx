@@ -1,13 +1,14 @@
-import { StyleSheet } from "react-native";
-import { View } from "react-native";
+import { Pressable, StyleSheet, View, Text } from "react-native";
 import UserCard from "./UserCard";
 import Course from "./Course";
 import CurrentSubjectsList from "./CurrentSubjectsList";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import { ScrollView } from "react-native";
 import { theme } from "../../theme";
 import { logoutApp } from "../../storage/storage";
+import LogoutIcon from "../icons/LogoutIcon";
+import Loading from "../Loading";
 
 const styles = StyleSheet.create({
   container: {

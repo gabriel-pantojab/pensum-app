@@ -10,6 +10,7 @@ import Express from "./express/Express";
 import { StatusBar } from "expo-status-bar";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import Constants from "expo-constants";
+import Header from "./Header";
 
 const styles = StyleSheet.create({
   container: {

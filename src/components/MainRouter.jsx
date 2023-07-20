@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { StudentContext } from "../context/studentContext";
 import { Route, Routes, Navigate } from "react-router-native";
 import Register from "./register/Register";
-import Login from "./register/Login";
-import SignUp from "./register/SignUp";
 import Main from "./Main";
+import LoginPage from "./register/LoginPage";
+import SignUpPage from "./register/SignUpPage";
 
 export default function () {
   const { student } = useContext(StudentContext);
@@ -23,13 +23,21 @@ export default function () {
       <Route
         path="/login"
         element={
-          student.notexist ? <Login /> : <Navigate to="/main" replace={true} />
+          student.notexist ? (
+            <LoginPage />
+          ) : (
+            <Navigate to="/main" replace={true} />
+          )
         }
       />
       <Route
         path="/signUp"
         element={
-          student.notexist ? <SignUp /> : <Navigate to="/main" replace={true} />
+          student.notexist ? (
+            <SignUpPage />
+          ) : (
+            <Navigate to="/main" replace={true} />
+          )
         }
       />
       <Route

@@ -186,7 +186,9 @@ function Carreras({ carreras, loading, finishedRender }) {
         <FlatList
           initialNumToRender={5}
           data={carreras}
-          renderItem={({ item }) => <Carrera name={item} sis={item.sis} />}
+          renderItem={({ item }) => (
+            <Carrera name={item.nombre} sis={item.sis} />
+          )}
           keyExtractor={(item) => item.sis}
           ListFooterComponent={loading}
         />
