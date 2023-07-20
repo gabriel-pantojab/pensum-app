@@ -117,7 +117,7 @@ function Level({ name, progress = 0, inProgress = false, index }) {
 }
 
 export default function Pensum() {
-  const { levels } = useContext(StudentContext);
+  const { levels, course } = useContext(StudentContext);
 
   const { loading, finishedRender } = useLoading();
 
@@ -125,9 +125,7 @@ export default function Pensum() {
   return (
     <View style={styCont} onLayout={finishedRender}>
       <View style={styles.content}>
-        <TextStyle style={styles.title}>
-          Licenciatura en Ing. Informática
-        </TextStyle>
+        <TextStyle style={styles.title}>{course.name}</TextStyle>
         <FlatList
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
           data={levels}
