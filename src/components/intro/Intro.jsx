@@ -52,7 +52,7 @@ export default function Intro() {
   useEffect(() => {
     setTimeout(() => {
       setShow(true);
-    }, 700);
+    }, 300);
   }, []);
   return (
     <View style={styles.container}>
@@ -62,21 +62,28 @@ export default function Intro() {
             style={{
               flex: 1,
               alignItems: "center",
-              justifyContent: "flex-end",
+              justifyContent: "center",
               paddingBottom: 30,
             }}
           >
-            <Logo widthBG={100} heightBG={100} />
-            <Text style={{ ...styles.title, color: theme.colors.primary }}>
+            <Logo
+              widthBG={200}
+              heightBG={200}
+              widthBirrete={100}
+              heightBirrete={100}
+              topBirrete={65}
+              leftBirrete={40}
+            />
+            {/* <Text style={{ ...styles.title, color: theme.colors.primary }}>
               Universidad Mayor de San Simón
             </Text>
             <Text
               style={{ ...styles.title, color: theme.colors.redIinformatica }}
             >
               Pensum Ing. Informática
-            </Text>
+            </Text> */}
           </View>
-          <View
+          {/* <View
             style={{
               flex: 1,
               width: "100%",
@@ -87,7 +94,7 @@ export default function Intro() {
               style={{ width: 100, height: 100 }}
               source={require("../../../assets/LogoUMSS.png")}
             />
-          </View>
+          </View> */}
           <Devs />
         </>
       )}
