@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
   signOut,
+  onAuthStateChanged as onAuthStateChangedAuth,
 } from "firebase/auth";
 // import {...} from "firebase/firestore";
 // import {...} from "firebase/functions";
@@ -31,6 +32,20 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 export const auth = getAuth(app);
+
+export function onAuthStateChanged() {
+  onAuthStateChangedAuth(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      const uid = user.uid;
+      console.log("User is signed in.", uid);
+      // ...
+    } else {
+      console.log("No user is signed in.");
+    }
+  });
+}
 
 export function crearHorariosCarrera({ sis, horarios }) {
   try {

@@ -1,4 +1,4 @@
-import { Text, View, TextInput, Button, Alert, StyleSheet } from "react-native";
+import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,7 +8,11 @@ import { Link } from "react-router-native";
 import BackIcon from "../icons/BackIcon";
 import Loading from "../Loading";
 import { useContext } from "react";
-import { getUser, login as loginFirebase } from "../../../firebaseconfig";
+import {
+  getUser,
+  login as loginFirebase,
+  onAuthStateChanged,
+} from "../../../firebaseconfig";
 import { StudentContext } from "../../context/studentContext";
 import {
   saveCourse,
@@ -36,7 +40,7 @@ async function login({ nickname, password }) {
   const user = responseLogin.user;
   const uid = user.uid;
   const userDB = await getUser({ uid });
-  const student = { ...userDB.user, uid };
+  const student = { ...userDB.user, uid, nickname };
   const course = userDB.course;
   const currentSubjectsList = userDB.currentSubjectsList;
   const levels = userDB.levels;
@@ -97,6 +101,7 @@ export default function LoginPage() {
       if (schedule) {
         await saveSchedule(schedule);
       }
+      onAuthStateChanged();
     } catch (error) {
       const errorCode = error.code;
       HandleError({ errorCode });

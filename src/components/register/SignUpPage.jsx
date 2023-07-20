@@ -7,7 +7,12 @@ import BackIcon from "../icons/BackIcon";
 import Constants from "expo-constants";
 import { theme } from "../../theme";
 import Loading from "../Loading";
-import { addUser, crearUsuario, getCurrentUser } from "../../../firebaseconfig";
+import {
+  addUser,
+  crearUsuario,
+  getCurrentUser,
+  onAuthStateChanged,
+} from "../../../firebaseconfig";
 import { saveStudent } from "../../storage/storage";
 import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
@@ -65,12 +70,14 @@ async function signUp({ nickname, password, username }) {
     name: username,
     description: "Estudiante de Ing. Informática",
     avatar: "",
+    nickname,
   });
   const studentDB = {
     name: username,
     description: "Estudiante de Ing. Informática",
     avatar: "",
     uid,
+    nickname,
   };
   await saveStudent(studentDB);
   return studentDB;
@@ -97,6 +104,7 @@ export default function SignUpPage() {
       setCourse(Course);
       setLevels(Levels);
       setCurrentSubjectsList([]);
+      onAuthStateChanged();
     } catch (error) {
       const errorCode = error.code;
       HandleError({ errorCode });

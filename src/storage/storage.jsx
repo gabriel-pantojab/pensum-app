@@ -13,7 +13,7 @@ async function getStudent() {
   }
 }
 
-async function saveStudent({ name, description, avatar }) {
+async function saveStudent({ name, description, avatar, uid, nickname }) {
   let student = await getStudent();
 
   if (student === null) {
@@ -21,6 +21,8 @@ async function saveStudent({ name, description, avatar }) {
       name,
       description,
       avatar,
+      uid,
+      nickname,
     };
   } else {
     student.name = name || student.name;

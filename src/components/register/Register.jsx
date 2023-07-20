@@ -25,7 +25,7 @@ function UMSS() {
   return (
     <View style={styles.umss.container}>
       <Image
-        style={{ width: 150, height: 250 }}
+        style={{ width: 150, height: 210 }}
         source={require("../../../assets/LogoUMSS.png")}
       />
       <View style={styles.umss.nameContainer}>
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   },
   optionsRegister: {
     flex: 1,
+    marginTop: 70,
     width: "100%",
     alignItems: "center",
     gap: 30,
