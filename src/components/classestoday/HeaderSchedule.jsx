@@ -1,15 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 export default function HeaderSchedule({ month, dayName, day, year }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{year}</Text>
+      <TextStyle style={styles.text}>{year}</TextStyle>
       <View style={styles.dayContainer}>
-        <Text style={styles.text}>{dayName}</Text>
-        <Text style={styles.text}>{day}</Text>
+        <TextStyle style={styles.text}>{dayName}</TextStyle>
+        <TextStyle style={styles.text}>{day}</TextStyle>
       </View>
-      <Text style={styles.text}>{month}</Text>
+      <TextStyle style={styles.text}>{month}</TextStyle>
     </View>
   );
 }
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    fontWeight: "bold",
     color: theme.colors.primary,
   },
 });

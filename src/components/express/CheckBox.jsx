@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Pressable, View, StyleSheet } from "react-native";
 import CheckIcon from "../icons/CheckIcon";
+
 export default function CheckBox({
   name = "",
   width = 20,

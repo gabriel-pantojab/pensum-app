@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet } from "react-native";
 import { ScheduleContext } from "./context/scheduleContext";
 import { formatHour, nextHour } from "./utils";
 import Loading from "../Loading";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import Constants from "expo-constants";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 let PERIOD_HEIGHT = 28;
 
@@ -83,13 +84,13 @@ function Subject({ subject, choque }) {
   ];
   return (
     <View style={styleSubject}>
-      <Text style={[styles.infoSubject, choque && { color: "red" }]}>
+      <TextStyle style={[styles.infoSubject, choque && { color: "red" }]}>
         {subject.auxi && "* "}
         {subject.subjectName}
-      </Text>
-      <Text style={[styles.infoSubject, choque && { color: "red" }]}>
+      </TextStyle>
+      <TextStyle style={[styles.infoSubject, choque && { color: "red" }]}>
         {subject.classroom} G:{subject.group}
-      </Text>
+      </TextStyle>
     </View>
   );
 }
@@ -162,7 +163,7 @@ function Day({ dayName, activities }) {
   if (activities.length === 0) return;
   return (
     <View style={styles.day}>
-      <Text style={styles.dayName}>{dayName}</Text>
+      <TextStyle style={styles.dayName}>{dayName}</TextStyle>
       <View style={styles.activitiesContainer}>
         {activities.map((activity) => (
           <Activity activity={activity} key={activity.period} />
@@ -181,7 +182,7 @@ function LoadingSchedule() {
         alignItems: "center",
       }}
     >
-      <Text
+      <TextStyle
         style={{
           fontSize: 20,
           fontWeight: "bold",
@@ -189,7 +190,7 @@ function LoadingSchedule() {
         }}
       >
         Cargando...
-      </Text>
+      </TextStyle>
       <Loading />
     </View>
   );
@@ -213,7 +214,7 @@ function Hour({ hr }) {
   };
   return (
     <View key={hr} style={styleHour}>
-      <Text style={styles.hourValue}>{hr}</Text>
+      <TextStyle style={styles.hourValue}>{hr}</TextStyle>
     </View>
   );
 }
@@ -223,7 +224,7 @@ function Hours({ hours }) {
 
   return (
     <View>
-      <Text style={styles.dayName}>hora</Text>
+      <TextStyle style={styles.dayName}>hora</TextStyle>
       <View style={styles.activitiesContainer}>
         {hours.map((hr) => (
           <Hour key={hr} hr={hr} />
@@ -292,7 +293,6 @@ const styles = StyleSheet.create({
   },
   dayName: {
     fontSize: 16,
-    fontWeight: "bold",
     textAlign: "center",
     padding: 5,
   },
@@ -332,6 +332,5 @@ const styles = StyleSheet.create({
   hourValue: {
     fontSize: 10,
     textAlign: "center",
-    fontWeight: "bold",
   },
 });

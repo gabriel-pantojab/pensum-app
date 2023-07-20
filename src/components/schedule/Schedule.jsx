@@ -1,14 +1,15 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import TimeTableExpress from "../express/TimeTableExpress";
 import ScheduleProvider from "../express/context/scheduleContext";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 export default function Schedule() {
   return (
     <ScheduleProvider>
       <View style={styles.container}>
         <View style={styles.content}>
-          <Text style={styles.title}>Horario</Text>
+          <TextStyle style={styles.title}>Horario</TextStyle>
           <View style={styles.containerTimeTable}>
             <TimeTableExpress />
           </View>
@@ -30,7 +31,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: "bold",
     color: theme.colors.primary,
   },
   containerTimeTable: {

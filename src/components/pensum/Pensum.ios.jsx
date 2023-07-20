@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { Link } from "react-router-native";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
@@ -6,6 +6,7 @@ import useLoading from "../../hooks/useLoading";
 import Constants from "expo-constants";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 const styles = StyleSheet.create({
   container: {
@@ -78,41 +79,41 @@ function Level({ name, progress = 0, inProgress = false, index }) {
             borderTopRightRadius: progress === 100 ? 8 : 0,
           }}
         ></View>
-        <Text
+        <TextStyle
           style={{
             ...styles.titleLevel,
             color: progress > 0 || inProgress ? "black" : "#ccc",
           }}
         >
           Nivel {name}
-        </Text>
+        </TextStyle>
         <View
           style={{
             alignSelf: "flex-start",
             padding: 10,
           }}
         >
-          <Text
+          <TextStyle
             style={{
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
             Aprobadas: {approved}
-          </Text>
-          <Text
+          </TextStyle>
+          <TextStyle
             style={{
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
             Cursando: {subjectsInProgress}
-          </Text>
-          <Text
+          </TextStyle>
+          <TextStyle
             style={{
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
             No Cursadas: {pending}
-          </Text>
+          </TextStyle>
         </View>
       </>
     </Link>
@@ -135,7 +136,7 @@ export default function Pensum() {
   return (
     <View style={styCont} onLayout={finishedRender}>
       <View style={styles.content}>
-        <Text style={styles.title}>{course.name}</Text>
+        <TextStyle style={styles.title}>{course.name}</TextStyle>
         <FlatList
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
           data={levels}

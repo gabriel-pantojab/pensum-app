@@ -1,13 +1,12 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { Link, useParams } from "react-router-native";
-
 import SubjectInLevel from "./SubjectInLevel";
 import BackIcon from "../icons/BackIcon";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
 import { theme } from "../../theme";
-
+import TextStyle from "../TextStyle";
 function StatesSubject() {
   return (
     <View style={styles.states}>
@@ -19,7 +18,7 @@ function StatesSubject() {
             borderColor: "#2f9e44",
           }}
         ></View>
-        <Text>Aprobada</Text>
+        <TextStyle>Aprobada</TextStyle>
       </View>
       <View style={styles.state}>
         <View
@@ -29,7 +28,7 @@ function StatesSubject() {
             backgroundColor: "#ffec99",
           }}
         ></View>
-        <Text>Cursando</Text>
+        <TextStyle>Cursando</TextStyle>
       </View>
       <View style={styles.state}>
         <View
@@ -39,7 +38,7 @@ function StatesSubject() {
             backgroundColor: "#ccc",
           }}
         ></View>
-        <Text>No Cursada</Text>
+        <TextStyle>No Cursada</TextStyle>
       </View>
     </View>
   );
@@ -77,7 +76,9 @@ export default function SubjectsInLevelList() {
             alignItems: "center",
           }}
         >
-          <Text style={styles.title}>Licenciatura en Ing. Informática</Text>
+          <TextStyle style={styles.title}>
+            Licenciatura en Ing. Informática
+          </TextStyle>
           <Link
             underlayColor={"transparent"}
             style={{
@@ -89,13 +90,13 @@ export default function SubjectsInLevelList() {
           </Link>
         </View>
         <View style={styles.info}>
-          <Text style={styles.level}>Nivel {level}</Text>
+          <TextStyle style={styles.level}>Nivel {level}</TextStyle>
           <StatesSubject />
         </View>
         <View style={styles.info}>
-          <Text>Aprobadas: {approved}</Text>
-          <Text>Cursando: {inProgress}</Text>
-          <Text>No Cursadas: {pending}</Text>
+          <TextStyle>Aprobadas: {approved}</TextStyle>
+          <TextStyle>Cursando: {inProgress}</TextStyle>
+          <TextStyle>No Cursadas: {pending}</TextStyle>
         </View>
         <FlatList
           initialNumToRender={1}
@@ -132,11 +133,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
     color: theme.colors.primary,
   },
   level: {
-    fontWeight: "bold",
     fontSize: 18,
   },
   info: {

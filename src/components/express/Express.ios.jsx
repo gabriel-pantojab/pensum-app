@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Dimensions,
-  Button,
-} from "react-native";
+import { View, StyleSheet, FlatList, Dimensions, Button } from "react-native";
 import Constants from "expo-constants";
 import { Pressable } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
@@ -22,6 +15,7 @@ import CheckIcon from "../icons/CheckIcon";
 import { getCarreras, getNiveles } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -60,14 +54,14 @@ function Ejecutando({ ejecutando, ejecutado, mensaje }) {
         }}
       >
         <CheckIcon width={10} height={10} color="green" />
-        <Text
+        <TextStyle
           style={{
             color: "green",
             fontSize: 10,
           }}
         >
           {mensaje}
-        </Text>
+        </TextStyle>
       </View>
     );
 }
@@ -91,7 +85,7 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
       }}
     >
       <Pressable style={styles.options} onPress={showCarreras}>
-        <Text style={styles.title}>Carreras</Text>
+        <TextStyle style={styles.title}>Carreras</TextStyle>
         {showCarrerasValue ? (
           <CaretUpIcon color="#fff" width={15} height={15} />
         ) : (
@@ -154,7 +148,7 @@ function Carrera({ name, sis }) {
         }}
         onPress={() => setShowOffer(!showOffer)}
       >
-        <Text style={styles.carrera}>{name}</Text>
+        <TextStyle style={styles.carrera}>{name}</TextStyle>
         {showOffer && offer ? (
           <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
@@ -193,7 +187,9 @@ function Carreras({ carreras, loading, finishedRender }) {
           ListFooterComponent={loading}
         />
       ) : (
-        <Text style={styles.carrera}>No hay carreras disponibles</Text>
+        <TextStyle style={styles.carrera}>
+          No hay carreras disponibles
+        </TextStyle>
       )}
     </View>
   );
@@ -212,9 +208,9 @@ function ExpressHeader({ action, showCarreras }) {
 
   return (
     <View style={styHeader}>
-      <Text style={styles.title}>
+      <TextStyle style={styles.title}>
         Express - Gestión {new Date().getFullYear()}
-      </Text>
+      </TextStyle>
       <CarrerasOption showCarreras={action} showCarrerasValue={showCarreras} />
     </View>
   );
@@ -285,18 +281,17 @@ const styles = StyleSheet.create({
     gap: 5,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: theme.colors.white,
     paddingHorizontal: 5,
     borderRadius: 5,
-    backgroundColor: "#999",
-    maxWidth: 85,
+    backgroundColor: "#ccc",
   },
   title: {
-    color: "#fff",
-    fontWeight: "bold",
+    color: theme.colors.white,
+    fontSize: 15,
   },
   menu: {
-    backgroundColor: "#999",
+    backgroundColor: "#ccc",
     borderRightWidth: 2,
     borderBottomWidth: 2,
     borderBottomRightRadius: 5,
@@ -310,9 +305,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   carrera: {
-    color: "#fff",
+    color: theme.colors.white,
     padding: 5,
-    fontWeight: "bold",
     fontSize: 10,
     marginBottom: 5,
   },

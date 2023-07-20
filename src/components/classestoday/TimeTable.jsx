@@ -1,9 +1,10 @@
-import { Text, View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import useLoading from "../../hooks/useLoading";
 import { useEffect, useState } from "react";
 import { getSchedule } from "../../storage/storage";
 import { getDateFormat } from "../../utils/utils";
 import { formatHour } from "../express/utils";
+import TextStyle from "../TextStyle";
 
 function buildFreeDay() {
   let freeDay = [];
@@ -58,11 +59,11 @@ function Cell({ hour, subjects, periods }) {
         }}
       >
         {hours.map((h) => (
-          <Text key={h} style={styles.hour}>
+          <TextStyle key={h} style={styles.hour}>
             {parseInt(h.split(":")[0]) < 10
               ? `0${parseInt(h.split(":")[0])}:${h.split(":")[1]}`
               : h}
-          </Text>
+          </TextStyle>
         ))}
       </View>
       <View style={{ flex: 1, position: "relative" }}>
@@ -92,10 +93,10 @@ function Subject({ subjects }) {
     <View style={styC}>
       {subjects.map((s) => (
         <View key={s.subjectName}>
-          <Text style={styT}>{s.subjectName}</Text>
-          <Text style={styT}>
+          <TextStyle style={styT}>{s.subjectName}</TextStyle>
+          <TextStyle style={styT}>
             {s.classroom} G:{s.group}
-          </Text>
+          </TextStyle>
         </View>
       ))}
     </View>
@@ -209,7 +210,6 @@ const styles = StyleSheet.create({
   },
   hour: {
     fontSize: 15,
-    fontWeight: "bold",
     height: 50,
     textAlign: "center",
   },
@@ -246,7 +246,6 @@ const styles = StyleSheet.create({
   },
   subjectText: {
     fontSize: 12,
-    fontWeight: "bold",
     textAlign: "center",
     marginBottom: 5,
   },

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
+import { View, Pressable, StyleSheet, FlatList } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CheckBox from "./CheckBox";
@@ -10,6 +10,8 @@ import {
   getMateriasNivelCarrera,
 } from "../../../firebaseconfig";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
+
 function checkedGroup(group, schedule) {
   const dias = {
     LU: "lunes",
@@ -78,9 +80,9 @@ function Group({ group, teacher, infoGroup }) {
           setChecked(!checked);
         }}
       >
-        <Text style={stylesGroup.group}>
+        <TextStyle style={stylesGroup.group}>
           G:{group} {teacher}
-        </Text>
+        </TextStyle>
       </CheckBox>
     </View>
   );
@@ -104,7 +106,6 @@ function Subject({ name, nivel, sisSubejct, sisCarrera }) {
     },
     nameSubject: {
       fontSize: 10,
-      fontWeight: "bold",
       color: "#fff",
     },
   });
@@ -123,7 +124,7 @@ function Subject({ name, nivel, sisSubejct, sisCarrera }) {
         style={stylesSubject.subject}
         onPress={() => setShowOffer(!showOffer)}
       >
-        <Text style={stylesSubject.nameSubject}>{name}</Text>
+        <TextStyle style={stylesSubject.nameSubject}>{name}</TextStyle>
         {showOffer && offer ? (
           <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
@@ -182,7 +183,6 @@ function Level({ name, carrera, sisCarrera }) {
     nameLevel: {
       color: "#fff",
       fontSize: 10,
-      fontWeight: "bold",
       borderBottomWidth: 1,
       borderColor: "#fff",
     },
@@ -205,7 +205,7 @@ function Level({ name, carrera, sisCarrera }) {
           setShowOffer(!showOffer);
         }}
       >
-        <Text style={stylesLevel.nameLevel}>NIVEL: {name}</Text>
+        <TextStyle style={stylesLevel.nameLevel}>NIVEL: {name}</TextStyle>
         {showOffer && offer ? (
           <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (

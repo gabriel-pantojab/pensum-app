@@ -11,6 +11,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     "Good Dog": require("./assets/fonts/GoodDog.otf"),
     "Holiday Budapest": require("./assets/fonts/Holiday_Budapest.ttf"),
+    "Holiday Budapest Regular": require("./assets/fonts/HolidaybudapestRegular.ttf"),
   });
   useEffect(() => {
     setTimeout(() => {

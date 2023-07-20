@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { Link } from "react-router-native";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
@@ -89,27 +89,27 @@ function Level({ name, progress = 0, inProgress = false, index }) {
             padding: 10,
           }}
         >
-          <Text
+          <TextStyle
             style={{
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
             Aprobadas: {approved}
-          </Text>
-          <Text
+          </TextStyle>
+          <TextStyle
             style={{
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
             Cursando: {subjectsInProgress}
-          </Text>
-          <Text
+          </TextStyle>
+          <TextStyle
             style={{
               color: progress > 0 || inProgress ? "black" : "#ccc",
             }}
           >
             No Cursadas: {pending}
-          </Text>
+          </TextStyle>
         </View>
       </>
     </Link>

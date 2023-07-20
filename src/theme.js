@@ -6,10 +6,12 @@ export const theme = {
     lila: "#6e77ee",
     greenProgress: "#b2f2bb",
     softRed: "#fa5252",
+    black: "#1f1f1f",
   },
   fonts: {
     goodDog: "Good Dog",
     holidayBudapest: "Holiday Budapest",
+    holidayBudapestRegular: "Holiday Budapest Regular",
   },
   form: {
     title: {

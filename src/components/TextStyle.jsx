@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: theme.fonts.holidayBudapest,
     fontSize: 16,
+    color: theme.colors.black,
   },
 });
 

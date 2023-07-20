@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   Modal,
   Pressable,
@@ -11,6 +10,7 @@ import MenuIcon from "../icons/MenuIcon";
 import CloseIcon from "../icons/CloseIcon";
 import { StudentContext } from "../../context/studentContext";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 function RadioButton({ initValue, values, action }) {
   const [currentValue, setCurrentValue] = useState(initValue);
@@ -29,7 +29,7 @@ function RadioButton({ initValue, values, action }) {
             backgroundColor: value === currentValue ? "blue" : "white",
           }}
         />
-        <Text>{value}</Text>
+        <TextStyle>{value}</TextStyle>
       </View>
     </Pressable>
   ));
@@ -61,7 +61,7 @@ function ModalChangeState({ modal, setModal, name, stateSubject, action }) {
               gap: 10,
             }}
           >
-            <Text
+            <TextStyle
               style={{
                 fontWeight: "bold",
                 fontSize: 18,
@@ -69,7 +69,7 @@ function ModalChangeState({ modal, setModal, name, stateSubject, action }) {
               }}
             >
               {name}
-            </Text>
+            </TextStyle>
             <RadioButton
               values={["No Cursada", "Cursando", "Aprobada"]}
               action={(value) => {
@@ -185,14 +185,14 @@ export default function SubjectInLevel({ name, state, level, id }) {
       <TouchableOpacity style={styles.menu} onPress={() => setModal(true)}>
         <MenuIcon />
       </TouchableOpacity>
-      <Text
+      <TextStyle
         style={{
           ...styles.title,
           color: stateSubject === "No Cursada" ? "#ccc" : "black",
         }}
       >
         {name}
-      </Text>
+      </TextStyle>
 
       <ModalChangeState
         modal={modal}
@@ -234,7 +234,6 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 16,
-    fontWeight: "bold",
     textAlign: "center",
   },
   noCursada: {
