@@ -98,6 +98,7 @@ export default function SignUpPage() {
     name: "",
     sis: "",
   });
+  const [emptyCarrera, setEmptyCarrera] = useState(false);
   const { setStudent, setCourse, setLevels, setCurrentSubjectsList } =
     useContext(StudentContext);
   const {
@@ -270,13 +271,23 @@ export default function SignUpPage() {
               <Text>Licenciatura en Ingeniería de Sistemas</Text>
             </Option>
           </Select>
-          {carrera.name === "" && (
-            <Text style={theme.form.textError}>
+          {emptyCarrera && (
+            <Text style={{ ...theme.form.textError, marginTop: 7 }}>
               Porfavor seleccione una carrera
             </Text>
           )}
         </View>
-        <Button title="Registrar" onPress={handleSubmit(onSubmit)} />
+        <Button
+          title="Registrar"
+          onPress={handleSubmit(() => {
+            if (carrera.name === "") {
+              setEmptyCarrera(true);
+            } else {
+              setEmptyCarrera(false);
+              onSubmit();
+            }
+          })}
+        />
         {isSubmitting && <Loading />}
       </View>
     </View>
