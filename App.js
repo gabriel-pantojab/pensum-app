@@ -13,11 +13,17 @@ export default function App() {
     "Holiday Budapest": require("./assets/fonts/Holiday_Budapest.ttf"),
     "Holiday Budapest Regular": require("./assets/fonts/HolidaybudapestRegular.ttf"),
   });
+
   useEffect(() => {
     setTimeout(() => {
       setIntro(false);
     }, 3000);
   }, []);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <NativeRouter>
       <StudentProvider>
