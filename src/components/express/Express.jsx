@@ -253,7 +253,7 @@ export default function Express() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ccc",
+    backgroundColor: theme.colors.white,
   },
   header: {
     position: "relative",

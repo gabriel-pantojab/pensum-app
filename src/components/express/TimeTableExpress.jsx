@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   activity: {
-    borderColor: "#f9faf5",
+    borderColor: "#999",
     borderBottomWidth: 1,
     justifyContent: "center",
   },
@@ -314,10 +314,10 @@ const styles = StyleSheet.create({
   activitiesContainer: {
     borderTopWidth: 1,
     borderRightWidth: 1,
-    borderColor: "#f9faf5",
+    borderColor: "#999",
   },
   hour: {
-    borderColor: "#f9faf5",
+    borderColor: "#999",
     borderBottomWidth: 1,
     padding: 3,
   },

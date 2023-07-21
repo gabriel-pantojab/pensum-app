@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#ccc",
+    backgroundColor: theme.colors.white,
     padding: 10,
   },
   title: {
