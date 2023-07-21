@@ -70,6 +70,7 @@ async function saveCourse({
   if (course === null) {
     course = {
       name,
+      sis,
       totalSubjects,
       approvedSubjects,
       pendingSubjects,
@@ -77,6 +78,7 @@ async function saveCourse({
     };
   } else {
     course.name = name != undefined ? name : course.name;
+    course.sis = sis != undefined ? sis : course.sis;
     course.totalSubjects =
       totalSubjects != undefined ? totalSubjects : course.totalSubjects;
     course.approvedSubjects =
