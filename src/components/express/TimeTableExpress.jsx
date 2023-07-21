@@ -145,7 +145,7 @@ function Activity({ activity }) {
         ? (2 * PERIOD_HEIGHT * maxSubjects) / maxPeriods
         : PERIOD_HEIGHT,
     },
-    activity.subjects.length > 1 && { backgroundColor: "#f9faf5" },
+    activity.subjects.length > 1 && { backgroundColor: theme.colors.white },
   ];
   return (
     <View style={styleActivity}>
@@ -245,6 +245,7 @@ export default function TimeTableExpress() {
           <ScrollView
             contentContainerStyle={{
               flexDirection: "row",
+              backgroundColor: theme.colors.white,
             }}
           >
             {!schedule ? (
@@ -276,9 +277,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     alignItems: "center",
+    backgroundColor: theme.colors.white,
   },
   containerScroll: {
     alignItems: "flex-start",
+    backgroundColor: theme.colors.white,
   },
   day: {
     flex: 1,

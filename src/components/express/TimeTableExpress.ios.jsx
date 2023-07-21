@@ -144,7 +144,7 @@ function Activity({ activity }) {
         ? (2 * PERIOD_HEIGHT * maxSubjects) / maxPeriods
         : PERIOD_HEIGHT,
     },
-    activity.subjects.length > 1 && { backgroundColor: "#f9faf5" },
+    activity.subjects.length > 1 && { backgroundColor: theme.colors.white },
   ];
   return (
     <View style={styleActivity}>

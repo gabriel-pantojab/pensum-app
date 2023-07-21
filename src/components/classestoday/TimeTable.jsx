@@ -5,6 +5,7 @@ import { getSchedule } from "../../storage/storage";
 import { getDateFormat } from "../../utils/utils";
 import { formatHour } from "../express/utils";
 import TextStyle from "../TextStyle";
+import { theme } from "../../theme";
 
 function buildFreeDay() {
   let freeDay = [];
@@ -43,13 +44,13 @@ function Cell({ hour, subjects, periods }) {
     hours.push(next);
     i--;
   }
-  const height = periods ? 50 * periods : 50;
+  const height = periods ? 50 * subjects.length : 50;
   return (
     <View
       style={{
         flex: 1,
         flexDirection: "row",
-        paddingLeft: 10,
+        paddingLeft: 15,
       }}
     >
       <View
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   choque: {
-    backgroundColor: "white",
+    backgroundColor: theme.colors.white,
   },
   subjectText: {
     fontSize: 12,
