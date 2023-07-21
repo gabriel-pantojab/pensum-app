@@ -59,6 +59,7 @@ async function getCourse() {
 
 async function saveCourse({
   name,
+  sis,
   totalSubjects,
   approvedSubjects,
   pendingSubjects,

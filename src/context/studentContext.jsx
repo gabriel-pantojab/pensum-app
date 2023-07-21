@@ -28,6 +28,7 @@ function StudentProvider({ children }) {
 
   const [course, setCourseContext] = useState({
     name: "",
+    sis: "",
     totalSubjects: 0,
     approvedSubjects: 0,
     pendingSubjects: 0,
@@ -93,6 +94,7 @@ function StudentProvider({ children }) {
     });
     setCourse({
       name: "",
+      sis: "",
       totalSubjects: 0,
       approvedSubjects: 0,
       pendingSubjects: 0,
