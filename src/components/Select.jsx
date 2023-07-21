@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
+import { useContext, useEffect } from "react";
+import { Pressable, Text, StyleSheet, ScrollView } from "react-native";
 import { View } from "react-native";
 import { theme } from "../theme";
 import CaretUpIcon from "./icons/CaretUpIcon";
@@ -58,7 +58,11 @@ function SelectComponent({ children, defaultValue = "" }) {
           <CaretDownIcon color={theme.colors.primary} width={20} height={20} />
         )}
       </Pressable>
-      {open && <View style={styles.options}>{children}</View>}
+      {open && (
+        <View style={styles.options}>
+          <ScrollView>{children}</ScrollView>
+        </View>
+      )}
     </View>
   );
 }
@@ -89,6 +93,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
     backgroundColor: theme.colors.white,
+    maxHeight: 200,
   },
   option: {
     padding: 10,

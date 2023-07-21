@@ -95,54 +95,59 @@ function Subject({ subject, choque }) {
   );
 }
 
-function getMaxSubjectsAndMaxPeriods({ subjectsLength, periodActivity }) {
+function getHeigthPeriod({ period }) {
   const { schedule } = useContext(ScheduleContext);
-  let maxSubjects = subjectsLength;
-  let maxPeriods = 1;
-  let activityPeriod = formatHour(periodActivity);
-  activityPeriod =
-    parseInt(activityPeriod.split(":")[0]) < 10
-      ? "0" +
-        parseInt(activityPeriod.split(":")[0]) +
-        ":" +
-        activityPeriod.split(":")[1]
-      : activityPeriod;
+  period = formatHour(period);
+  period =
+    parseInt(period.split(":")[0]) < 10
+      ? "0" + parseInt(period.split(":")[0]) + ":" + period.split(":")[1]
+      : period;
+  let height = PERIOD_HEIGHT;
   Object.keys(schedule).forEach((day) => {
-    Object.keys(schedule[day]).forEach((period) => {
-      let start = formatHour(period);
+    Object.keys(schedule[day]).forEach((ped) => {
+      let start = formatHour(ped);
       start = parseInt(start.split(":")[0]) < 10 ? "0" + start : start;
       let hrs = [start];
-      let periods = schedule[day][period].periods;
+      let periods = schedule[day][ped].periods;
       while (periods - 1) {
         start = nextHour(start);
         hrs.push(start);
         periods--;
       }
-      if (
-        hrs.includes(activityPeriod) &&
-        schedule[day][period].subjects.length > maxSubjects
-      ) {
-        maxSubjects = schedule[day][period].subjects.length;
-        maxPeriods = schedule[day][period].periods;
+      if (hrs.includes(period)) {
+        let heigthTemp =
+          (2 * schedule[day][ped].subjects.length * PERIOD_HEIGHT) /
+          schedule[day][ped].periods;
+        if (heigthTemp > height) height = heigthTemp;
       }
     });
   });
-  return { maxSubjects, maxPeriods };
+  return height;
 }
 
 function Activity({ activity }) {
-  const { maxSubjects, maxPeriods } = getMaxSubjectsAndMaxPeriods({
-    subjectsLength: activity.subjects.length,
-    periodActivity: activity.period,
+  let HEIGHTTOTAL = 0;
+  let hoursPeriods = [activity.period];
+  let start = formatHour(activity.period);
+  let i = activity.periods;
+  while (i - 1) {
+    start = nextHour(start);
+    let h = start.split(":");
+    hoursPeriods.push(parseInt(h[0]) + "" + h[1]);
+    i--;
+  }
+  hoursPeriods.forEach((hr) => {
+    HEIGHTTOTAL += getHeigthPeriod({ period: hr });
   });
+  HEIGHTTOTAL =
+    (2 * activity.subjects.length * PERIOD_HEIGHT) / activity.periods <
+    HEIGHTTOTAL
+      ? HEIGHTTOTAL
+      : (2 * activity.subjects.length * PERIOD_HEIGHT) / activity.periods;
   const styleActivity = [
     styles.activity,
     {
-      height: activity.subjects.length
-        ? 2 * PERIOD_HEIGHT * maxSubjects
-        : maxSubjects
-        ? (2 * PERIOD_HEIGHT * maxSubjects) / maxPeriods
-        : PERIOD_HEIGHT,
+      height: HEIGHTTOTAL,
     },
     activity.subjects.length > 1 && { backgroundColor: theme.colors.white },
   ];
@@ -185,7 +190,6 @@ function LoadingSchedule() {
       <TextStyle
         style={{
           fontSize: 20,
-          fontWeight: "bold",
           textAlign: "center",
         }}
       >
@@ -201,13 +205,7 @@ function Hour({ hr }) {
     parseInt(hr.split(":")[0]) < 10
       ? "0" + parseInt(hr.split(":")[0]) + ":" + hr.split(":")[1]
       : hr;
-  const { maxSubjects, maxPeriods } = getMaxSubjectsAndMaxPeriods({
-    subjectsLength: 0,
-    periodActivity: hr,
-  });
-  let height = maxSubjects
-    ? (2 * PERIOD_HEIGHT * maxSubjects) / maxPeriods
-    : PERIOD_HEIGHT;
+  let height = getHeigthPeriod({ period: hr });
   const styleHour = {
     ...styles.hour,
     height,
