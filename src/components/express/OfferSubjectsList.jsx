@@ -88,7 +88,7 @@ function Group({ group, teacher, infoGroup }) {
   );
 }
 
-function Subject({ name, nivel, sisSubejct, sisCarrera }) {
+function Subject({ name, nivel, sisSubject, sisCarrera }) {
   const stylesSubject = StyleSheet.create({
     container: {
       borderBottomWidth: 1,
@@ -150,7 +150,7 @@ function Subject({ name, nivel, sisSubejct, sisCarrera }) {
                   infoGroup={{
                     ...item,
                     subjectName: name,
-                    sis: sisSubejct,
+                    sis: sisSubject,
                   }}
                 />
               );

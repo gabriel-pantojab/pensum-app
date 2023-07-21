@@ -100,14 +100,14 @@ function getMaxSubjectsAndMaxPeriods({ subjectsLength, periodActivity }) {
   const { schedule } = useContext(ScheduleContext);
   let maxSubjects = subjectsLength;
   let maxPeriods = 1;
-  let activityPeriod = formatHour(periodActivity);
-  activityPeriod =
-    parseInt(activityPeriod.split(":")[0]) < 10
+  periodActivity = formatHour(periodActivity);
+  periodActivity =
+    parseInt(periodActivity.split(":")[0]) < 10
       ? "0" +
-        parseInt(activityPeriod.split(":")[0]) +
+        parseInt(periodActivity.split(":")[0]) +
         ":" +
-        activityPeriod.split(":")[1]
-      : activityPeriod;
+        periodActivity.split(":")[1]
+      : periodActivity;
   Object.keys(schedule).forEach((day) => {
     Object.keys(schedule[day]).forEach((period) => {
       let start = formatHour(period);
@@ -120,7 +120,7 @@ function getMaxSubjectsAndMaxPeriods({ subjectsLength, periodActivity }) {
         periods--;
       }
       if (
-        hrs.includes(activityPeriod) &&
+        hrs.includes(periodActivity) &&
         schedule[day][period].subjects.length > maxSubjects
       ) {
         maxSubjects = schedule[day][period].subjects.length;
