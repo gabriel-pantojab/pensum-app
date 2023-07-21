@@ -112,6 +112,11 @@ export default function SignUpPage() {
   });
 
   const onSubmit = async (data) => {
+    if (!carrera.sis) {
+      setEmptyCarrera(true);
+      return;
+    }
+    setEmptyCarrera(false);
     const { username, nickname, password } = data;
     try {
       const newStudent = await signUp({
@@ -277,17 +282,7 @@ export default function SignUpPage() {
             </Text>
           )}
         </View>
-        <Button
-          title="Registrar"
-          onPress={handleSubmit(() => {
-            if (carrera.name === "") {
-              setEmptyCarrera(true);
-            } else {
-              setEmptyCarrera(false);
-              onSubmit();
-            }
-          })}
-        />
+        <Button title="Registrar" onPress={handleSubmit(onSubmit)} />
         {isSubmitting && <Loading />}
       </View>
     </View>
