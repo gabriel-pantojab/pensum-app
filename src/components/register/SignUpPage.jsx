@@ -84,7 +84,7 @@ async function signUp({
   });
   const studentDB = {
     name: username,
-    description: "Estudiante de Ing. Informática",
+    description: "Estudiante de " + nameCarrera,
     avatar: "",
     uid,
     nickname,
