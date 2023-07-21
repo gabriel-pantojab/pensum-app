@@ -16,6 +16,7 @@ import { getCarreras, getNiveles } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
+import { StudentContext } from "../../context/studentContext";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -85,7 +86,7 @@ function CarrerasOption({ showCarreras, showCarrerasValue }) {
       }}
     >
       <Pressable style={styles.options} onPress={showCarreras}>
-        <TextStyle style={styles.title}>Carreras</TextStyle>
+        <TextStyle style={styles.title}>Horarios</TextStyle>
         {showCarrerasValue ? (
           <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
@@ -146,7 +147,9 @@ function Carrera({ name, sis }) {
           alignItems: "center",
           justifyContent: "space-between",
         }}
-        onPress={() => setShowOffer(!showOffer)}
+        onPress={() => {
+          setShowOffer(!showOffer);
+        }}
       >
         <TextStyle style={styles.carrera}>{name}</TextStyle>
         {showOffer && offer ? (
@@ -155,7 +158,7 @@ function Carrera({ name, sis }) {
           <CaretDownIcon color={theme.colors.white} width={15} height={15} />
         )}
       </Pressable>
-      {showOffer && offer && (
+      {showOffer && offer && offer.niveles && (
         <LevelsList
           levels={offer.niveles}
           nameCarrera={name}
@@ -166,24 +169,80 @@ function Carrera({ name, sis }) {
   );
 }
 
-function Carreras({ carreras, loading, finishedRender }) {
+function Carreras({ carreraStudent }) {
+  const [showOthersCareers, setShowOthersCareers] = useState(false);
+  const { course } = useContext(StudentContext);
+  const [carreras, setCarreras] = useState([]);
+  const { loading, finishedRender, initLoading } = useLoading();
+  const getCarrerasDB = async () => {
+    try {
+      const data = await getCarreras();
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    if (showOthersCareers) {
+      initLoading();
+      getCarrerasDB().then((data) => {
+        if (data) {
+          const carreras = data.filter((carrera) => carrera.sis !== course.sis);
+          setCarreras(carreras);
+        } else setCarreras([]);
+      });
+    }
+  }, [showOthersCareers]);
   return (
-    <View style={styles.menu} onLayout={finishedRender}>
-      {carreras.length ? (
-        <FlatList
-          initialNumToRender={5}
-          data={carreras}
-          renderItem={({ item }) => (
-            <Carrera name={item.nombre} sis={item.sis} />
+    <View style={styles.menu}>
+      <Carrera
+        name={carreraStudent.name}
+        sis={carreraStudent.sis}
+        key={carreraStudent.sis}
+      />
+      <View
+        style={{
+          borderBottomWidth: 1,
+          borderColor: theme.colors.white,
+        }}
+      >
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+          onPress={() => setShowOthersCareers(!showOthersCareers)}
+        >
+          <TextStyle style={{ ...styles.carrera, fontSize: 13 }}>
+            Otras Carreras
+          </TextStyle>
+          {showOthersCareers ? (
+            <CaretUpIcon color={theme.colors.white} width={15} height={15} />
+          ) : (
+            <CaretDownIcon color={theme.colors.white} width={15} height={15} />
           )}
-          keyExtractor={(item) => item.sis}
-          ListFooterComponent={loading}
-        />
-      ) : (
-        <TextStyle style={styles.carrera}>
-          No hay carreras disponibles
-        </TextStyle>
-      )}
+        </Pressable>
+        {carreras.length && showOthersCareers ? (
+          <View onLayout={finishedRender}>
+            <FlatList
+              initialNumToRender={5}
+              data={carreras}
+              renderItem={({ item }) => (
+                <Carrera name={item.nombre} sis={item.sis} />
+              )}
+              keyExtractor={(item) => item.sis}
+              ListFooterComponent={loading}
+            />
+          </View>
+        ) : (
+          showOthersCareers && (
+            <TextStyle style={styles.carrera}>
+              No hay carreras disponibles
+            </TextStyle>
+          )
+        )}
+      </View>
     </View>
   );
 }
@@ -210,27 +269,13 @@ function ExpressHeader({ action, showCarreras }) {
 }
 
 export default function Express() {
-  const [carreras, setCarreras] = useState([]);
+  const { course } = useContext(StudentContext);
   const [showCarreras, setShowCarreras] = useState(false);
-  const { loading, finishedRender, initLoading } = useLoading();
-  const getCarrerasDB = async () => {
-    try {
-      const data = await getCarreras();
-      if (data) setCarreras(data);
-    } catch (e) {
-      setCarreras([]);
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    getCarrerasDB();
-  }, []);
   return (
     <ScheduleProvider>
       <View style={styles.container}>
         <ExpressHeader
           action={() => {
-            initLoading(true);
             setShowCarreras(!showCarreras);
           }}
           showCarreras={showCarreras}
@@ -238,9 +283,10 @@ export default function Express() {
         <View style={styles.content}>
           {showCarreras && (
             <Carreras
-              carreras={carreras}
-              loading={loading}
-              finishedRender={finishedRender}
+              carreraStudent={{
+                name: course.name.toUpperCase(),
+                sis: course.sis,
+              }}
             />
           )}
           <TimeTableExpress />
