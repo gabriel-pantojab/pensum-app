@@ -152,7 +152,7 @@ function Carrera({ name, sis }) {
         }}
       >
         <TextStyle style={styles.carrera}>{name}</TextStyle>
-        {showOffer && offer ? (
+        {showOffer && offer && offer.niveles ? (
           <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
           <CaretDownIcon color={theme.colors.white} width={15} height={15} />

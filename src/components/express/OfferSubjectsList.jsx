@@ -125,7 +125,7 @@ function Subject({ name, nivel, sisSubject, sisCarrera }) {
         onPress={() => setShowOffer(!showOffer)}
       >
         <TextStyle style={stylesSubject.nameSubject}>{name}</TextStyle>
-        {showOffer && offer ? (
+        {showOffer && offer && offer.grupos ? (
           <CaretUpIcon color={theme.colors.white} width={15} height={15} />
         ) : (
           <CaretDownIcon color={theme.colors.white} width={15} height={15} />
@@ -212,7 +212,7 @@ function Level({ name, carrera, sisCarrera }) {
           <CaretDownIcon color={theme.colors.white} width={15} height={15} />
         )}
       </Pressable>
-      {showOffer && offer && (
+      {showOffer && offer && offer.materias && (
         <View>
           <FlatList
             data={offer.materias}

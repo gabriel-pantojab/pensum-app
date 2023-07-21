@@ -93,8 +93,7 @@ function Subject({ subject, choque }) {
   );
 }
 
-function getHeigthPeriod({ period }) {
-  const { schedule } = useContext(ScheduleContext);
+function getHeigthPeriod({ period, schedule }) {
   period = formatHour(period);
   period =
     parseInt(period.split(":")[0]) < 10
@@ -124,6 +123,7 @@ function getHeigthPeriod({ period }) {
 }
 
 function Activity({ activity }) {
+  const { schedule } = useContext(ScheduleContext);
   let HEIGHTTOTAL = 0;
   let hoursPeriods = [activity.period];
   let start = formatHour(activity.period);
@@ -135,7 +135,7 @@ function Activity({ activity }) {
     i--;
   }
   hoursPeriods.forEach((hr) => {
-    HEIGHTTOTAL += getHeigthPeriod({ period: hr });
+    HEIGHTTOTAL += getHeigthPeriod({ period: hr, schedule });
   });
   HEIGHTTOTAL =
     (2 * activity.subjects.length * PERIOD_HEIGHT) / activity.periods <
@@ -199,11 +199,12 @@ function LoadingSchedule() {
 }
 
 function Hour({ hr }) {
+  const { schedule } = useContext(ScheduleContext);
   hr =
     parseInt(hr.split(":")[0]) < 10
       ? "0" + parseInt(hr.split(":")[0]) + ":" + hr.split(":")[1]
       : hr;
-  let height = getHeigthPeriod({ period: hr });
+  let height = getHeigthPeriod({ period: hr, schedule });
   const styleHour = {
     ...styles.hour,
     height,
