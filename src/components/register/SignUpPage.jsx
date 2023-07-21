@@ -10,13 +10,14 @@ import Loading from "../Loading";
 import {
   addUser,
   crearUsuario,
+  getCarreras,
   getCurrentUser,
   getInfoNiveles,
   getTotalMateriasCarrera,
   onAuthStateChanged,
 } from "../../../firebaseconfig";
 import { saveStudent } from "../../storage/storage";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import HandleError from "./HandleError";
 import Select, { Option } from "../Select";
@@ -99,6 +100,12 @@ export default function SignUpPage() {
     sis: "",
   });
   const [emptyCarrera, setEmptyCarrera] = useState(false);
+  const [careersAvailable, setCareersAvailable] = useState([]);
+  useEffect(() => {
+    getCarreras().then((data) => {
+      setCareersAvailable(data);
+    });
+  }, []);
   const { setStudent, setCourse, setLevels, setCurrentSubjectsList } =
     useContext(StudentContext);
   const {
@@ -256,25 +263,20 @@ export default function SignUpPage() {
             Carrera
           </Text>
           <Select defaultValue={carrera.sis}>
-            <Option
-              value={"134111"}
-              name="Licenciatura en Ingeniería Informática"
-              onChange={(value) => {
-                setCarrera(value);
-              }}
-            >
-              <Text>Licenciatura en Ingeniería Informática</Text>
-            </Option>
-
-            <Option
-              value={"411702"}
-              name="Licenciatura en Ingeniería de Sistemas"
-              onChange={(value) => {
-                setCarrera(value);
-              }}
-            >
-              <Text>Licenciatura en Ingeniería de Sistemas</Text>
-            </Option>
+            {careersAvailable.map((career) => {
+              return (
+                <Option
+                  key={career.sis}
+                  value={career.sis}
+                  name={career.nombre}
+                  onChange={(value) => {
+                    setCarrera(value);
+                  }}
+                >
+                  <Text>{career.nombre}</Text>
+                </Option>
+              );
+            })}
           </Select>
           {emptyCarrera && (
             <Text style={{ ...theme.form.textError, marginTop: 7 }}>
