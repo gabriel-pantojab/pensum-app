@@ -44,7 +44,11 @@ function Cell({ hour, subjects, periods }) {
     hours.push(next);
     i--;
   }
-  const height = periods ? 50 * subjects.length : 50;
+  const height = periods
+    ? subjects.length > 1
+      ? 50 * subjects.length
+      : 50 * periods
+    : 50;
   return (
     <View
       style={{
