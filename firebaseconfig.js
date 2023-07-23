@@ -11,7 +11,6 @@ import {
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_APIKEY,
-  apiKey: process.env.EXPO_PUBLIC_APIKEY2,
   authDomain: process.env.EXPO_PUBLIC_AUTHDOMAIN,
   projectId: process.env.EXPO_PUBLIC_PROJECTID,
   storageBucket: process.env.EXPO_PUBLIC_STORAGEBUCKET,
