@@ -7,7 +7,6 @@ import useLoading from "../../hooks/useLoading";
 import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
-import TimeTableExpress from "./TimeTableExpress";
 import ScheduleProvider, { ScheduleContext } from "./context/scheduleContext";
 import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
@@ -16,6 +15,7 @@ import { getCarreras, getNiveles } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
+import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -258,7 +258,7 @@ export default function Express() {
               finishedRender={finishedRender}
             />
           )}
-          <TimeTableExpress />
+          <TimeTableEschedule />
         </View>
       </View>
     </ScheduleProvider>

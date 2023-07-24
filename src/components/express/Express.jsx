@@ -7,7 +7,7 @@ import useLoading from "../../hooks/useLoading";
 import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
-import TimeTableExpress from "./TimeTableExpress";
+import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
 import ScheduleProvider, { ScheduleContext } from "./context/scheduleContext";
 import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
@@ -289,7 +289,7 @@ export default function Express() {
               }}
             />
           )}
-          <TimeTableExpress />
+          <TimeTableEschedule />
         </View>
       </View>
     </ScheduleProvider>

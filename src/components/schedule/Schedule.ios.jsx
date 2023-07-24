@@ -1,10 +1,10 @@
 import { View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import TimeTableExpress from "../express/TimeTableExpress";
 import ScheduleProvider from "../express/context/scheduleContext";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
+import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
 
 export default function Schedule() {
   const orientation = useDeviceOrientation();
@@ -20,7 +20,7 @@ export default function Schedule() {
         <View style={styles.content}>
           <TextStyle style={styles.title}>Horario</TextStyle>
           <View style={styles.containerTimeTable}>
-            <TimeTableExpress />
+            <TimeTableEschedule />
           </View>
         </View>
       </View>
