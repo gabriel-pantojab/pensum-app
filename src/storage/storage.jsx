@@ -197,14 +197,6 @@ async function removeSchedule() {
   }
 }
 
-// saveCourse({
-//   name: "Licenciatura en Ing. Informática",
-//   totalSubjects: 48,
-//   approvedSubjects: 0,
-//   pendingSubjects: 48,
-//   inProgressSubjects: 0,
-// });
-
 export async function logoutApp({ uid }) {
   const student = await getStudent();
   const course = await getCourse();

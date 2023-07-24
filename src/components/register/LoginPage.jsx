@@ -45,6 +45,11 @@ async function login({ nickname, password }) {
   const currentSubjectsList = userDB.currentSubjectsList;
   const levels = userDB.levels;
   const schedule = userDB.schedule;
+  Object.values(schedule.schedule).forEach((day) => {
+    Object.values(day).forEach((hour) => {
+      if (!hour.subjects) hour.subjects = [];
+    });
+  });
   return {
     student,
     course,
