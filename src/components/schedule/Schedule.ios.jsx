@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import ScheduleProvider from "../express/context/scheduleContext";
+import ScheduleProvider from "../TimeTableSchedule/context/scheduleContext";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";

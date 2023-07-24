@@ -1,8 +1,14 @@
 import { useContext } from "react";
 import { ScheduleContext } from "./context/scheduleContext";
-import { PERIOD_HEIGHT, formatHour, nextHour } from "./utils/utils";
+import {
+  PERIOD_HEIGHT,
+  formatHour,
+  getHeigthPeriod,
+  nextHour,
+} from "./utils/utils";
 import { View, StyleSheet } from "react-native";
 import { Subject } from "./Subject";
+import { theme } from "../../theme";
 
 export function Activity({ activity }) {
   const { schedule } = useContext(ScheduleContext);

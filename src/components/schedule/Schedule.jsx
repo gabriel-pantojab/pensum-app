@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import ScheduleProvider from "../express/context/scheduleContext";
+import ScheduleProvider from "../TimeTableSchedule/context/scheduleContext";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
 import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";

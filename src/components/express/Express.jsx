@@ -8,7 +8,9 @@ import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
-import ScheduleProvider, { ScheduleContext } from "./context/scheduleContext";
+import ScheduleProvider, {
+  ScheduleContext,
+} from "../TimeTableSchedule/context/scheduleContext";
 import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";

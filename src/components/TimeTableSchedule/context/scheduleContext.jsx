@@ -6,7 +6,7 @@ import {
   subjects,
   subjectsDay,
   unfoldInPeriodsSubjectGroup,
-} from "../utils";
+} from "../utils/utils";
 import { getSchedule } from "../../../storage/storage";
 
 function buildInitSchedule() {

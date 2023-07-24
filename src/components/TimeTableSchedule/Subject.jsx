@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import TextStyle from "../TextStyle";
+import { theme } from "../../theme";
 
 export function Subject({ subject, choque }) {
   const styleSubject = [
