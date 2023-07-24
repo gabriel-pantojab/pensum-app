@@ -161,11 +161,7 @@ function Carrera({ name, sis }) {
         )}
       </Pressable>
       {showOffer && offer && offer.niveles && (
-        <LevelsList
-          levels={offer.niveles}
-          nameCarrera={name}
-          sisCarrera={sis}
-        />
+        <LevelsList levels={offer.niveles} sisCarrera={sis} />
       )}
     </View>
   );

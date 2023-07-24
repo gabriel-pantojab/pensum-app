@@ -4,7 +4,7 @@ import CaretDownIcon from "../icons/CaretDownIcon";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CheckBox from "./CheckBox";
 import CaretUpIcon from "../icons/CaretUpIcon";
-import { ScheduleContext } from "./context/scheduleContext";
+import { ScheduleContext } from "../TimeTableSchedule/context/scheduleContext";
 import {
   getGruposCarreraNivelMateria,
   getMateriasNivelCarrera,
@@ -54,6 +54,7 @@ function checkedGroup(group, schedule) {
   });
   return checked;
 }
+
 function Group({ group, teacher, infoGroup }) {
   const { addSubject, schedule } = useContext(ScheduleContext);
   const valueChecked = checkedGroup(infoGroup, schedule);
