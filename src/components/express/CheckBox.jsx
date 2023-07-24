@@ -1,5 +1,6 @@
 import { Pressable, View, StyleSheet } from "react-native";
 import CheckIcon from "../icons/CheckIcon";
+import { theme } from "../../theme";
 
 export default function CheckBox({
   name = "",
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: theme.colors.white,
   },
   pressCheckbox: {
     flexDirection: "row",

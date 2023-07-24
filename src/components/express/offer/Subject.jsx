@@ -2,6 +2,10 @@ import { FlatList, Pressable, View, StyleSheet } from "react-native";
 import TextStyle from "../../TextStyle";
 import Group from "./Group";
 import { getGruposCarreraNivelMateria } from "../../../../firebaseconfig";
+import { theme } from "../../../theme";
+import CaretDownIcon from "../../icons/CaretDownIcon";
+import CaretUpIcon from "../../icons/CaretUpIcon";
+import useFetchOffer from "../../../hooks/useFetchOffer";
 
 export default function Subject({ name, nivel, sisSubject, sisCarrera }) {
   const getData = async () => {
@@ -60,7 +64,7 @@ export default function Subject({ name, nivel, sisSubject, sisCarrera }) {
 const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,
-    borderColor: "#fff",
+    borderColor: theme.colors.white,
     marginRight: 10,
     marginLeft: 10,
     marginVertical: 5,
@@ -74,6 +78,6 @@ const styles = StyleSheet.create({
   },
   nameSubject: {
     fontSize: 10,
-    color: "#fff",
+    color: theme.colors.white,
   },
 });

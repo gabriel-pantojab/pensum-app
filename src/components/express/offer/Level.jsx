@@ -3,6 +3,9 @@ import TextStyle from "../../TextStyle";
 import useFetchOffer from "../../../hooks/useFetchOffer";
 import { getMateriasNivelCarrera } from "../../../../firebaseconfig";
 import Subject from "./Subject";
+import { theme } from "../../../theme";
+import CaretDownIcon from "../../icons/CaretDownIcon";
+import CaretUpIcon from "../../icons/CaretUpIcon";
 
 export default function Level({ name, sisCarrera }) {
   const getData = async () => {
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 5,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: theme.colors.white,
     borderRadius: 5,
     padding: 3,
   },
@@ -69,9 +72,9 @@ const styles = StyleSheet.create({
     padding: 3,
   },
   nameLevel: {
-    color: "#fff",
+    color: theme.colors.white,
     fontSize: 10,
     borderBottomWidth: 1,
-    borderColor: "#fff",
+    borderColor: theme.colors.white,
   },
 });

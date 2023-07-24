@@ -4,7 +4,7 @@ import { Pressable } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import { useContext, useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
-import LevelsList from "./OfferSubjectsList";
+import LevelsList from "./offer/LevelsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
