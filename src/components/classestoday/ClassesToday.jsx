@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import HeaderSchedule from "./HeaderSchedule";
 import { getDateFormat } from "../../utils/utils";
-import TimeTable from "./TimeTable";
+import TimeTable from "./TimeTable/TimeTable";
 import { theme } from "../../theme";
 
 export default function ClassesToday() {

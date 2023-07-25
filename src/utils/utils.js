@@ -76,4 +76,22 @@ function prevDate(date) {
   return new Date(year, month - 1, day);
 }
 
-export { controlZeroNumber, getDateFormat, nextDate, prevDate, getMonthNumber };
+function formatHour(text) {
+  if (text.split(":").length === 2) return text;
+  let hour = text.substring(0, 2);
+  let min = text.substring(2, text.length);
+  if (hour > 24) {
+    hour = text.substring(0, 1);
+    min = text.substring(1, text.length);
+  }
+  return `${hour}:${min}`;
+}
+
+export {
+  controlZeroNumber,
+  getDateFormat,
+  nextDate,
+  prevDate,
+  getMonthNumber,
+  formatHour,
+};
