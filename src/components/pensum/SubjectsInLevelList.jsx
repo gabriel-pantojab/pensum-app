@@ -7,7 +7,7 @@ import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
-import StatesSubject from "./StatesSubject";
+import HeaderLevel from "./HeaderLevel";
 
 export default function SubjectsInLevelList() {
   const { levels } = useContext(StudentContext);
@@ -20,10 +20,9 @@ export default function SubjectsInLevelList() {
   const [pending, setPending] = useState(0);
 
   useEffect(() => {
-    const subjs = levels[index].subjects;
-    const appro = subjs.filter((s) => s.state === "Aprobada").length;
-    const inProg = subjs.filter((s) => s.state === "Cursando").length;
-    const pendg = subjs.filter((s) => s.state === "No Cursada").length;
+    const appro = subjects.filter((s) => s.state === "Aprobada").length;
+    const inProg = subjects.filter((s) => s.state === "Cursando").length;
+    const pendg = subjects.filter((s) => s.state === "No Cursada").length;
     setApproved(appro);
     setInProgress(inProg);
     setPending(pendg);
@@ -54,15 +53,12 @@ export default function SubjectsInLevelList() {
             <BackIcon />
           </Link>
         </View>
-        <View style={styles.info}>
-          <TextStyle style={styles.level}>Nivel {level}</TextStyle>
-          <StatesSubject />
-        </View>
-        <View style={styles.info}>
-          <TextStyle>Aprobadas: {approved}</TextStyle>
-          <TextStyle>Cursando: {inProgress}</TextStyle>
-          <TextStyle>No Cursadas: {pending}</TextStyle>
-        </View>
+        <HeaderLevel
+          approved={approved}
+          inProgress={inProgress}
+          pending={pending}
+          levelName={level}
+        />
         <FlatList
           initialNumToRender={1}
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
