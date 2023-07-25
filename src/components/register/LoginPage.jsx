@@ -47,12 +47,14 @@ async function login({ nickname, password }) {
     : [];
   const levels = userDB.levels;
   const schedule = userDB.schedule;
-  if (!schedule.selectedSubjects) schedule.selectedSubjects = [];
-  Object.values(schedule.schedule).forEach((day) => {
-    Object.values(day).forEach((hour) => {
-      if (!hour.subjects) hour.subjects = [];
+  if (schedule) {
+    if (!schedule.selectedSubjects) schedule.selectedSubjects = [];
+    Object.values(schedule.schedule).forEach((day) => {
+      Object.values(day).forEach((hour) => {
+        if (!hour.subjects) hour.subjects = [];
+      });
     });
-  });
+  }
   return {
     student,
     course,
