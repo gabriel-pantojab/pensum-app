@@ -15,7 +15,10 @@ import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
 import { StudentContext } from "../../context/studentContext";
-import ScheduleProvider from "../timeTableSchedule/TimeTableSchedule";
+import ScheduleProvider, {
+  ScheduleContext,
+} from "../timeTableSchedule/context/scheduleContext";
+import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -284,6 +287,7 @@ export default function Express() {
               }}
             />
           )}
+          <TimeTableEschedule />
         </View>
       </View>
     </ScheduleProvider>
