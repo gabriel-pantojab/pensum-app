@@ -1,12 +1,11 @@
 import { View, StyleSheet, FlatList } from "react-native";
-import { Link, useParams } from "react-router-native";
+import { useParams } from "react-router-native";
 import SubjectInLevel from "./SubjectInLevel";
-import BackIcon from "../icons/BackIcon";
-import TextStyle from "../TextStyle";
 import HeaderLevel from "./HeaderLevel";
 import useLoading from "../../hooks/useLoading";
 import useUpdateLevel from "../../hooks/useUpdateLevel";
 import { theme } from "../../theme";
+import NameCareer from "./NameCareer";
 
 export default function SubjectsInLevelList() {
   const level = useParams().level;
@@ -18,26 +17,7 @@ export default function SubjectsInLevelList() {
   return (
     <View style={styles.container} onLayout={finishedRender}>
       <View style={styles.content}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <TextStyle style={styles.title}>
-            Licenciatura en Ing. Informática
-          </TextStyle>
-          <Link
-            underlayColor={"transparent"}
-            style={{
-              alignSelf: "flex-end",
-            }}
-            to="/main/pensum"
-          >
-            <BackIcon />
-          </Link>
-        </View>
+        <NameCareer />
         <HeaderLevel
           approved={approved}
           inProgress={inProgress}
@@ -76,18 +56,5 @@ const styles = StyleSheet.create({
     padding: 10,
     gap: 10,
     backgroundColor: theme.colors.white,
-  },
-  title: {
-    fontSize: 20,
-    color: theme.colors.primary,
-  },
-  level: {
-    fontSize: 18,
-  },
-  info: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    alignItems: "center",
   },
 });
