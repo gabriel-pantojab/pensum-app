@@ -1,4 +1,4 @@
-import { controlZeroNumber, formatHour } from "../../../utils/utils";
+import { nextPeriod, formatHour } from "../../../utils/utils";
 
 export const PERIOD_HEIGHT = 28;
 
@@ -8,22 +8,10 @@ export function getHours({ minPeriod, maxPeriod }) {
   let end = formatHour(maxPeriod);
   let hrs = [start];
   while (start != end) {
-    start = nextHour(start);
+    start = nextPeriod(start);
     hrs.push(start);
   }
   return hrs;
-}
-
-export function nextHour(hour) {
-  let [h, m] = hour.split(":");
-  h = parseInt(h);
-  m = parseInt(m);
-  let totalMinutos = h * 60 + m + 45;
-  let newHour = Math.floor(totalMinutos / 60);
-  let newMinutes = totalMinutos % 60;
-  const hourS = controlZeroNumber(newHour);
-  const minS = controlZeroNumber(newMinutes);
-  return `${hourS}:${minS}`;
 }
 
 export function getHeigthPeriod({ period, schedule }) {
@@ -35,7 +23,7 @@ export function getHeigthPeriod({ period, schedule }) {
       let hrs = [start];
       let periods = schedule[day][ped].periods;
       while (periods - 1) {
-        start = nextHour(start);
+        start = nextPeriod(start);
         hrs.push(start);
         periods--;
       }
@@ -72,7 +60,7 @@ function completePeriods(activities, minPeriod, maxPeriod) {
     subjects: [],
   });
   activities.push({
-    period: nextHour(formatHour(maxPeriod)).split(":").join(""),
+    period: nextPeriod(formatHour(maxPeriod)).split(":").join(""),
     periods: 0,
     subjects: [],
   });
@@ -84,7 +72,7 @@ function completePeriods(activities, minPeriod, maxPeriod) {
     let start = formatHour(activity.period);
     let periods = activity.periods;
     while (periods) {
-      start = nextHour(start);
+      start = nextPeriod(start);
       periods--;
     }
     if (activity.periods > 0) activitiesComplete.push(activity);
@@ -94,7 +82,7 @@ function completePeriods(activities, minPeriod, maxPeriod) {
         periods: 1,
         subjects: [],
       });
-      start = nextHour(start);
+      start = nextPeriod(start);
     }
   }
   return activitiesComplete;
@@ -142,7 +130,7 @@ function getPeriods(hora) {
   let period = start;
   while (period != end && period != "0" + end) {
     periods.push(period);
-    period = nextHour(period);
+    period = nextPeriod(period);
   }
   return periods;
 }

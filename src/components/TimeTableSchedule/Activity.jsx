@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ScheduleContext } from "./context/scheduleContext";
-import { PERIOD_HEIGHT, getHeigthPeriod, nextHour } from "./utils/utils";
-import { formatHour } from "../../utils/utils";
+import { PERIOD_HEIGHT, getHeigthPeriod } from "./utils/utils";
+import { formatHour, nextPeriod } from "../../utils/utils";
 import { View, StyleSheet } from "react-native";
 import { Subject } from "./Subject";
 import { theme } from "../../theme";
@@ -13,7 +13,7 @@ export function Activity({ activity }) {
   let start = formatHour(activity.period);
   let i = activity.periods;
   while (i - 1) {
-    start = nextHour(start);
+    start = nextPeriod(start);
     let h = start.split(":");
     hoursPeriods.push(parseInt(h[0]) + "" + h[1]);
     i--;

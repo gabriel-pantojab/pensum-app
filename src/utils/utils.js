@@ -89,6 +89,18 @@ function formatHour(text) {
   return `${hour}:${min}`;
 }
 
+export function nextPeriod(hour) {
+  let [h, m] = hour.split(":");
+  h = parseInt(h);
+  m = parseInt(m);
+  let totalMinutos = h * 60 + m + 45;
+  let newHour = Math.floor(totalMinutos / 60);
+  let newMinutes = totalMinutos % 60;
+  const hourS = controlZeroNumber(newHour);
+  const minS = controlZeroNumber(newMinutes);
+  return `${hourS}:${minS}`;
+}
+
 export {
   controlZeroNumber,
   getDateFormat,

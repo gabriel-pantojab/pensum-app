@@ -1,4 +1,4 @@
-import { formatHour } from "../../../utils/utils";
+import { formatHour, nextPeriod } from "../../../utils/utils";
 
 export function completeDay({ scheduleDay }) {
   let hoursComplete = [];
@@ -28,17 +28,17 @@ export function completeDay({ scheduleDay }) {
       });
     }
     while (periods - 1 > 0) {
-      start = nextHour(start);
+      start = nextPeriod(start);
       periods--;
     }
-    start = nextHour(start);
+    start = nextPeriod(start);
     while (start != formatHour(next)) {
       hoursComplete.push({
         hour: start,
         subjects: [],
         periods: 0,
       });
-      start = nextHour(start);
+      start = nextPeriod(start);
     }
   }
   return hoursComplete;
@@ -53,21 +53,9 @@ function buildFreeDay() {
       subjects: [],
       periods: 0,
     });
-    start = nextHour(start);
+    start = nextPeriod(start);
   }
   return freeDay;
 }
 
 export const freeDay = buildFreeDay();
-
-export function nextHour(hour) {
-  let [h, m] = hour.split(":");
-  h = parseInt(h);
-  m = parseInt(m);
-  let totalMinutos = h * 60 + m + 45;
-  let newHour = Math.floor(totalMinutos / 60);
-  let newMinutes = totalMinutos % 60;
-  const hourS = newHour < 10 ? `0${newHour}` : newHour;
-  const minS = newMinutes < 10 ? `0${newMinutes}` : newMinutes;
-  return `${hourS}:${minS}`;
-}

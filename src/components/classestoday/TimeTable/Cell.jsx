@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import TextStyle from "../../TextStyle";
-import { nextHour } from "./utils";
+import { nextPeriod } from "../../../utils/utils";
 import Subject from "./Subject";
 
 export default function Cell({ hour, subjects, periods }) {
@@ -8,7 +8,7 @@ export default function Cell({ hour, subjects, periods }) {
   let next = hour;
   let i = periods - 1;
   while (i > 0) {
-    next = nextHour(next);
+    next = nextPeriod(next);
     hours.push(next);
     i--;
   }

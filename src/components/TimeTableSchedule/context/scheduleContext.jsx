@@ -1,12 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import {
-  formatHour,
   colors,
-  nextHour,
   subjects,
   subjectsDay,
   unfoldInPeriodsSubjectGroup,
 } from "../utils/utils";
+import { nextPeriod, formatHour } from "../../../utils/utils";
 import { getSchedule } from "../../../storage/storage";
 
 function buildInitSchedule() {
@@ -83,7 +82,7 @@ function ScheduleProvider({ children }) {
           let s = formatHour(period);
           let c = schd[day][period].periods;
           while (c - 1) {
-            s = nextHour(s);
+            s = nextPeriod(s);
             c--;
           }
           return s.split(":").join("");
