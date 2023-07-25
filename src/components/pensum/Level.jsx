@@ -1,47 +1,15 @@
-import { View, StyleSheet, FlatList } from "react-native";
-import { Link } from "react-router-native";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
-import useLoading from "../../hooks/useLoading";
-import { theme } from "../../theme";
+import { Link } from "react-router-native";
+import { View, StyleSheet } from "react-native";
 import TextStyle from "../TextStyle";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    padding: 10,
-    gap: 20,
-    backgroundColor: theme.colors.white,
-  },
-  title: {
-    fontSize: 20,
-    color: theme.colors.primary,
-  },
-  level: {
-    position: "relative",
-    borderWidth: 2,
-    paddingVertical: 20,
-    alignItems: "center",
-    borderRadius: 10,
-  },
-  progress: {
-    alignSelf: "flex-start",
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    backgroundColor: "#b2f2bb",
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
-  },
-  titleLevel: {
-    fontSize: 18,
-  },
-});
-
-function Level({ name, progress = 0, inProgress = false, index }) {
+export default function Level({
+  name,
+  progress = 0,
+  inProgress = false,
+  index,
+}) {
   const { levels } = useContext(StudentContext);
   const [approved, setApproved] = useState(0);
   const [subjectsInProgress, setSubjectsInProgress] = useState(0);
@@ -116,32 +84,24 @@ function Level({ name, progress = 0, inProgress = false, index }) {
   );
 }
 
-export default function Pensum() {
-  const { levels, course } = useContext(StudentContext);
-
-  const { loading, finishedRender } = useLoading();
-
-  const styCont = [styles.container];
-  return (
-    <View style={styCont} onLayout={finishedRender}>
-      <View style={styles.content}>
-        <TextStyle style={styles.title}>{course.name}</TextStyle>
-        <FlatList
-          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-          data={levels}
-          initialNumToRender={1}
-          ListFooterComponent={loading}
-          renderItem={({ item, index }) => (
-            <Level
-              key={item.id}
-              progress={item.progress}
-              name={item.name}
-              inProgress={item.inProgress}
-              index={index}
-            />
-          )}
-        />
-      </View>
-    </View>
-  );
-}
+const styles = StyleSheet.create({
+  level: {
+    position: "relative",
+    borderWidth: 2,
+    paddingVertical: 20,
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  progress: {
+    alignSelf: "flex-start",
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    backgroundColor: "#b2f2bb",
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+  },
+  titleLevel: {
+    fontSize: 18,
+  },
+});
