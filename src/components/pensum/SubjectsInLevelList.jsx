@@ -2,32 +2,17 @@ import { View, StyleSheet, FlatList } from "react-native";
 import { Link, useParams } from "react-router-native";
 import SubjectInLevel from "./SubjectInLevel";
 import BackIcon from "../icons/BackIcon";
-import { useContext, useEffect, useState } from "react";
-import { StudentContext } from "../../context/studentContext";
-import useLoading from "../../hooks/useLoading";
-import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
 import HeaderLevel from "./HeaderLevel";
+import useLoading from "../../hooks/useLoading";
+import useUpdateLevel from "../../hooks/useUpdateLevel";
+import { theme } from "../../theme";
 
 export default function SubjectsInLevelList() {
-  const { levels } = useContext(StudentContext);
   const level = useParams().level;
-  const index = level.charCodeAt(0) - "A".charCodeAt(0);
-  const subjects = levels[index].subjects;
-
-  const [approved, setApproved] = useState(0);
-  const [inProgress, setInProgress] = useState(0);
-  const [pending, setPending] = useState(0);
-
-  useEffect(() => {
-    const appro = subjects.filter((s) => s.state === "Aprobada").length;
-    const inProg = subjects.filter((s) => s.state === "Cursando").length;
-    const pendg = subjects.filter((s) => s.state === "No Cursada").length;
-    setApproved(appro);
-    setInProgress(inProg);
-    setPending(pendg);
-  }, [levels]);
-
+  const { approved, inProgress, pending, subjects } = useUpdateLevel({
+    levelName: level,
+  });
   const { loading, finishedRender } = useLoading();
 
   return (
