@@ -1,12 +1,12 @@
-import { View } from "react-native";
-import { getDateFormat } from "../../utils/utils";
-import Constants from "expo-constants";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import { getDateFormat } from "../../utils/utils";
+import { View } from "react-native";
+import HeaderClassesToday from "../../components/classestoday/HeaderClassesToday";
+import TimeTable from "../../components/classestoday/timeTable/TimeTable";
 import { theme } from "../../theme";
-import HeaderClassesToday from "./HeaderClassesToday";
-import TimeTable from "./timeTable/TimeTable";
+import Constants from "expo-constants";
 
-export default function ClassesToday() {
+export default function ClassesTodayPage() {
   const orientation = useDeviceOrientation();
   const date = new Date();
   const { day, monthName, dayName, year } = getDateFormat(date);

@@ -1,10 +1,10 @@
 import { View } from "react-native";
+import HeaderClassesToday from "../../components/classestoday/HeaderClassesToday";
+import TimeTable from "../../components/classestoday/timeTable/TimeTable";
 import { getDateFormat } from "../../utils/utils";
-import TimeTable from "./timeTable/TimeTable";
 import { theme } from "../../theme";
-import HeaderClassesToday from "./HeaderClassesToday";
 
-export default function ClassesToday() {
+export default function ClassesTodayPage() {
   const date = new Date();
   const { day, monthName, dayName, year } = getDateFormat(date);
   const styCont = [
