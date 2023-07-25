@@ -7,42 +7,7 @@ import { StudentContext } from "../../context/studentContext";
 import useLoading from "../../hooks/useLoading";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
-function StatesSubject() {
-  return (
-    <View style={styles.states}>
-      <View style={styles.state}>
-        <View
-          style={{
-            ...styles.circle,
-            backgroundColor: "#b2f2bb",
-            borderColor: "#2f9e44",
-          }}
-        ></View>
-        <TextStyle>Aprobada</TextStyle>
-      </View>
-      <View style={styles.state}>
-        <View
-          style={{
-            ...styles.circle,
-            borderColor: "#fff842",
-            backgroundColor: "#ffec99",
-          }}
-        ></View>
-        <TextStyle>Cursando</TextStyle>
-      </View>
-      <View style={styles.state}>
-        <View
-          style={{
-            ...styles.circle,
-            borderColor: "#ccc",
-            backgroundColor: "#ccc",
-          }}
-        ></View>
-        <TextStyle>No Cursada</TextStyle>
-      </View>
-    </View>
-  );
-}
+import StatesSubject from "./StatesSubject";
 
 export default function SubjectsInLevelList() {
   const { levels } = useContext(StudentContext);
@@ -143,17 +108,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     alignItems: "center",
-  },
-  states: {},
-  state: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-  },
-  circle: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    borderWidth: 1,
   },
 });

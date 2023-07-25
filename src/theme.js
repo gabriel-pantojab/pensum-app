@@ -1,3 +1,5 @@
+import { statesSubject } from "./utils/utils";
+
 export const theme = {
   colors: {
     primary: "#073476",
@@ -37,6 +39,20 @@ export const theme = {
     textError: {
       color: "#dc3545",
       fontSize: 12,
+    },
+  },
+  statesSubject: {
+    [statesSubject.APROVADA]: {
+      backgroundColor: "#b2f2bb",
+      borderColor: "#2f9e44",
+    },
+    [statesSubject.CURSANDO]: {
+      borderColor: "#fff842",
+      backgroundColor: "#ffec99",
+    },
+    [statesSubject["NO CURSADA"]]: {
+      borderColor: "#ccc",
+      backgroundColor: "#ccc",
     },
   },
 };

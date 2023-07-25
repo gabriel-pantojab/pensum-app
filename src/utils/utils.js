@@ -101,6 +101,12 @@ export function nextPeriod(hour) {
   return `${hourS}:${minS}`;
 }
 
+const statesSubject = {
+  APROVADA: "Aprobada",
+  CURSANDO: "Cursando",
+  "NO CURSADA": "No Cursada",
+};
+
 export {
   controlZeroNumber,
   getDateFormat,
@@ -108,4 +114,5 @@ export {
   prevDate,
   getMonthNumber,
   formatHour,
+  statesSubject,
 };
