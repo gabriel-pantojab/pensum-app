@@ -1,21 +1,11 @@
-export const PERIOD_HEIGHT = 28;
+import { controlZeroNumber, formatHour } from "../../../utils/utils";
 
-export function formatHour(text) {
-  if (text.split(":").length === 2) return text;
-  let hour = text.substring(0, 2);
-  let min = text.substring(2, text.length);
-  if (hour > 24) {
-    hour = text.substring(0, 1);
-    min = text.substring(1, text.length);
-  }
-  return `${hour}:${min}`;
-}
+export const PERIOD_HEIGHT = 28;
 
 export function getHours({ minPeriod, maxPeriod }) {
   if (!minPeriod || !maxPeriod) return [];
   let start = formatHour(minPeriod);
   let end = formatHour(maxPeriod);
-  end = end.split(":")[0] < 10 ? "0" + end : end;
   let hrs = [start];
   while (start != end) {
     start = nextHour(start);
@@ -31,22 +21,17 @@ export function nextHour(hour) {
   let totalMinutos = h * 60 + m + 45;
   let newHour = Math.floor(totalMinutos / 60);
   let newMinutes = totalMinutos % 60;
-  const hourS = newHour < 10 ? `0${newHour}` : newHour;
-  const minS = newMinutes < 10 ? `0${newMinutes}` : newMinutes;
+  const hourS = controlZeroNumber(newHour);
+  const minS = controlZeroNumber(newMinutes);
   return `${hourS}:${minS}`;
 }
 
 export function getHeigthPeriod({ period, schedule }) {
   period = formatHour(period);
-  period =
-    parseInt(period.split(":")[0]) < 10
-      ? "0" + parseInt(period.split(":")[0]) + ":" + period.split(":")[1]
-      : period;
   let height = PERIOD_HEIGHT;
   Object.keys(schedule).forEach((day) => {
     Object.keys(schedule[day]).forEach((ped) => {
       let start = formatHour(ped);
-      start = parseInt(start.split(":")[0]) < 10 ? "0" + start : start;
       let hrs = [start];
       let periods = schedule[day][ped].periods;
       while (periods - 1) {
@@ -103,10 +88,7 @@ function completePeriods(activities, minPeriod, maxPeriod) {
       periods--;
     }
     if (activity.periods > 0) activitiesComplete.push(activity);
-    while (
-      start != formatHour(nextActivity.period) &&
-      start != "0" + formatHour(nextActivity.period)
-    ) {
+    while (start != formatHour(nextActivity.period)) {
       activitiesComplete.push({
         period: start,
         periods: 1,

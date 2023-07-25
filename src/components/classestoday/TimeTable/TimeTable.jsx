@@ -3,7 +3,7 @@ import Cell from "./Cell";
 import useLoading from "../../../hooks/useLoading";
 import { useEffect, useState } from "react";
 import { getSchedule } from "../../../storage/storage";
-import { completeDay } from "./utils";
+import { completeDay, freeDay } from "./utils";
 import { getDateFormat } from "../../../utils/utils";
 
 export default function TimeTable() {

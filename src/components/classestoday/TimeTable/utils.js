@@ -32,7 +32,7 @@ export function completeDay({ scheduleDay }) {
       periods--;
     }
     start = nextHour(start);
-    while (start != formatHour(next) && start != "0" + formatHour(next)) {
+    while (start != formatHour(next)) {
       hoursComplete.push({
         hour: start,
         subjects: [],

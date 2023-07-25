@@ -84,6 +84,8 @@ function formatHour(text) {
     hour = text.substring(0, 1);
     min = text.substring(1, text.length);
   }
+  hour = controlZeroNumber(parseInt(hour));
+  min = controlZeroNumber(parseInt(min));
   return `${hour}:${min}`;
 }
 
