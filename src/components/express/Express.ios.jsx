@@ -9,7 +9,7 @@ import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import ScheduleProvider, {
   ScheduleContext,
-} from "../TimeTableSchedule/context/scheduleContext";
+} from "../timeTableSchedule/context/scheduleContext";
 import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";
@@ -17,7 +17,7 @@ import { getCarreras, getNiveles } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
-import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
+import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);

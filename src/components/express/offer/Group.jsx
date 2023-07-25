@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import CheckBox from "../CheckBox";
 import TextStyle from "../../TextStyle";
 import { useContext, useState } from "react";
-import { ScheduleContext } from "../../TimeTableSchedule/context/scheduleContext";
+import { ScheduleContext } from "../../timeTableSchedule/context/scheduleContext";
 import { theme } from "../../../theme";
 
 export default function Group({ group, teacher, infoGroup }) {

@@ -1,10 +1,10 @@
 import { View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import ScheduleProvider from "../TimeTableSchedule/context/scheduleContext";
+import ScheduleProvider from "../timeTableSchedule/context/scheduleContext";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
-import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
+import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
 
 export default function Schedule() {
   const orientation = useDeviceOrientation();

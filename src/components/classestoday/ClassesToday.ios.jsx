@@ -1,10 +1,10 @@
 import { View } from "react-native";
-import HeaderSchedule from "./HeaderSchedule";
 import { getDateFormat } from "../../utils/utils";
-import TimeTable from "./TimeTable";
 import Constants from "expo-constants";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
+import HeaderClassesToday from "./HeaderClassesToday";
+import TimeTable from "./timeTable/TimeTable";
 
 export default function ClassesToday() {
   const orientation = useDeviceOrientation();
@@ -21,7 +21,7 @@ export default function ClassesToday() {
   ];
   return (
     <View style={styCont}>
-      <HeaderSchedule
+      <HeaderClassesToday
         month={monthName}
         dayName={dayName}
         day={day}

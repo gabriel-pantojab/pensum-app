@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
 
-export default function HeaderSchedule({ month, dayName, day, year }) {
+export default function HeaderClassesToday({ month, dayName, day, year }) {
   return (
     <View style={styles.container}>
       <TextStyle style={styles.text}>{year}</TextStyle>

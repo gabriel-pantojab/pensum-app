@@ -7,10 +7,6 @@ import useLoading from "../../hooks/useLoading";
 import LevelsList from "./offer/LevelsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
-import TimeTableEschedule from "../TimeTableSchedule/TimeTableSchedule";
-import ScheduleProvider, {
-  ScheduleContext,
-} from "../TimeTableSchedule/context/scheduleContext";
 import { removeSchedule, saveSchedule } from "../../storage/storage";
 import Loading from "../Loading";
 import CheckIcon from "../icons/CheckIcon";
@@ -19,6 +15,7 @@ import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
 import { StudentContext } from "../../context/studentContext";
+import ScheduleProvider from "../timeTableSchedule/TimeTableSchedule";
 
 function useEjecutando() {
   const [ejecutando, setEjecutando] = useState(false);
@@ -287,7 +284,6 @@ export default function Express() {
               }}
             />
           )}
-          <TimeTableEschedule />
         </View>
       </View>
     </ScheduleProvider>
