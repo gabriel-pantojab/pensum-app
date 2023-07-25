@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import { Link } from "react-router-native";
 import { View, StyleSheet } from "react-native";
@@ -11,19 +11,13 @@ export default function Level({
   index,
 }) {
   const { levels } = useContext(StudentContext);
-  const [approved, setApproved] = useState(0);
-  const [subjectsInProgress, setSubjectsInProgress] = useState(0);
-  const [pending, setPending] = useState(0);
 
-  useEffect(() => {
-    const subjs = levels[index].subjects;
-    const appro = subjs.filter((s) => s.state === "Aprobada").length;
-    const inProg = subjs.filter((s) => s.state === "Cursando").length;
-    const pendg = subjs.filter((s) => s.state === "No Cursada").length;
-    setApproved(appro);
-    setSubjectsInProgress(inProg);
-    setPending(pendg);
-  }, []);
+  const subjects = levels[index].subjects;
+  const approved = subjects.filter((s) => s.state === "Aprobada").length;
+  const subjectsInProgress = subjects.filter(
+    (s) => s.state === "Cursando"
+  ).length;
+  const pending = subjects.filter((s) => s.state === "No Cursada").length;
 
   return (
     <Link
