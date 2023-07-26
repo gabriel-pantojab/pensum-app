@@ -1,16 +1,15 @@
-import { View, StyleSheet } from "react-native";
-import Constants from "expo-constants";
 import { useContext, useState } from "react";
-import useLoading from "../../hooks/useLoading";
-import ScheduleProvider from "../timeTableSchedule/context/scheduleContext";
-import { useDeviceOrientation } from "@react-native-community/hooks";
-import { theme } from "../../theme";
-import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
-import ExpressHeader from "./ExpressHeader.ios";
-import CareersList from "./CareersList.ios";
 import { StudentContext } from "../../context/studentContext";
+import useLoading from "../../hooks/useLoading";
+import { useDeviceOrientation } from "@react-native-community/hooks";
+import ScheduleProvider from "../../components/timeTableSchedule/context/scheduleContext";
+import { View, StyleSheet } from "react-native";
+import ExpressHeader from "../../components/express/ExpressHeader";
+import CareersList from "../../components/express/CareersList";
+import TimeTableEschedule from "../../components/timeTableSchedule/TimeTableSchedule";
+import { theme } from "../../theme";
 
-export default function Express() {
+export default function ExpressPage() {
   const { course } = useContext(StudentContext);
   const [showCarreras, setShowCarreras] = useState(false);
   const { initLoading } = useLoading();

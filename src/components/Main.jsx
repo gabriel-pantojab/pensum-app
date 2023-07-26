@@ -2,7 +2,6 @@ import { Text, View, StyleSheet } from "react-native";
 import { Route, Routes, useLocation } from "react-router-native";
 import NavBar from "./NavBar";
 import SubjectsInLevelList from "./pensum/SubjectsInLevelList";
-import Express from "./express/Express";
 import { StatusBar } from "expo-status-bar";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import Constants from "expo-constants";
@@ -11,6 +10,7 @@ import Home from "../pages/home/Home";
 import PensumPage from "../pages/pensum/PensumPage";
 import ClassesTodayPage from "../pages/classestoday/ClassesTodayPage";
 import SchedulePage from "../pages/schedule/SchedulePage";
+import ExpressPage from "../pages/express/ExpressPage";
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +40,7 @@ export default function Main() {
         <Route path="/pensum/:level" element={<SubjectsInLevelList />} />
         <Route path="/clases-hoy" element={<ClassesTodayPage />} />
         <Route path="/horario" element={<SchedulePage />} />
-        <Route path="/express" element={<Express />} />
+        <Route path="/express" element={<ExpressPage />} />
         <Route path="*" element={<Text>Not Found</Text>} />
       </Routes>
       <NavBar vertical={vertical} />

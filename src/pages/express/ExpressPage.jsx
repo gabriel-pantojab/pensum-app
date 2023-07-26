@@ -1,13 +1,13 @@
-import { View, StyleSheet } from "react-native";
 import { useContext, useState } from "react";
-import { theme } from "../../theme";
 import { StudentContext } from "../../context/studentContext";
-import ScheduleProvider from "../timeTableSchedule/context/scheduleContext";
-import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
-import ExpressHeader from "./ExpressHeader";
-import CareersList from "./CareersList";
+import ScheduleProvider from "../../components/timeTableSchedule/context/scheduleContext";
+import { View, StyleSheet } from "react-native";
+import ExpressHeader from "../../components/express/ExpressHeader";
+import CareersList from "../../components/express/CareersList";
+import TimeTableEschedule from "../../components/timeTableSchedule/TimeTableSchedule";
+import { theme } from "../../theme";
 
-export default function Express() {
+export default function ExpressPage() {
   const { course } = useContext(StudentContext);
   const [showCarreras, setShowCarreras] = useState(false);
   return (
