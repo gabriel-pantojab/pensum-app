@@ -4,56 +4,15 @@ import { Pressable } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import { useContext, useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
-import LevelsList from "./offer/LevelsList";
-import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
-import { getCarreras, getNiveles } from "../../../firebaseconfig";
+import { getCarreras } from "../../../firebaseconfig";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
 import { StudentContext } from "../../context/studentContext";
 import ScheduleProvider from "../timeTableSchedule/context/scheduleContext";
 import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
 import ExpressHeader from "./ExpressHeader";
-
-function Carrera({ name, sis }) {
-  const getData = async () => {
-    const data = await getNiveles({ sisCarrera: sis });
-    return data;
-  };
-  const { offer, setShowOffer, showOffer } = useFetchOffer({
-    getData,
-  });
-
-  return (
-    <View
-      style={{
-        borderBottomWidth: 1,
-        borderColor: theme.colors.white,
-      }}
-    >
-      <Pressable
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-        onPress={() => {
-          setShowOffer(!showOffer);
-        }}
-      >
-        <TextStyle style={styles.carrera}>{name}</TextStyle>
-        {showOffer && offer && offer.niveles ? (
-          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
-        ) : (
-          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
-        )}
-      </Pressable>
-      {showOffer && offer && offer.niveles && (
-        <LevelsList levels={offer.niveles} sisCarrera={sis} />
-      )}
-    </View>
-  );
-}
+import Career from "./offer/Career";
 
 function Carreras({ carreraStudent }) {
   const [showOthersCareers, setShowOthersCareers] = useState(false);
@@ -81,7 +40,7 @@ function Carreras({ carreraStudent }) {
   }, [showOthersCareers]);
   return (
     <View style={styles.menu}>
-      <Carrera
+      <Career
         name={carreraStudent.name}
         sis={carreraStudent.sis}
         key={carreraStudent.sis}
