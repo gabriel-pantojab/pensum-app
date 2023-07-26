@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { StudentContext } from "../context/studentContext";
 
 export default function useUpdateSubjectState({ name, state, level, id }) {
@@ -11,7 +11,7 @@ export default function useUpdateSubjectState({ name, state, level, id }) {
     setCurrentSubjectsList,
   } = useContext(StudentContext);
   const [stateSubject, setStateSubject] = useState(state);
-  const updateCourse = async (antValue, value) => {
+  const updateCourse = useCallback(async (antValue, value) => {
     if (antValue === value) return;
     if (antValue === "No Cursada") {
       if (value === "Aprobada") {
@@ -36,9 +36,9 @@ export default function useUpdateSubjectState({ name, state, level, id }) {
       course.approvedSubjects -= 1;
     }
     setCourse(course);
-  };
+  }, []);
 
-  const updateCurrentSubjectsList = async (value) => {
+  const updateCurrentSubjectsList = useCallback(async (value) => {
     let newCurrentSubjectsList = [];
     if (value === "Cursando") {
       newCurrentSubjectsList = [
@@ -56,9 +56,9 @@ export default function useUpdateSubjectState({ name, state, level, id }) {
       );
     }
     setCurrentSubjectsList(newCurrentSubjectsList);
-  };
+  }, []);
 
-  const handleChangeState = async (value) => {
+  const handleChangeState = useCallback(async (value) => {
     const temp = [...levels];
     const index = temp.indexOf(temp.find((nivel) => nivel.name === level));
     const currentLevel = temp[index];
@@ -87,7 +87,6 @@ export default function useUpdateSubjectState({ name, state, level, id }) {
     setStateSubject(value);
     await updateCourse(antValue, value);
     await updateCurrentSubjectsList(value);
-  };
-
+  }, []);
   return { handleChangeState, stateSubject };
 }
