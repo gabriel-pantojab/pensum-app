@@ -1,130 +1,19 @@
-import { View, StyleSheet, FlatList, Dimensions, Button } from "react-native";
+import { View, StyleSheet, FlatList, Dimensions } from "react-native";
 import Constants from "expo-constants";
 import { Pressable } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import LevelsList from "./OfferSubjectsList";
 import useFetchOffer from "../../hooks/useFetchOffer";
 import CaretUpIcon from "../icons/CaretUpIcon";
-import ScheduleProvider, {
-  ScheduleContext,
-} from "../timeTableSchedule/context/scheduleContext";
-import { removeSchedule, saveSchedule } from "../../storage/storage";
-import Loading from "../Loading";
-import CheckIcon from "../icons/CheckIcon";
+import ScheduleProvider from "../timeTableSchedule/context/scheduleContext";
 import { getCarreras, getNiveles } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TextStyle from "../TextStyle";
 import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
-
-function useEjecutando() {
-  const [ejecutando, setEjecutando] = useState(false);
-  const [ejecutado, setEjecutado] = useState(false);
-
-  const init = () => {
-    setEjecutando(true);
-    setEjecutado(false);
-  };
-
-  const finish = () => {
-    setTimeout(() => {
-      setEjecutando(false);
-      setEjecutado(true);
-      setTimeout(() => {
-        setEjecutado(false);
-      }, 500);
-    }, 500);
-  };
-  return { init, finish, ejecutando, ejecutado };
-}
-
-function Ejecutando({ ejecutando, ejecutado, mensaje }) {
-  if (!ejecutando && !ejecutado) return;
-  if (ejecutando) return <Loading />;
-  if (ejecutado)
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 3,
-          backgroundColor: "#f9faf5",
-          padding: 3,
-          borderRadius: 5,
-        }}
-      >
-        <CheckIcon width={10} height={10} color="green" />
-        <TextStyle
-          style={{
-            color: "green",
-            fontSize: 10,
-          }}
-        >
-          {mensaje}
-        </TextStyle>
-      </View>
-    );
-}
-
-function CarrerasOption({ showCarreras, showCarrerasValue }) {
-  const {
-    schedule,
-    minPeriod,
-    maxPeriod,
-    selectedSubjects,
-    colorsSubjects,
-    clear,
-  } = useContext(ScheduleContext);
-  const { ejecutando, ejecutado, init, finish } = useEjecutando();
-  const [sms, setSms] = useState("");
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        gap: 10,
-      }}
-    >
-      <Pressable style={styles.options} onPress={showCarreras}>
-        <TextStyle style={styles.title}>Carreras</TextStyle>
-        {showCarrerasValue ? (
-          <CaretUpIcon color="#fff" width={15} height={15} />
-        ) : (
-          <CaretDownIcon color="#fff" width={15} height={15} />
-        )}
-      </Pressable>
-      <Button
-        onPress={() => {
-          setSms("Guardado");
-          init();
-          saveSchedule({
-            schedule,
-            minPeriod,
-            maxPeriod,
-            selectedSubjects,
-            colorsSubjects,
-          }).then(() => {
-            finish();
-          });
-        }}
-        title="Guardar"
-      />
-      <Button
-        onPress={() => {
-          setSms("Limpiado");
-          init();
-          removeSchedule().then(() => {
-            clear();
-            finish();
-          });
-        }}
-        title="Limpiar"
-      />
-      <Ejecutando ejecutando={ejecutando} ejecutado={ejecutado} mensaje={sms} />
-    </View>
-  );
-}
+import ExpressHeader from "./ExpressHeader.ios";
 
 function Carrera({ name, sis }) {
   const getData = async () => {
@@ -193,27 +82,6 @@ function Carreras({ carreras, loading, finishedRender }) {
           No hay carreras disponibles
         </TextStyle>
       )}
-    </View>
-  );
-}
-
-function ExpressHeader({ action, showCarreras }) {
-  const orientation = useDeviceOrientation();
-  const styHeader = [
-    styles.header,
-    orientation === "landscape" && {
-      flexDirection: "row-reverse",
-      justifyContent: "space-between",
-      paddingLeft: Constants.statusBarHeight,
-    },
-  ];
-
-  return (
-    <View style={styHeader}>
-      <TextStyle style={styles.title}>
-        Express - Gestión {new Date().getFullYear()}
-      </TextStyle>
-      <CarrerasOption showCarreras={action} showCarrerasValue={showCarreras} />
     </View>
   );
 }
