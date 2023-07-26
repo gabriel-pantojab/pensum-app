@@ -1,19 +1,19 @@
 import { View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import ScheduleProvider from "../timeTableSchedule/context/scheduleContext";
-import { getCarreras } from "../../../firebaseconfig";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import { theme } from "../../theme";
 import TimeTableEschedule from "../timeTableSchedule/TimeTableSchedule";
 import ExpressHeader from "./ExpressHeader.ios";
 import CareersList from "./CareersList.ios";
+import { StudentContext } from "../../context/studentContext";
 
 export default function Express() {
-  const [carreras, setCarreras] = useState([]);
+  const { course } = useContext(StudentContext);
   const [showCarreras, setShowCarreras] = useState(false);
-  const { loading, finishedRender, initLoading } = useLoading();
+  const { initLoading } = useLoading();
   const orientation = useDeviceOrientation();
 
   const styCont = [
@@ -23,18 +23,6 @@ export default function Express() {
     },
   ];
 
-  const getCarrerasDB = async () => {
-    try {
-      const data = await getCarreras();
-      setCarreras(data);
-    } catch (e) {
-      setCarreras([]);
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    getCarrerasDB();
-  }, []);
   return (
     <ScheduleProvider>
       <View style={styCont}>
@@ -48,9 +36,10 @@ export default function Express() {
         <View style={styles.content}>
           {showCarreras && (
             <CareersList
-              carreras={carreras}
-              loading={loading}
-              finishedRender={finishedRender}
+              carreraStudent={{
+                name: course.name.toUpperCase(),
+                sis: course.sis,
+              }}
             />
           )}
           <TimeTableEschedule />
