@@ -18,6 +18,7 @@ import Calendar2Icon from "../icons/Calendar2";
 import CoffeIcon from "../icons/CoffeIcon";
 import UserCard from "../home/UserCard";
 import { StudentContext } from "../../context/studentContext";
+import SettingsIcon from "../icons/SettingsIcon";
 
 export default function SideMenu({ show, close }) {
   const leftPosition = useSharedValue(-Dimensions.get("window").width);
@@ -77,6 +78,12 @@ export default function SideMenu({ show, close }) {
             <View style={styles.link}>
               <CoffeIcon color={theme.colors.white} width={20} height={20} />
               <TextStyle style={styles.textLink}>Express</TextStyle>
+            </View>
+          </Item>
+          <Item to="/main/ajustes" close={close}>
+            <View style={styles.link}>
+              <SettingsIcon color={theme.colors.white} width={20} height={20} />
+              <TextStyle style={styles.textLink}>Ajustes</TextStyle>
             </View>
           </Item>
         </View>
