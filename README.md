@@ -33,6 +33,33 @@
 - [x] Visualizar el horario de clases del estudiante.
 - [x] Armar el horario dinámicamente.
 
+## Instalación
+
+**1.** Clonar el repositorio.
+
+```bash
+git clone https://github.com/gabriel-pantojab/pensum-app.git
+```
+
+**2.** Instalar las dependencias.
+
+```bash
+npm install
+```
+
+**3.** Instalar la aplicación **Expo Go** en tu dispositivo móvil.
+
+- [Expo Go para Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=es_BO&gl=US)
+- [Expo Go para iOS](https://apps.apple.com/us/app/expo-go/id982107779)
+
+**4.** Ejecutar el proyecto.
+
+```bash
+expo start
+```
+
+**5.** Escanear el código QR con la aplicación **Expo Go**.
+
 ## Tecnologías
 
 - [React Native](https://reactnative.dev/)
