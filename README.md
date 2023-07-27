@@ -13,12 +13,16 @@
 
 ## Demo
 
-<img
-  src="./assets/app/demo.jpg"
-  alt="Demo"
-  width="300"
-  height="600"
-/>
+<p
+  align="center"
+>
+  <img
+    src="./assets/app/demov.gif"
+    alt="Demo"
+    width="230"
+    height="500"
+  />
+</p>
 
 ## Características
 
