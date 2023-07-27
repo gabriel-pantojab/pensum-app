@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Intro from "./src/components/intro/Intro";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import MainRouter from "./src/components/MainRouter";
+import AuthRouter from "./src/routes/AuthRouter";
 
 export default function App() {
   const [intro, setIntro] = useState(true);
@@ -28,7 +28,7 @@ export default function App() {
     <NativeRouter>
       <StudentProvider>
         <StatusBar style="auto" />
-        {intro || !fontsLoaded ? <Intro /> : <MainRouter />}
+        {intro || !fontsLoaded ? <Intro /> : <AuthRouter />}
       </StudentProvider>
     </NativeRouter>
   );
