@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   },
 
   contentRoutes: {
-    paddingHorizontal: 20,
     gap: 10,
     borderBottomWidth: 2,
     borderBottomColor: theme.colors.white,
