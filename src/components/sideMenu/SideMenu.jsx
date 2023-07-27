@@ -41,39 +41,45 @@ export default function SideMenu({ show, close }) {
   const styContainer = [styles.container, style];
   return (
     <Animated.View style={styContainer}>
-      <Button title="Close" onPress={close} />
-      <UserCard name={student.name} />
-      <View style={styles.contentRoutes}>
-        <Item to="/main" close={close}>
-          <View style={styles.link}>
-            <HomeIcon color={theme.colors.black} width={20} height={20} />
-            <TextStyle>Home</TextStyle>
-          </View>
-        </Item>
-        <Item to="/main/pensum" close={close}>
-          <View style={styles.link}>
-            <BookIcon color={theme.colors.black} width={20} height={20} />
-            <TextStyle>Pensum</TextStyle>
-          </View>
-        </Item>
-        <Item to="/main/clases-hoy" close={close}>
-          <View style={styles.link}>
-            <CalendarIcon color={theme.colors.black} width={20} height={20} />
-            <TextStyle>Clases Hoy</TextStyle>
-          </View>
-        </Item>
-        <Item to="/main/horario" close={close}>
-          <View style={styles.link}>
-            <Calendar2Icon color={theme.colors.black} width={20} height={20} />
-            <TextStyle>Horario</TextStyle>
-          </View>
-        </Item>
-        <Item to="/main/express" close={close}>
-          <View style={styles.link}>
-            <CoffeIcon color={theme.colors.black} width={20} height={20} />
-            <TextStyle>Express</TextStyle>
-          </View>
-        </Item>
+      <View style={styles.content}>
+        <Button title="Close" onPress={close} />
+        <UserCard name={student.name} />
+        <View style={styles.contentRoutes}>
+          <Item to="/main" close={close}>
+            <View style={styles.link}>
+              <HomeIcon color={theme.colors.white} width={20} height={20} />
+              <TextStyle style={styles.textLink}>Home</TextStyle>
+            </View>
+          </Item>
+          <Item to="/main/pensum" close={close}>
+            <View style={styles.link}>
+              <BookIcon color={theme.colors.white} width={20} height={20} />
+              <TextStyle style={styles.textLink}>Pensum</TextStyle>
+            </View>
+          </Item>
+          <Item to="/main/clases-hoy" close={close}>
+            <View style={styles.link}>
+              <CalendarIcon color={theme.colors.white} width={20} height={20} />
+              <TextStyle style={styles.textLink}>Clases Hoy</TextStyle>
+            </View>
+          </Item>
+          <Item to="/main/horario" close={close}>
+            <View style={styles.link}>
+              <Calendar2Icon
+                color={theme.colors.white}
+                width={20}
+                height={20}
+              />
+              <TextStyle style={styles.textLink}>Horario</TextStyle>
+            </View>
+          </Item>
+          <Item to="/main/express" close={close}>
+            <View style={styles.link}>
+              <CoffeIcon color={theme.colors.white} width={20} height={20} />
+              <TextStyle style={styles.textLink}>Express</TextStyle>
+            </View>
+          </Item>
+        </View>
       </View>
     </Animated.View>
   );
@@ -81,7 +87,7 @@ export default function SideMenu({ show, close }) {
 
 function Item({ to, children, close }) {
   return (
-    <Link to={to} underlayColor="#fff" onPress={close}>
+    <Link to={to} underlayColor="rgba(0,0, 0, 0.5)" onPress={close}>
       {children}
     </Link>
   );
@@ -91,23 +97,35 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     // paddingTop: Constants.statusBarHeight,
-    width: "80%",
-    backgroundColor: theme.colors.white,
-    borderRightWidth: 3,
-    borderColor: theme.colors.black,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    width: "100%",
     top: 0,
     left: -Dimensions.get("window").width,
     bottom: 0,
     zIndex: 999,
   },
-  contentRoutes: {
+  content: {
     flex: 1,
-    paddingLeft: 20,
+    backgroundColor: theme.colors.primary,
+    zIndex: 1000,
+    width: "80%",
+    top: 0,
+    bottom: 0,
+    left: 0,
+  },
+
+  contentRoutes: {
+    paddingHorizontal: 20,
     gap: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: theme.colors.white,
   },
   link: {
     flexDirection: "row",
     gap: 10,
     padding: 10,
+  },
+  textLink: {
+    color: theme.colors.white,
   },
 });

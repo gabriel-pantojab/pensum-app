@@ -1,10 +1,10 @@
 import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
-export default function BackIcon() {
+export default function BackIcon({ color = "black", width = 20, height = 20 }) {
   return (
     <View>
-      <Svg width="20" height="20" fill="black" viewBox="0 0 16 16">
+      <Svg width={width} height={height} fill={color} viewBox="0 0 16 16">
         <Path
           fillRule="evenodd"
           d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"

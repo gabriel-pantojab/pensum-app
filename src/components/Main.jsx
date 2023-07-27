@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Pressable } from "react-native";
-import { useLocation } from "react-router-native";
+import { Link, useLocation } from "react-router-native";
 import NavBar from "./NavBar";
 import { StatusBar } from "expo-status-bar";
 import { useDeviceOrientation } from "@react-native-community/hooks";
@@ -10,6 +10,7 @@ import SideMenu from "./sideMenu/SideMenu";
 import { useState } from "react";
 import MenuIcon from "./icons/MenuIcon";
 import { theme } from "../theme";
+import BackIcon from "./icons/BackIcon";
 
 const styles = StyleSheet.create({
   container: {
@@ -34,9 +35,21 @@ export default function Main() {
       <StatusBar style="auto" backgroundColor="#ccc" />
       {location.pathname !== "/main/express" && orientation !== "landscape" && (
         <Header>
-          <Pressable onPress={() => setShowSideMenu(!showSideMenu)}>
-            <MenuIcon color={theme.colors.white} width={30} height={30} />
-          </Pressable>
+          {location.pathname === "/main" ? (
+            <Pressable onPress={() => setShowSideMenu(!showSideMenu)}>
+              <MenuIcon color={theme.colors.white} width={30} height={30} />
+            </Pressable>
+          ) : (
+            <Link
+              to="/main"
+              underlayColor={"transparent"}
+              style={{
+                padding: 5,
+              }}
+            >
+              <BackIcon color={theme.colors.white} width={25} height={25} />
+            </Link>
+          )}
         </Header>
       )}
       <MainRouter />

@@ -16,13 +16,21 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.goodDog,
     marginRight: 10,
   },
+  contentAppName: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
 });
 
 export default function Header({ children }) {
   const styHeader = [styles.container];
   return (
     <View style={styHeader}>
-      {children}
+      <View style={styles.contentAppName}>
+        {children}
+        <Text style={styles.appName}>pensum app</Text>
+      </View>
       <Logo
         widthBG={80}
         heightBG={51}
@@ -31,7 +39,6 @@ export default function Header({ children }) {
         topBirrete={17}
         leftBirrete={24}
       />
-      <Text style={styles.appName}>pensum app</Text>
     </View>
   );
 }
