@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { theme } from "../theme";
 import Logo from "./Logo";
+import { useLocation } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,13 +24,33 @@ const styles = StyleSheet.create({
   },
 });
 
+function getNamePage({ pathName }) {
+  if (pathName.includes("pensum")) {
+    return "pensum";
+  }
+  switch (pathName) {
+    case "/main":
+      return "pensum app";
+    case "/main/clases-hoy":
+      return "clases hoy";
+    case "/main/horario":
+      return "horario";
+    case "/main/express":
+      return "express";
+    default:
+      return "pensum app";
+  }
+}
+
 export default function Header({ children }) {
+  const location = useLocation();
+  const name = getNamePage({ pathName: location.pathname });
   const styHeader = [styles.container];
   return (
     <View style={styHeader}>
       <View style={styles.contentAppName}>
         {children}
-        <Text style={styles.appName}>pensum app</Text>
+        <Text style={styles.appName}>{name}</Text>
       </View>
       <Logo
         widthBG={80}
