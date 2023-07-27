@@ -1,40 +1,14 @@
 import { useContext, useEffect } from "react";
-import { Pressable, Text, StyleSheet, ScrollView } from "react-native";
-import { View } from "react-native";
-import { theme } from "../theme";
-import CaretUpIcon from "./icons/CaretUpIcon";
-import CaretDownIcon from "./icons/CaretDownIcon";
-import SelectProvider, { SelectContext } from "../context/selectContext";
-
-export function Option({ value, children, name, onChange }) {
-  const { setValueSelected, valueSelected, setOpen, setNameValue } =
-    useContext(SelectContext);
-  const styOption = [
-    styles.option,
-    valueSelected === value && styles.optionSelected,
-  ];
-  return (
-    <Pressable
-      style={styOption}
-      onPress={() => {
-        setValueSelected(value);
-        setNameValue(name);
-        setOpen(false);
-        onChange &&
-          onChange({
-            name,
-            sis: value,
-          });
-      }}
-    >
-      {children}
-    </Pressable>
-  );
-}
+import SelectProvider, { SelectContext } from "../../context/selectContext";
+import { Pressable, ScrollView, Text, View, StyleSheet } from "react-native";
+import CaretDownIcon from "../icons/CaretDownIcon";
+import CaretUpIcon from "../icons/CaretUpIcon";
+import { theme } from "../../theme";
 
 function SelectComponent({ children, defaultValue = "" }) {
   const { setValueSelected, open, setOpen, nameValue, setNameValue } =
     useContext(SelectContext);
+
   useEffect(() => {
     Object.values(children).forEach((child) => {
       if (child.props.value === defaultValue) {
@@ -43,6 +17,7 @@ function SelectComponent({ children, defaultValue = "" }) {
       }
     });
   }, []);
+
   return (
     <View>
       <Pressable
@@ -94,13 +69,5 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5,
     backgroundColor: theme.colors.white,
     maxHeight: 200,
-  },
-  option: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.primary,
-  },
-  optionSelected: {
-    backgroundColor: "#ccc",
   },
 });
