@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { theme } from "../theme";
 import Logo from "./Logo";
-import TextStyle from "./TextStyle";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,10 +18,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Header() {
+export default function Header({ children }) {
   const styHeader = [styles.container];
   return (
     <View style={styHeader}>
+      {children}
       <Logo
         widthBG={80}
         heightBG={51}
