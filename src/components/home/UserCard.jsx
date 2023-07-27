@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   textInfo: {
     flexWrap: "wrap",
     width: "100%",
-    color: "#1f1f1f",
+    color: theme.colors.white,
   },
 });
 
