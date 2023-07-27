@@ -20,7 +20,8 @@ import { saveStudent } from "../../storage/storage";
 import { useContext, useEffect, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
 import HandleError from "./HandleError";
-import Select, { Option } from "../Select";
+import Select from "../selectComponent/Select";
+import Option from "../selectComponent/Option";
 
 const styles = StyleSheet.create({
   container: {

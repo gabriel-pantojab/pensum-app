@@ -3,7 +3,7 @@ import { SelectContext } from "../../context/selectContext";
 import { Pressable, StyleSheet } from "react-native";
 import { theme } from "../../theme";
 
-export function Option({ value, children, name, onChange }) {
+export default function Option({ value, children, name, onChange }) {
   const { setValueSelected, valueSelected, setOpen, setNameValue } =
     useContext(SelectContext);
   const styOption = [
