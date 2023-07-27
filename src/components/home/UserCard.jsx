@@ -28,17 +28,25 @@ const styles = StyleSheet.create({
   textInfo: {
     flexWrap: "wrap",
     width: "100%",
-    color: theme.colors.white,
   },
 });
 
-export default function UserCard({ image, name, description = "" }) {
+export default function UserCard({
+  image,
+  name,
+  description = "",
+  colorInfo = theme.colors.black,
+}) {
+  const styTextInfo = {
+    ...styles.textInfo,
+    color: colorInfo,
+  };
   return (
     <View style={styles.container}>
       <View style={styles.userInfo}>
         <TextStyle
           style={{
-            ...styles.textInfo,
+            ...styTextInfo,
             fontSize: 20,
           }}
         >
@@ -46,7 +54,7 @@ export default function UserCard({ image, name, description = "" }) {
         </TextStyle>
         <Text
           style={{
-            ...styles.textInfo,
+            ...styTextInfo,
             paddingLeft: 10,
             fontSize: 16,
           }}

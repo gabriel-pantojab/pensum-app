@@ -44,7 +44,7 @@ export default function SideMenu({ show, close }) {
     <Animated.View style={styContainer}>
       <View style={styles.content}>
         <Button title="Close" onPress={close} />
-        <UserCard name={student.name} />
+        <UserCard name={student.name} colorInfo={theme.colors.white} />
         <View style={styles.contentRoutes}>
           <Item to="/main" close={close}>
             <View style={styles.link}>
