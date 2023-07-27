@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import { ScrollView, View, StyleSheet } from "react-native";
-import UserCard from "../../components/home/UserCard";
 import Course from "../../components/home/Course";
 import CurrentSubjectsList from "../../components/home/CurrentSubjectsList";
 import { theme } from "../../theme";
@@ -14,11 +13,6 @@ export default function Home() {
     <View style={styCont}>
       <Logout />
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <UserCard
-          image={student.avatar}
-          name={student.name}
-          description={student.description}
-        />
         <Course />
         <CurrentSubjectsList subjects={currentSubjectsList} />
       </ScrollView>
@@ -33,6 +27,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     alignItems: "center",
+    paddingTop: 20,
     gap: 50,
   },
 });
