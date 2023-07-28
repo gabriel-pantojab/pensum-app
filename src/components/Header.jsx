@@ -37,6 +37,8 @@ function getNamePage({ pathName }) {
       return "horario";
     case "/main/express":
       return "express";
+    case "/main/ajustes":
+      return "ajustes";
     default:
       return "pensum app";
   }

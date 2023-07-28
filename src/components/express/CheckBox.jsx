@@ -39,7 +39,7 @@ export default function CheckBox({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   checkbox: {
     borderWidth: 1,
