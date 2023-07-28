@@ -1,9 +1,10 @@
 import { useContext, useEffect } from "react";
 import SelectProvider, { SelectContext } from "../../context/selectContext";
-import { Pressable, ScrollView, Text, View, StyleSheet } from "react-native";
+import { Pressable, ScrollView, View, StyleSheet } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
 function SelectComponent({ children, defaultValue = "", enabled = true }) {
   const { setValueSelected, open, setOpen, nameValue, setNameValue } =
@@ -29,7 +30,7 @@ function SelectComponent({ children, defaultValue = "", enabled = true }) {
           setOpen(!open);
         }}
       >
-        <Text>{nameValue}</Text>
+        <TextStyle>{nameValue}</TextStyle>
         {open ? (
           <CaretUpIcon color={theme.colors.primary} width={20} height={20} />
         ) : (
