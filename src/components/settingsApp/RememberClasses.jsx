@@ -5,6 +5,7 @@ import CheckBox from "../express/CheckBox";
 import Option from "./Option";
 import Select from "../selectComponent/Select";
 import SelectOption from "../selectComponent/Option";
+import { theme } from "../../theme";
 
 export default function RememberClasses() {
   const [checked, setChecked] = useState(false);
@@ -13,7 +14,11 @@ export default function RememberClasses() {
     checked ? { opacity: 1 } : { opacity: 0.5 },
   ];
   return (
-    <Option>
+    <Option
+      style={{
+        backgroundColor: theme.colors.white,
+      }}
+    >
       <CheckBox value={checked} onChange={() => setChecked(!checked)}>
         <TextStyle>Recordar Clases</TextStyle>
       </CheckBox>
