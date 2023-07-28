@@ -271,7 +271,10 @@ export default function SignUpPage() {
                   value={career.sis}
                   name={career.nombre}
                   onChange={(value) => {
-                    setCarrera(value);
+                    setCarrera({
+                      name: value.name,
+                      sis: value.value,
+                    });
                   }}
                 >
                   <Text>{career.nombre}</Text>

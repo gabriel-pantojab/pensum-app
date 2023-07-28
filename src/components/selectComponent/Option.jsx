@@ -20,7 +20,7 @@ export default function Option({ value, children, name, onChange }) {
         onChange &&
           onChange({
             name,
-            sis: value,
+            value,
           });
       }}
     >
