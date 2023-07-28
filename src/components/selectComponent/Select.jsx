@@ -5,15 +5,17 @@ import CaretDownIcon from "../icons/CaretDownIcon";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { theme } from "../../theme";
 
-function SelectComponent({ children, defaultValue = "" }) {
+function SelectComponent({ children, defaultValue = "", enabled = true }) {
   const { setValueSelected, open, setOpen, nameValue, setNameValue } =
     useContext(SelectContext);
 
   useEffect(() => {
     Object.values(children).forEach((child) => {
-      if (child.props.value === defaultValue) {
-        setValueSelected(child.props.value);
-        setNameValue(child.props.name);
+      if (child && child.props) {
+        if (child.props.value === defaultValue) {
+          setValueSelected(child.props.value);
+          setNameValue(child.props.name);
+        }
       }
     });
   }, []);
@@ -23,6 +25,7 @@ function SelectComponent({ children, defaultValue = "" }) {
       <Pressable
         style={styles.select}
         onPress={() => {
+          if (!enabled) return;
           setOpen(!open);
         }}
       >
@@ -42,10 +45,16 @@ function SelectComponent({ children, defaultValue = "" }) {
   );
 }
 
-export default function Select({ children, defaultValue = "" }) {
+export default function Select({
+  children,
+  defaultValue = "",
+  enabled = true,
+}) {
   return (
     <SelectProvider>
-      <SelectComponent defaultValue={defaultValue}>{children}</SelectComponent>
+      <SelectComponent defaultValue={defaultValue} enabled={enabled}>
+        {children}
+      </SelectComponent>
     </SelectProvider>
   );
 }
