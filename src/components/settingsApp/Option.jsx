@@ -7,5 +7,6 @@ export default function Option({ children }) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    gap: 10,
   },
 });
