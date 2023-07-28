@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet } from "react-native";
 import UserCard from "../../components/home/UserCard";
 import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
@@ -6,6 +6,7 @@ import RememberClasses from "../../components/settingsApp/RememberClasses";
 import { theme } from "../../theme";
 import TextStyle from "../../components/TextStyle";
 import EditIcon from "../../components/icons/EditIcon";
+import { Link } from "react-router-native";
 
 export default function SettingsPage() {
   const { student } = useContext(StudentContext);
@@ -14,9 +15,9 @@ export default function SettingsPage() {
       <View style={styles.account}>
         <View style={styles.accountHeader}>
           <TextStyle style={styles.title}>Cuenta</TextStyle>
-          <Pressable>
+          <Link to="/main/perfil" underlayColor={theme.colors.white}>
             <EditIcon width={20} height={20} color={theme.colors.primary} />
-          </Pressable>
+          </Link>
         </View>
         <UserCard name={student.name} />
       </View>

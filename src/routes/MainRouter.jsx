@@ -7,6 +7,7 @@ import ClassesTodayPage from "../pages/classestoday/ClassesTodayPage";
 import SchedulePage from "../pages/schedule/SchedulePage";
 import ExpressPage from "../pages/express/ExpressPage";
 import SettingsPage from "../pages/settings/SettingsPage";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 export default function MainRouter() {
   return (
@@ -18,6 +19,7 @@ export default function MainRouter() {
       <Route path="/horario" element={<SchedulePage />} />
       <Route path="/express" element={<ExpressPage />} />
       <Route path="/ajustes" element={<SettingsPage />} />
+      <Route path="/perfil" element={<ProfilePage />} />
       <Route path="*" element={<Text>Not Found</Text>} />
     </Routes>
   );

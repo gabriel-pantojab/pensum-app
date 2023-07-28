@@ -39,6 +39,8 @@ function getNamePage({ pathName }) {
       return "express";
     case "/main/ajustes":
       return "ajustes";
+    case "/main/perfil":
+      return "perfil";
     default:
       return "pensum app";
   }
