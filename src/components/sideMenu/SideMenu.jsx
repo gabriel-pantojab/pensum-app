@@ -1,6 +1,4 @@
-import { StyleSheet, Dimensions, Button, View, Pressable } from "react-native";
-import Constants from "expo-constants";
-import { Text } from "react-native";
+import { StyleSheet, Dimensions, View, Pressable } from "react-native";
 import Animated, {
   useSharedValue,
   withTiming,
@@ -42,52 +40,66 @@ export default function SideMenu({ show, close }) {
   const styContainer = [styles.container, style];
   return (
     <Animated.View style={styContainer}>
-      <View style={styles.content}>
-        <Button title="Close" onPress={close} />
-        <UserCard name={student.name} colorInfo={theme.colors.white} />
-        <View style={styles.contentRoutes}>
-          <Item to="/main" close={close}>
-            <View style={styles.link}>
-              <HomeIcon color={theme.colors.white} width={20} height={20} />
-              <TextStyle style={styles.textLink}>Home</TextStyle>
-            </View>
-          </Item>
-          <Item to="/main/pensum" close={close}>
-            <View style={styles.link}>
-              <BookIcon color={theme.colors.white} width={20} height={20} />
-              <TextStyle style={styles.textLink}>Pensum</TextStyle>
-            </View>
-          </Item>
-          <Item to="/main/clases-hoy" close={close}>
-            <View style={styles.link}>
-              <CalendarIcon color={theme.colors.white} width={20} height={20} />
-              <TextStyle style={styles.textLink}>Clases Hoy</TextStyle>
-            </View>
-          </Item>
-          <Item to="/main/horario" close={close}>
-            <View style={styles.link}>
-              <Calendar2Icon
-                color={theme.colors.white}
-                width={20}
-                height={20}
-              />
-              <TextStyle style={styles.textLink}>Horario</TextStyle>
-            </View>
-          </Item>
-          <Item to="/main/express" close={close}>
-            <View style={styles.link}>
-              <CoffeIcon color={theme.colors.white} width={20} height={20} />
-              <TextStyle style={styles.textLink}>Express</TextStyle>
-            </View>
-          </Item>
-          <Item to="/main/ajustes" close={close}>
-            <View style={styles.link}>
-              <SettingsIcon color={theme.colors.white} width={20} height={20} />
-              <TextStyle style={styles.textLink}>Ajustes</TextStyle>
-            </View>
-          </Item>
+      <Pressable
+        style={{
+          flex: 1,
+        }}
+        onPress={close}
+      >
+        <View style={styles.content}>
+          <UserCard name={student.name} colorInfo={theme.colors.white} />
+          <View style={styles.contentRoutes}>
+            <Item to="/main" close={close}>
+              <View style={styles.link}>
+                <HomeIcon color={theme.colors.white} width={20} height={20} />
+                <TextStyle style={styles.textLink}>Home</TextStyle>
+              </View>
+            </Item>
+            <Item to="/main/pensum" close={close}>
+              <View style={styles.link}>
+                <BookIcon color={theme.colors.white} width={20} height={20} />
+                <TextStyle style={styles.textLink}>Pensum</TextStyle>
+              </View>
+            </Item>
+            <Item to="/main/clases-hoy" close={close}>
+              <View style={styles.link}>
+                <CalendarIcon
+                  color={theme.colors.white}
+                  width={20}
+                  height={20}
+                />
+                <TextStyle style={styles.textLink}>Clases Hoy</TextStyle>
+              </View>
+            </Item>
+            <Item to="/main/horario" close={close}>
+              <View style={styles.link}>
+                <Calendar2Icon
+                  color={theme.colors.white}
+                  width={20}
+                  height={20}
+                />
+                <TextStyle style={styles.textLink}>Horario</TextStyle>
+              </View>
+            </Item>
+            <Item to="/main/express" close={close}>
+              <View style={styles.link}>
+                <CoffeIcon color={theme.colors.white} width={20} height={20} />
+                <TextStyle style={styles.textLink}>Express</TextStyle>
+              </View>
+            </Item>
+            <Item to="/main/ajustes" close={close}>
+              <View style={styles.link}>
+                <SettingsIcon
+                  color={theme.colors.white}
+                  width={20}
+                  height={20}
+                />
+                <TextStyle style={styles.textLink}>Ajustes</TextStyle>
+              </View>
+            </Item>
+          </View>
         </View>
-      </View>
+      </Pressable>
     </Animated.View>
   );
 }
@@ -119,6 +131,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
+    paddingTop: 15,
   },
 
   contentRoutes: {
