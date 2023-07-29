@@ -8,7 +8,6 @@ import MainRouter from "../routes/MainRouter";
 import MenuIcon from "./icons/MenuIcon";
 import BackIcon from "./icons/BackIcon";
 import { theme } from "../theme";
-import { useLocation } from "react-router-native";
 import SideMenu from "./sideMenu/SideMenu";
 import { useState } from "react";
 

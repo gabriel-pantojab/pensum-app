@@ -18,7 +18,7 @@ export default function PensumPage() {
         <FlatList
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
           data={levels}
-          initialNumToRender={1}
+          // initialNumToRender={1}
           ListFooterComponent={loading}
           renderItem={({ item, index }) => (
             <Level

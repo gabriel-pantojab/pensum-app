@@ -29,7 +29,7 @@ export default function TimeTable() {
     <View style={styles.container} onLayout={finishedRender}>
       {schedule && (
         <FlatList
-          initialNumToRender={1}
+          // initialNumToRender={1}
           contentContainerStyle={{
             position: "relative",
             paddingVertical: 10,
