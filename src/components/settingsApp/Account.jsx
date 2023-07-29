@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import UserName from "./UserName";
+import { getCurrentUser, updateUserName } from "../../../firebaseconfig";
+import { getStudent, saveStudent } from "../../storage/storage";
 
 const schema = yup.object({
   username: yup
@@ -17,8 +19,19 @@ const schema = yup.object({
     .trim(),
 });
 
+async function updateusername({ uid, username, student }) {
+  await updateUserName({
+    uid,
+    userName: username,
+  });
+  await saveStudent({
+    ...student,
+    name: username,
+  });
+}
+
 export default function Account() {
-  const { student } = useContext(StudentContext);
+  const { student, setStudent } = useContext(StudentContext);
   const [edit, setEdit] = useState(false);
 
   const defaultValues = {
@@ -36,7 +49,14 @@ export default function Account() {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    const { username } = data;
+    if (username !== student.name) {
+      await updateusername({ uid: student.uid, username, student });
+      setStudent({
+        ...student,
+        name: username,
+      });
+    }
     setEdit(false);
   };
 
@@ -54,7 +74,7 @@ export default function Account() {
         />
         {edit && (
           <View style={styles.optionsEdit}>
-            {isSubmitting && <Loading />}
+            {isSubmitting && <Loading large="small" />}
             <Pressable
               style={[
                 styles.optionEdit,
@@ -120,7 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     gap: 10,
-    marginTop: 5,
+    padding: 10,
   },
   optionEdit: {
     padding: 5,

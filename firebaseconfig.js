@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { child, get, getDatabase, ref, set } from "firebase/database";
+import { child, get, getDatabase, ref, set, update } from "firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -200,6 +200,19 @@ export async function addUser({
     currentSubjectsList,
     schedule,
   });
+}
+
+export async function updateUserName({ uid, userName }) {
+  try {
+    await updateProfile(auth.currentUser, {
+      displayName: userName,
+    });
+    await update(ref(database, "usuarios/" + uid + "/user"), {
+      name: userName,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getUser({ uid }) {
