@@ -1,86 +1,101 @@
 import { useContext, useState } from "react";
 import { StudentContext } from "../../context/studentContext";
-import { View, StyleSheet, TextInput, Pressable } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import TextStyle from "../TextStyle";
 import { theme } from "../../theme";
-import EditIcon from "../icons/EditIcon";
+import Loading from "../Loading";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import UserName from "./UserName";
+
+const schema = yup.object({
+  username: yup
+    .string()
+    .required("No puedo estar vacio")
+    .matches(/^[a-zA-Z\s]+$/, "El nombre solo puede contener letras")
+    .trim(),
+});
 
 export default function Account() {
   const { student } = useContext(StudentContext);
-  const [name, setName] = useState(student.name);
-  const [editName, setEditName] = useState(false);
+  const [edit, setEdit] = useState(false);
+
+  const defaultValues = {
+    username: student.name,
+  };
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    setEdit(false);
+  };
+
   return (
     <View style={styles.account}>
       <View style={styles.accountHeader}>
         <TextStyle style={styles.title}>Cuenta</TextStyle>
       </View>
       <View>
-        <View style={styles.field}>
-          <Pressable
-            style={styles.fieldHeader}
-            onPress={() => {
-              setEditName(true);
-            }}
-          >
-            <TextStyle>Nombre</TextStyle>
-            <View style={[editName && { opacity: 0.5 }]}>
-              <EditIcon width={17} height={17} color={theme.colors.black} />
-            </View>
-          </Pressable>
-          <TextInput
-            style={{
-              fontFamily: theme.fonts.holidayBudapest,
-              borderBottomWidth: 1,
-              borderBottomColor: theme.colors.primary,
-            }}
-            value={name}
-            editable={editName}
-            onChangeText={(text) => setName(text)}
-            autoFocus={editName}
-          />
-          {editName && (
-            <View style={styles.optionsEdit}>
-              <Pressable
-                style={[
-                  styles.optionEdit,
-                  {
-                    borderColor: "green",
-                  },
-                ]}
-              >
-                <TextStyle
-                  style={{
-                    color: "green",
-                    fontSize: 13,
-                  }}
-                >
-                  Guardar
-                </TextStyle>
-              </Pressable>
-              <Pressable
-                style={[
-                  styles.optionEdit,
-                  {
-                    borderColor: "red",
-                  },
-                ]}
-                onPress={() => {
-                  setEditName(false);
-                  setName(student.name);
+        <UserName
+          control={control}
+          errors={errors}
+          action={() => setEdit(true)}
+          edit={edit}
+        />
+        {edit && (
+          <View style={styles.optionsEdit}>
+            {isSubmitting && <Loading />}
+            <Pressable
+              style={[
+                styles.optionEdit,
+                {
+                  borderColor: "green",
+                },
+              ]}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <TextStyle
+                style={{
+                  color: "green",
+                  fontSize: 13,
                 }}
               >
-                <TextStyle
-                  style={{
-                    color: "red",
-                    fontSize: 13,
-                  }}
-                >
-                  Cancelar
-                </TextStyle>
-              </Pressable>
-            </View>
-          )}
-        </View>
+                Guardar
+              </TextStyle>
+            </Pressable>
+            <Pressable
+              style={[
+                styles.optionEdit,
+                {
+                  borderColor: "red",
+                },
+              ]}
+              onPress={() => {
+                setEdit(false);
+                reset(defaultValues);
+              }}
+            >
+              <TextStyle
+                style={{
+                  color: "red",
+                  fontSize: 13,
+                }}
+              >
+                Cancelar
+              </TextStyle>
+            </Pressable>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -100,13 +115,6 @@ const styles = StyleSheet.create({
   accountHeader: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  field: {
-    margin: 10,
-  },
-  fieldHeader: {
-    flexDirection: "row",
-    gap: 10,
   },
   optionsEdit: {
     flexDirection: "row",
