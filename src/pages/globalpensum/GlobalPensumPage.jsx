@@ -4,16 +4,24 @@ import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import { theme } from "../../theme";
 import LevelGP from "../../components/pensum/globalpensum/LevelGP";
+import { Link } from "react-router-native";
+import BackIcon from "../../components/icons/BackIcon";
+import useLoading from "../../hooks/useLoading";
 
 export default function GlobalPensumPage() {
   const { levels, course } = useContext(StudentContext);
+  const { finishedRender, loading } = useLoading();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TextStyle style={styles.title}>{course.name}</TextStyle>
+        <Link underlayColor={"#ccc"} to="/main/pensum">
+          <BackIcon />
+        </Link>
       </View>
-      <View style={styles.content}>
+      <View style={styles.content} onLayout={finishedRender}>
         <FlatList
+          initialNumToRender={1}
           data={levels}
           ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
           renderItem={({ item }) => {
@@ -23,6 +31,7 @@ export default function GlobalPensumPage() {
             return <LevelGP name={item.name} subjects={subjects} />;
           }}
           keyExtractor={(item) => item.id}
+          ListFooterComponent={loading}
         />
       </View>
     </View>
@@ -38,7 +47,8 @@ const styles = StyleSheet.create({
   },
   header: {
     width: "100%",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
     paddingTop: 10,
   },
