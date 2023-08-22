@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import HeaderClassesToday from "../../components/classestoday/HeaderClassesToday";
-import TimeTable from "../../components/classestoday/timeTable/TimeTable";
+import TimeTable from "../../components/classestoday/TimeTable/TimeTable";
 import { getDateFormat } from "../../utils/utils";
 import { theme } from "../../theme";
 

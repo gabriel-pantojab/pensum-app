@@ -2,7 +2,7 @@ import { useDeviceOrientation } from "@react-native-community/hooks";
 import { getDateFormat } from "../../utils/utils";
 import { View } from "react-native";
 import HeaderClassesToday from "../../components/classestoday/HeaderClassesToday";
-import TimeTable from "../../components/classestoday/timeTable/TimeTable";
+import TimeTable from "../../components/classestoday/TimeTable/TimeTable";
 import { theme } from "../../theme";
 import Constants from "expo-constants";
 
