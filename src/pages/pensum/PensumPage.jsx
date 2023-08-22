@@ -5,6 +5,7 @@ import { FlatList, View, StyleSheet } from "react-native";
 import TextStyle from "../../components/TextStyle";
 import { theme } from "../../theme";
 import { StudentContext } from "../../context/studentContext";
+import { Link } from "react-router-native";
 
 export default function PensumPage() {
   const { levels, course } = useContext(StudentContext);
@@ -15,6 +16,11 @@ export default function PensumPage() {
     <View style={styCont} onLayout={finishedRender}>
       <View style={styles.content}>
         <TextStyle style={styles.title}>{course.name}</TextStyle>
+        <Link underlayColor={"#ccc"} to="/main/pensum/global">
+          <TextStyle style={{ ...styles.title, fontSize: 16 }}>
+            Ver pensum global
+          </TextStyle>
+        </Link>
         <FlatList
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
           data={levels}
