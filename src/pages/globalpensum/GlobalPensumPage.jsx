@@ -3,6 +3,7 @@ import TextStyle from "../../components/TextStyle";
 import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import { theme } from "../../theme";
+import SubjectGP from "../../components/pensum/globalpensum/SubjectGP";
 
 export default function GlobalPensumPage() {
   const { levels, course } = useContext(StudentContext);
@@ -34,21 +35,8 @@ export default function GlobalPensumPage() {
                   </View>
                   <View style={styles.subjects}>
                     {subjects.map((s) => {
-                      const { backgroundColor, borderColor } =
-                        theme.statesSubject[s.state];
                       return (
-                        <View
-                          key={s.id}
-                          style={{
-                            ...styles.subject,
-                            backgroundColor,
-                            borderColor,
-                          }}
-                        >
-                          <TextStyle style={styles.nameSubject}>
-                            {s.name}
-                          </TextStyle>
-                        </View>
+                        <SubjectGP key={s.id} name={s.name} state={s.state} />
                       );
                     })}
                   </View>
@@ -102,22 +90,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-  subject: {
-    width: 100,
-    minHeight: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 2,
-    padding: 3,
-  },
   nameLevel: {
     width: 15,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 3,
-  },
-  nameSubject: {
-    fontSize: 12,
-    textAlign: "center",
   },
 });
