@@ -9,30 +9,21 @@ export default function GlobalPensumPage() {
   const { levels, course } = useContext(StudentContext);
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TextStyle style={styles.title}>{course.name}</TextStyle>
+      </View>
       <View style={styles.content}>
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: 10,
+        <FlatList
+          data={levels}
+          ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+          renderItem={({ item }) => {
+            const name = item.name;
+            const index = name.charCodeAt(0) - "A".charCodeAt(0);
+            const subjects = levels[index].subjects;
+            return <LevelGP name={item.name} subjects={subjects} />;
           }}
-        >
-          <TextStyle style={styles.title}>{course.name}</TextStyle>
-        </View>
-        <View style={styles.contentScroll}>
-          <FlatList
-            data={levels}
-            ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
-            renderItem={({ item }) => {
-              const name = item.name;
-              const index = name.charCodeAt(0) - "A".charCodeAt(0);
-              const subjects = levels[index].subjects;
-              return <LevelGP name={item.name} subjects={subjects} />;
-            }}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </View>
   );
@@ -45,16 +36,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  content: {
+  header: {
     width: "100%",
-    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
+    paddingTop: 10,
   },
   title: {
     fontSize: 20,
     color: theme.colors.primary,
   },
-  contentScroll: {
+  content: {
     width: "100%",
     flex: 1,
     alignItems: "center",
