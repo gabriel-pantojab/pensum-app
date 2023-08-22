@@ -1,9 +1,9 @@
-import { View, FlatList, StyleSheet, ScrollView } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import TextStyle from "../../components/TextStyle";
 import { useContext } from "react";
 import { StudentContext } from "../../context/studentContext";
 import { theme } from "../../theme";
-import SubjectGP from "../../components/pensum/globalpensum/SubjectGP";
+import LevelGP from "../../components/pensum/globalpensum/LevelGP";
 
 export default function GlobalPensumPage() {
   const { levels, course } = useContext(StudentContext);
@@ -28,20 +28,7 @@ export default function GlobalPensumPage() {
               const name = item.name;
               const index = name.charCodeAt(0) - "A".charCodeAt(0);
               const subjects = levels[index].subjects;
-              return (
-                <View style={styles.level}>
-                  <View style={styles.nameLevel}>
-                    <TextStyle>{name}</TextStyle>
-                  </View>
-                  <View style={styles.subjects}>
-                    {subjects.map((s) => {
-                      return (
-                        <SubjectGP key={s.id} name={s.name} state={s.state} />
-                      );
-                    })}
-                  </View>
-                </View>
-              );
+              return <LevelGP name={item.name} subjects={subjects} />;
             }}
             keyExtractor={(item) => item.id}
           />
@@ -67,33 +54,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: theme.colors.primary,
   },
-  level: {
-    width: "100%",
-    minWidth: "100%",
-    maxWidth: "100%",
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#279EFF",
-    borderRadius: 5,
-    padding: 5,
-    paddingLeft: 0,
-  },
-  subjects: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 5,
-  },
   contentScroll: {
     width: "100%",
     flex: 1,
     alignItems: "center",
     padding: 10,
-  },
-  nameLevel: {
-    width: 15,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 3,
   },
 });
