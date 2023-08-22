@@ -51,7 +51,7 @@ export const theme = {
       backgroundColor: "#ffec99",
     },
     [statesSubject["NO CURSADA"]]: {
-      borderColor: "#ccc",
+      borderColor: "#999",
       backgroundColor: "#ccc",
     },
   },
