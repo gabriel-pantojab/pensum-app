@@ -24,7 +24,7 @@ export default function ExpressPage() {
       <View style={styCont}>
         <ExpressHeader />
         <ScrollView style={styles.content}>
-          <TimeTableEschedule />
+          <TimeTableEschedule scrollVertical={false} />
           <CareersList
             carreraStudent={{
               name: course.name.toUpperCase(),

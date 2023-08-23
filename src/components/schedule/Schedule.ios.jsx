@@ -20,7 +20,7 @@ export default function Schedule() {
         <View style={styles.content}>
           <TextStyle style={styles.title}>Horario</TextStyle>
           <View style={styles.containerTimeTable}>
-            <TimeTableEschedule />
+            <TimeTableEschedule scrollVertical={true} />
           </View>
         </View>
       </View>
