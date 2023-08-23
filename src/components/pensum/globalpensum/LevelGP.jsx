@@ -10,7 +10,7 @@ export default function LevelGP({ name, subjects }) {
       </View>
       <View style={styles.subjects}>
         {subjects.map((s) => {
-          return <SubjectGP key={s.id} name={s.name} state={s.state} />;
+          return <SubjectGP key={s.sis} name={s.name} state={s.state} />;
         })}
       </View>
     </View>
