@@ -1,4 +1,4 @@
-import { FlatList, Pressable, View, StyleSheet } from "react-native";
+import { Pressable, View, StyleSheet } from "react-native";
 import TextStyle from "../../TextStyle";
 import useFetchOffer from "../../../hooks/useFetchOffer";
 import { getMateriasNivelCarrera } from "../../../../firebaseconfig";
@@ -6,6 +6,7 @@ import Subject from "./Subject";
 import { theme } from "../../../theme";
 import CaretDownIcon from "../../icons/CaretDownIcon";
 import CaretUpIcon from "../../icons/CaretUpIcon";
+import Loading from "../../Loading";
 
 export default function Level({ name, sisCarrera }) {
   const getData = async () => {
@@ -21,35 +22,34 @@ export default function Level({ name, sisCarrera }) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={styles.level}
+        style={{ ...styles.level, borderBottomWidth: showOffer ? 1 : 0 }}
         onPress={() => {
           setShowOffer(!showOffer);
         }}
       >
         <TextStyle style={styles.nameLevel}>NIVEL: {name}</TextStyle>
         {showOffer && offer ? (
-          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
+          <CaretUpIcon color={theme.colors.black} width={15} height={15} />
         ) : (
-          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
+          <CaretDownIcon color={theme.colors.black} width={15} height={15} />
         )}
       </Pressable>
-      {showOffer && offer && offer.materias && (
-        <View>
-          <FlatList
-            data={offer.materias}
-            renderItem={({ item }) => (
+      {showOffer &&
+        (offer && offer.materias ? (
+          <View>
+            {offer.materias.map((item) => (
               <Subject
-                key={item.nombreMateria}
+                key={item.sis}
                 name={item.nombreMateria}
                 nivel={name.trim()}
                 sisSubject={item.sis}
                 sisCarrera={sisCarrera}
               />
-            )}
-            keyExtractor={(item) => item.nombreMateria}
-          />
-        </View>
-      )}
+            ))}
+          </View>
+        ) : (
+          <Loading large="small" />
+        ))}
     </View>
   );
 }
@@ -60,21 +60,18 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 5,
     borderWidth: 1,
-    borderColor: theme.colors.white,
+    borderColor: theme.colors.black,
     borderRadius: 5,
-    padding: 3,
   },
   level: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
-    padding: 3,
+    padding: 13,
   },
   nameLevel: {
-    color: theme.colors.white,
-    fontSize: 10,
-    borderBottomWidth: 1,
-    borderColor: theme.colors.white,
+    color: theme.colors.black,
+    fontSize: 12,
   },
 });

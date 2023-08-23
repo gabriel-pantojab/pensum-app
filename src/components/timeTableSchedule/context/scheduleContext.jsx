@@ -31,6 +31,7 @@ function buildInitSchedule() {
     "1930",
     "2015",
     "2100",
+    "2145",
   ];
   let schedule = {};
   days.forEach((day) => {
@@ -133,7 +134,7 @@ function ScheduleProvider({ children }) {
 
       const subDay = subjectsDay(unfolds);
       const sch = subjects(subDay);
-      updateMinMaxPeriod(sch);
+      //updateMinMaxPeriod(sch);
       setSchedule(sch);
       return newSelectedSubjects;
     });

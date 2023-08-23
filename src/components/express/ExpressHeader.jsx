@@ -4,7 +4,7 @@ import TextStyle from "../TextStyle";
 import { theme } from "../../theme";
 import ExpressOptions from "./ExpressOptions";
 
-export default function ExpressHeader({ action, showCarreras }) {
+export default function ExpressHeader() {
   const orientation = useDeviceOrientation();
   const styHeader = [
     styles.header,
@@ -20,7 +20,7 @@ export default function ExpressHeader({ action, showCarreras }) {
       <TextStyle style={styTitle}>
         Express - Gestión {new Date().getFullYear()}
       </TextStyle>
-      <ExpressOptions showCarreras={action} showCarrerasValue={showCarreras} />
+      <ExpressOptions />
     </View>
   );
 }

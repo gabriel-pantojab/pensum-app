@@ -1,15 +1,11 @@
 import { useContext, useState } from "react";
 import { ScheduleContext } from "../timeTableSchedule/context/scheduleContext";
-import { Pressable, View, StyleSheet, Button } from "react-native";
-import TextStyle from "../TextStyle";
-import CaretDownIcon from "../icons/CaretDownIcon";
-import CaretUpIcon from "../icons/CaretUpIcon";
+import { View, Button } from "react-native";
 import { removeSchedule, saveSchedule } from "../../storage/storage";
-import { theme } from "../../theme";
 import useRunning from "../../hooks/useRunning";
 import Running from "./Running";
 
-export default function ExpressOptions({ showCarreras, showCarrerasValue }) {
+export default function ExpressOptions() {
   const {
     schedule,
     minPeriod,
@@ -27,14 +23,6 @@ export default function ExpressOptions({ showCarreras, showCarrerasValue }) {
         gap: 10,
       }}
     >
-      <Pressable style={styles.options} onPress={showCarreras}>
-        <TextStyle style={styles.title}>Horarios</TextStyle>
-        {showCarrerasValue ? (
-          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
-        ) : (
-          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
-        )}
-      </Pressable>
       <Button
         onPress={() => {
           setSms("Guardado");
@@ -66,20 +54,3 @@ export default function ExpressOptions({ showCarreras, showCarrerasValue }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  options: {
-    flexDirection: "row",
-    gap: 5,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: theme.colors.white,
-    paddingHorizontal: 5,
-    borderRadius: 5,
-    backgroundColor: "#ccc",
-  },
-  title: {
-    color: theme.colors.white,
-    fontSize: 15,
-  },
-});

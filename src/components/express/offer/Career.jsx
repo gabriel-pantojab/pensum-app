@@ -6,6 +6,7 @@ import CaretDownIcon from "../../icons/CaretDownIcon";
 import CaretUpIcon from "../../icons/CaretUpIcon";
 import LevelsList from "./LevelsList";
 import { theme } from "../../../theme";
+import Loading from "../../Loading";
 
 export default function Career({ name, sis }) {
   const getData = async () => {
@@ -27,14 +28,17 @@ export default function Career({ name, sis }) {
       >
         <TextStyle style={styles.carrera}>{name}</TextStyle>
         {showOffer && offer && offer.niveles ? (
-          <CaretUpIcon color={theme.colors.white} width={15} height={15} />
+          <CaretUpIcon color={theme.colors.black} width={15} height={15} />
         ) : (
-          <CaretDownIcon color={theme.colors.white} width={15} height={15} />
+          <CaretDownIcon color={theme.colors.black} width={15} height={15} />
         )}
       </Pressable>
-      {showOffer && offer && offer.niveles && (
-        <LevelsList levels={offer.niveles} sisCarrera={sis} />
-      )}
+      {showOffer &&
+        (offer && offer.niveles ? (
+          <LevelsList levels={offer.niveles} sisCarrera={sis} />
+        ) : (
+          <Loading large="small" />
+        ))}
     </View>
   );
 }
@@ -42,7 +46,8 @@ export default function Career({ name, sis }) {
 const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,
-    borderColor: theme.colors.white,
+    borderColor: theme.colors.black,
+    padding: 5,
   },
   content: {
     flexDirection: "row",
@@ -50,9 +55,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   carrera: {
-    color: theme.colors.white,
+    color: theme.colors.black,
     padding: 5,
-    fontSize: 10,
+    fontSize: 12,
     marginBottom: 5,
   },
 });

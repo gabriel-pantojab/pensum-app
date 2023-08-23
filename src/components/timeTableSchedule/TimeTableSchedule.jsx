@@ -9,8 +9,8 @@ import { getActivitiesDay, getHours } from "./utils/utils";
 
 export default function TimeTableEschedule() {
   const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-  const { schedule, minPeriod, maxPeriod } = useContext(ScheduleContext);
-  const hours = getHours({ minPeriod, maxPeriod });
+  const { schedule } = useContext(ScheduleContext);
+  const hours = getHours({ minPeriod: "645", maxPeriod: "2145" });
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.containerScroll} horizontal>
@@ -30,8 +30,8 @@ export default function TimeTableEschedule() {
                   let activities = getActivitiesDay({
                     dayName: day.toLowerCase(),
                     schedule,
-                    minPeriod,
-                    maxPeriod,
+                    minPeriod: "645",
+                    maxPeriod: "2145",
                   });
                   return (
                     <Day key={day} dayName={day} activities={activities} />

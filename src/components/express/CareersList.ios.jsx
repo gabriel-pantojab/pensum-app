@@ -16,11 +16,13 @@ import CaretUpIcon from "../icons/CaretUpIcon";
 import { theme } from "../../theme";
 import Constants from "expo-constants";
 import { useDeviceOrientation } from "@react-native-community/hooks";
+import Loading from "../Loading";
 
 export default function CareersList({ carreraStudent }) {
   const [showOthersCareers, setShowOthersCareers] = useState(false);
   const { course } = useContext(StudentContext);
   const [carreras, setCarreras] = useState([]);
+  const [stateFechingCareers, setStateFechingCareers] = useState(false);
   const { loading, finishedRender, initLoading } = useLoading();
   const orientation = useDeviceOrientation();
 
@@ -41,8 +43,9 @@ export default function CareersList({ carreraStudent }) {
   };
   useEffect(() => {
     if (showOthersCareers) {
-      initLoading();
+      setStateFechingCareers(true);
       getCarrerasDB().then((data) => {
+        setStateFechingCareers(false);
         if (data) {
           const carreras = data.filter((carrera) => carrera.sis !== course.sis);
           setCarreras(carreras);
@@ -59,7 +62,10 @@ export default function CareersList({ carreraStudent }) {
       />
       <View style={styles.careers}>
         <Pressable
-          style={styles.btn_careers}
+          style={{
+            ...styles.btn_careers,
+            borderBottomWidth: showOthersCareers ? 1 : 0,
+          }}
           onPress={() => setShowOthersCareers(!showOthersCareers)}
         >
           <TextStyle style={{ ...styles.carrera, fontSize: 13 }}>
@@ -71,25 +77,28 @@ export default function CareersList({ carreraStudent }) {
             <CaretDownIcon color={theme.colors.white} width={15} height={15} />
           )}
         </Pressable>
-        {carreras.length && showOthersCareers ? (
-          <View onLayout={finishedRender}>
-            <FlatList
-              initialNumToRender={5}
-              data={carreras}
-              renderItem={({ item }) => (
-                <Career name={item.nombre} sis={item.sis} />
-              )}
-              keyExtractor={(item) => item.sis}
-              ListFooterComponent={loading}
-            />
-          </View>
-        ) : (
-          showOthersCareers && (
-            <TextStyle style={styles.carrera}>
-              No hay carreras disponibles
-            </TextStyle>
-          )
-        )}
+        {showOthersCareers &&
+          (stateFechingCareers ? (
+            <Loading large="small" />
+          ) : carreras.length ? (
+            <View onLayout={finishedRender}>
+              <FlatList
+                initialNumToRender={5}
+                data={carreras}
+                renderItem={({ item }) => (
+                  <Career name={item.nombre} sis={item.sis} />
+                )}
+                keyExtractor={(item) => item.sis}
+                ListFooterComponent={loading}
+              />
+            </View>
+          ) : (
+            showOthersCareers && (
+              <TextStyle style={styles.carrera}>
+                No hay carreras disponibles
+              </TextStyle>
+            )
+          ))}
       </View>
     </View>
   );
@@ -97,23 +106,22 @@ export default function CareersList({ carreraStudent }) {
 
 const styles = StyleSheet.create({
   menu: {
-    backgroundColor: "#ccc",
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderBottomRightRadius: 5,
-    borderColor: theme.colors.white,
-    maxHeight: Dimensions.get("window").height - Constants.statusBarHeight,
+    flex: 1,
+    borderTopWidth: 1,
+    backgroundColor: theme.colors.white,
+    minHeight: 100,
     padding: 5,
+    paddingBottom: 50,
   },
   carrera: {
-    color: theme.colors.white,
+    color: theme.colors.black,
     padding: 5,
     fontSize: 10,
     marginBottom: 5,
   },
   careers: {
     borderBottomWidth: 1,
-    borderColor: theme.colors.white,
+    borderColor: theme.colors.black,
   },
   btn_careers: {
     flexDirection: "row",

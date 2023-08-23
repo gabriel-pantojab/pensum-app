@@ -12,7 +12,7 @@ export default function Group({ group, teacher, infoGroup }) {
   return (
     <View style={styles.container}>
       <CheckBox
-        width={13}
+        width={20}
         value={checked}
         onChange={() => {
           addSubject(infoGroup, !checked);
@@ -29,14 +29,14 @@ export default function Group({ group, teacher, infoGroup }) {
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: theme.colors.white,
+    borderColor: theme.colors.black,
     marginRight: 10,
     marginLeft: 10,
     paddingVertical: 3,
   },
   group: {
-    fontSize: 10,
-    color: theme.colors.white,
+    fontSize: 12,
+    color: theme.colors.black,
   },
 });
 
