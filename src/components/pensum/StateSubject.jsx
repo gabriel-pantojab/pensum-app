@@ -8,7 +8,7 @@ export default function StateSubject({ state }) {
   return (
     <View style={styles.state}>
       <View style={styStateCircle}></View>
-      <TextStyle>{state}</TextStyle>
+      <TextStyle style={styles.text}>{state}</TextStyle>
     </View>
   );
 }
@@ -24,5 +24,8 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     borderWidth: 1,
+  },
+  text: {
+    fontSize: 13,
   },
 });

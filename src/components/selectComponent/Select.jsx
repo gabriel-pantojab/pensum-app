@@ -4,8 +4,14 @@ import { Pressable, ScrollView, Text, View, StyleSheet } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { theme } from "../../theme";
+import TextStyle from "../TextStyle";
 
-function SelectComponent({ children, defaultValue = "" }) {
+function SelectComponent({
+  children,
+  defaultValue = "",
+  style = {},
+  styleOptions = {},
+}) {
   const { setValueSelected, open, setOpen, nameValue, setNameValue } =
     useContext(SelectContext);
 
@@ -21,12 +27,12 @@ function SelectComponent({ children, defaultValue = "" }) {
   return (
     <View>
       <Pressable
-        style={styles.select}
+        style={{ ...styles.select, ...style }}
         onPress={() => {
           setOpen(!open);
         }}
       >
-        <Text>{nameValue}</Text>
+        <TextStyle>{nameValue}</TextStyle>
         {open ? (
           <CaretUpIcon color={theme.colors.primary} width={20} height={20} />
         ) : (
@@ -34,7 +40,12 @@ function SelectComponent({ children, defaultValue = "" }) {
         )}
       </Pressable>
       {open && (
-        <View style={styles.options}>
+        <View
+          style={{
+            ...styles.options,
+            ...styleOptions,
+          }}
+        >
           <ScrollView>{children}</ScrollView>
         </View>
       )}
@@ -42,10 +53,21 @@ function SelectComponent({ children, defaultValue = "" }) {
   );
 }
 
-export default function Select({ children, defaultValue = "" }) {
+export default function Select({
+  children,
+  defaultValue = "",
+  style = {},
+  styleOptions = {},
+}) {
   return (
     <SelectProvider>
-      <SelectComponent defaultValue={defaultValue}>{children}</SelectComponent>
+      <SelectComponent
+        defaultValue={defaultValue}
+        style={style}
+        styleOptions={styleOptions}
+      >
+        {children}
+      </SelectComponent>
     </SelectProvider>
   );
 }
@@ -55,10 +77,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.primary,
     padding: 10,
-    minWidth: 200,
+    minWidth: 100,
     borderRadius: 5,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   options: {
     minWidth: 200,
