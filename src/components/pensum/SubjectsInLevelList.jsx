@@ -35,8 +35,8 @@ export default function SubjectsInLevelList() {
                 name={item.name}
                 state={item.state}
                 level={level}
-                id={item.id}
-                key={item.id}
+                id={item.sis}
+                key={item.sis}
               />
             );
           }}

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { StudentContext } from "../context/studentContext";
 
 export default function useUpdateSubjectState({ name, state, level, id }) {
@@ -11,6 +11,11 @@ export default function useUpdateSubjectState({ name, state, level, id }) {
     setCurrentSubjectsList,
   } = useContext(StudentContext);
   const [stateSubject, setStateSubject] = useState(state);
+
+  useEffect(() => {
+    setStateSubject(state);
+  }, [state]);
+
   const updateCourse = useCallback(async (antValue, value) => {
     if (antValue === value) return;
     if (antValue === "No Cursada") {
@@ -63,7 +68,7 @@ export default function useUpdateSubjectState({ name, state, level, id }) {
     const index = temp.indexOf(temp.find((nivel) => nivel.name === level));
     const currentLevel = temp[index];
     const currentSubject = currentLevel.subjects.find(
-      (subject) => subject.id === id
+      (subject) => subject.sis === id
     );
     const antValue = currentSubject.state;
     if (antValue === value) return;

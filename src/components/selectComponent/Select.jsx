@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import SelectProvider, { SelectContext } from "../../context/selectContext";
-import { Pressable, ScrollView, Text, View, StyleSheet } from "react-native";
+import { Pressable, ScrollView, View, StyleSheet } from "react-native";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { theme } from "../../theme";
@@ -11,6 +11,8 @@ function SelectComponent({
   defaultValue = "",
   style = {},
   styleOptions = {},
+  enable = true,
+  textSize = 15,
 }) {
   const { setValueSelected, open, setOpen, nameValue, setNameValue } =
     useContext(SelectContext);
@@ -27,12 +29,19 @@ function SelectComponent({
   return (
     <View>
       <Pressable
-        style={{ ...styles.select, ...style }}
+        style={{ ...styles.select, ...style, opacity: enable ? 1 : 0.5 }}
         onPress={() => {
+          if (!enable) return;
           setOpen(!open);
         }}
       >
-        <TextStyle>{nameValue}</TextStyle>
+        <TextStyle
+          style={{
+            fontSize: textSize,
+          }}
+        >
+          {nameValue}
+        </TextStyle>
         {open ? (
           <CaretUpIcon color={theme.colors.primary} width={20} height={20} />
         ) : (
@@ -58,6 +67,8 @@ export default function Select({
   defaultValue = "",
   style = {},
   styleOptions = {},
+  enable = true,
+  textSize = 15,
 }) {
   return (
     <SelectProvider>
@@ -65,6 +76,8 @@ export default function Select({
         defaultValue={defaultValue}
         style={style}
         styleOptions={styleOptions}
+        enable={enable}
+        textSize={textSize}
       >
         {children}
       </SelectComponent>
