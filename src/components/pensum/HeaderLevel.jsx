@@ -13,7 +13,7 @@ export default function HeaderLevel({
   pending,
   levelName,
 }) {
-  const { levels, setLevels } = useContext(StudentContext);
+  const { levels, setLevels, course, setCourse } = useContext(StudentContext);
   const [checkAll, setCheckAll] = useState(false);
   const [state, setState] = useState("Aprobada");
 
@@ -28,12 +28,14 @@ export default function HeaderLevel({
 
     temp[indexLevel].subjects = subjects;
     const totalSubjects = subjects.length;
-    const approvedSubjects = subjects.filter(
-      (subject) => subject.state === "Aprobada"
-    ).length;
-    const inProgressSubjects = subjects.filter(
-      (subject) => subject.state === "Cursando"
-    ).length;
+    const approvedSubjects = subjects.reduce(
+      (acc, subject) => (subject.state === "Aprobada" ? acc + 1 : acc),
+      0
+    );
+    const inProgressSubjects = subjects.reduce(
+      (acc, subject) => (subject.state === "Cursando" ? acc + 1 : acc),
+      0
+    );
 
     temp[indexLevel].progress = (approvedSubjects / totalSubjects) * 100;
     temp[indexLevel].inProgress = false;
@@ -42,6 +44,26 @@ export default function HeaderLevel({
       temp[indexLevel].inProgress = inProgressSubjects > 0;
     }
     setLevels(temp);
+    const globalApprovedSubjects = temp.reduce(
+      (acc, level) =>
+        acc +
+        level.subjects.filter((subject) => subject.state === "Aprobada").length,
+      0
+    );
+    const globalInProgressSubjects = temp.reduce(
+      (acc, level) =>
+        acc +
+        level.subjects.filter((subject) => subject.state === "Cursando").length,
+      0
+    );
+    const globalPendingSubjects =
+      course.totalSubjects - globalApprovedSubjects - globalInProgressSubjects;
+    setCourse({
+      ...course,
+      approvedSubjects: globalApprovedSubjects,
+      inProgressSubjects: globalInProgressSubjects,
+      pendingSubjects: globalPendingSubjects,
+    });
   };
 
   return (
@@ -65,6 +87,7 @@ export default function HeaderLevel({
           <View style={styles.checkBox}>
             {checkAll && <CheckIcon color={"#1493ff"} width={13} height={13} />}
           </View>
+
           <TextStyle style={styles.textCheck}>Marcar Todas</TextStyle>
         </TouchableOpacity>
 
